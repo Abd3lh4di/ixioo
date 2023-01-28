@@ -1,0 +1,23 @@
+{
+    "headers": {
+        "Host": "localhost:4400",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0",
+        "Accept": "*/*",
+        "Accept-Language": "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Access-Control-Request-Method": "POST",
+        "Access-Control-Request-Headers": "authorization",
+        "Referer": "http://localhost:4200/",
+        "Origin": "http://localhost:4200",
+        "DNT": "1",
+        "Connection": "keep-alive",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-site",
+        "Pragma": "no-cache",
+        "Cache-Control": "no-cache"
+    },
+    "method": "options",
+    "url": "http://localhost:4400/v1/cases/1ed4090c-0c3d-6040-4ee7-31320b839700/plans-parameters/1ed4090c-2333-6ec0-bb88-0098f88185e6/simulations",
+    "bodyFileName": "input-request-body"
+}

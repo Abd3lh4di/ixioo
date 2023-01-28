@@ -1,0 +1,106 @@
+<h2 class="title">Caractéristiques du prêt racheté</h2>
+
+<table class="mx-auto w-75 mt-4 table table-hover">
+    <thead>
+        <tr>
+            <td *ngFor="let header of loansToConsolidateTableHeader"><b>{{header}}</b></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let loanToConsolidate of loansToConsolidateTable">
+            <td>{{loanToConsolidate[0]}}</td>
+            <td>{{loanToConsolidate[1]}}</td>
+            <td>{{loanToConsolidate[2]}}</td>
+            <td class='text-right'>{{loanToConsolidate[3]}}</td>
+            <td class='text-right'>{{loanToConsolidate[4]}}</td>
+            <td class='text-right'>{{loanToConsolidate[5]}}</td>
+            <td class='text-right'>{{loanToConsolidate[6]}}</td>
+            <td class='text-right text-nowrap'>{{loanToConsolidate[7]}}</td>
+            <td>{{loanToConsolidate[8]}}</td>
+            <td>{{loanToConsolidate[9]}}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h2 class="title">Bilan de l'opération de rachat</h2>
+
+
+<div class="mx-auto w-75 mt-3 mb-3" *ngIf="parameters.project.type">
+    <table class="results-table">
+        <tbody>
+            <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center "></td>
+                <td>{{ this.remainingInterestsStr }}</td>
+                <td class="text-right">{{ this.debtConsolidationSummary.total_remaining_interests | currency:'EUR' }}</td>
+            </tr>
+             <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center ">+</td>
+                <td>{{ this.remainingInsuranceStr }}</td>
+                <td class="text-right">{{ this.debtConsolidationSummary.total_remaining_insurance | currency:'EUR'}}</td>
+            </tr>
+
+            <tr [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">-</td>
+                <td>{{ this.interestsNewPlanStr }}</td>
+                <td class="text-right">{{ this.debtConsolidationSummary.total_new_interests | currency:'EUR' }}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">-</td>
+                <td>{{ this.insuranceNewPlanStr }}</td>
+                <td class="text-right">{{ this.debtConsolidationSummary.total_new_insurance | currency:'EUR' }}</td>
+            </tr>
+            
+            <tr [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">-</td>
+                <td>{{ this.iraStr }}</td>
+                <td class="text-right">
+                    {{ this.debtConsolidationSummary.total_ira | currency:'EUR' }}
+                </td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">-</td>
+                <td>{{ this.newGuarantyStr }}</td>
+                <td class="text-right">{{ this.debtConsolidationSummary.total_new_guaranty | currency:'EUR' }}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">-</td>
+                <td>{{ this.balancingOtherExpensesStr }}</td>
+                <td class="text-right">
+                    {{ this.debtConsolidationSummary.other_expenses | currency:'EUR' }}
+                </td>
+            </tr>
+
+            <tr [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">-</td>
+                <td>{{ this.balancingFileManagementFeesStr }}</td>
+                <td class="text-right">
+                    {{ this.debtConsolidationSummary.file_management_fees | currency:'EUR' }}
+                </td>
+            </tr>
+
+            <tr [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">-</td>
+                <td>{{ this.balancingBrokerFeesStr }}</td>
+                <td class="text-right">
+                    {{ this.debtConsolidationSummary.broker_fees | currency:'EUR' }}
+                </td>
+            </tr>
+
+            <!--tr [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">-</td>
+                <td>{{ this.balancingPersonalFundingStr }}</td>
+                <td class="text-right">{{ this.results.funding_plan.summary.total_personal_funding | currency:'EUR' }}</td>
+            </tr--->
+
+
+            <tr class="bold" [style.background-color]="this.debtConsolidationSummary.total_gain > 0 ? '#'+colormap[4] : '#'+colormap[9]">
+                <td class="text-center ">=</td>
+                <td>{{ this.debtConsolidationSummary.total_gain > 0 ? this.gainStr : this.deficitStr }}</td>
+                <td class="text-right">
+                    {{ this.debtConsolidationSummary.total_gain | currency:'EUR' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

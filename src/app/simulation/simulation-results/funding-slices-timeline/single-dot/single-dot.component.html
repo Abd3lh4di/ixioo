@@ -1,0 +1,11 @@
+
+<div [ngStyle]="dividerStyle" class="align-self-center"></div>
+<div (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" [ngStyle]="intervalStyle" class="interval">
+    <div [ngStyle]="topLabelStyle" class="top-label d-flex flex-column">
+        <span class="label-1">{{point.topLabel1}}</span>
+        <span class="label-2">{{point.topLabel2}}</span>			
+    </div>
+    <span [ngStyle]="dotStyle" class="dot"></span>
+    <span class="bottom-label">{{point.bottomLabel}}</span>
+</div>
+<div [ngStyle]="dividerStyle" class="align-self-center"></div>

@@ -1,0 +1,63 @@
+<div [formGroup]="household" class="household d-flex justify-content-center mt-3">
+
+    <mat-card class="mat-elevation-z4 family-composition">
+        <mat-card-header>
+            <mat-card-title>Informations familiale</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="d-flex flex-column justify-content-around">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre de personnes dans le ménage</mat-label>
+                    <input type="number" min="1" matInput formControlName="people_count">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre de personnes à charge</mat-label>
+                    <input type="number" min="0" matInput formControlName="dependent_persons_count">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Dont enfants à charge</mat-label>
+                    <input type="number" min="0" matInput formControlName="children_count">
+                </mat-form-field>
+            </div>
+            <mat-form-field floatLabel="always" appearance="none">
+                <mat-checkbox formControlName="first_time_buyer">Le ménage est primo-accédant à la propriété (ou assimilé)</mat-checkbox>
+                <textarea matInput hidden></textarea>
+            </mat-form-field>
+
+            <div class="bank-info-small">
+                <a mat-button (click)="addBankInformation()">
+                    <mat-icon>account_balance</mat-icon>
+                    Préciser la banque actuelle
+                </a>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z4">
+        <mat-card-header>
+            <mat-card-title>Enfants à charge</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="d-flex flex-column justify-content-start childs">
+            <div formArrayName="children" *ngFor="let child of children.controls; index as i">
+                <ng-container [formGroupName]="i">
+                    <span class="mr-3">Enfant {{ i+1 }}</span>
+                    <mat-form-field appearance="outline" class="mr-3 date-input">
+                        <mat-label>Date de naissance</mat-label>
+                        <input matInput [matDatepicker]="birthPicker" formControlName="birth_date" placeholder="JJ/MM/AAAA">
+                        <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #birthPicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="mr-3 small-width">
+                        <mat-label>Age</mat-label>
+                        <input matInput formControlName="age">
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="none" style="width:120px">
+                        <mat-checkbox formControlName="shared_custody">Garde alternée</mat-checkbox>
+                        <textarea matInput hidden></textarea>
+                    </mat-form-field>
+                </ng-container>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

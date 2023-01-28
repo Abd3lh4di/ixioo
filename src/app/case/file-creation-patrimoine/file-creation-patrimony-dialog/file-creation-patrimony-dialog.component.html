@@ -1,0 +1,120 @@
+<h1 *ngIf="data.category === 'MOVABLE'" mat-dialog-title>Ajouter un patrimoine mobilier</h1>
+<h1 *ngIf="data.category === 'SAVINGS'" mat-dialog-title>Ajouter une épargne</h1>
+<h1 *ngIf="data.category === 'REAL_ESTATE'" mat-dialog-title>Ajouter un patrimoine immobilier</h1>
+<h1 *ngIf="data.category === 'PROFESSIONAL'" mat-dialog-title>Ajouter un patrimoine professionel</h1>
+
+<div mat-dialog-content class="d-flex flex-column">
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Type de patrimoine</mat-label>
+        <mat-select [(ngModel)]="data.type">
+            <mat-option *ngFor="let type of currentTypeList" [value]="type">{{ toString(type) }}</mat-option>
+            <mat-option *ngIf="data.category !== 'SAVINGS'" value="OTHER">Autre</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="data.type === 'OTHER'" appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput [(ngModel)]="data.description">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Commentaire</mat-label>
+        <input matInput [(ngModel)]="data.comment">
+    </mat-form-field>
+    <div class="d-flex">
+        <mat-form-field appearance="outline" class="mr-1">
+            <mat-label>Valeur</mat-label>
+            <input type='number' matInput [(ngModel)]="data.value">
+        </mat-form-field>
+        <mat-form-field *ngIf="data.category === 'SAVINGS' && data.type !=='FAMILY_DONATION'" appearance="outline">
+            <mat-label>Date d'ouverture</mat-label>
+            <input matInput [matDatepicker]="buyingOrOpeningDatePicker" [(ngModel)]="data.buying_or_opening_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="buyingOrOpeningDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #buyingOrOpeningDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field *ngIf="data.type ==='FAMILY_DONATION'" appearance="outline">
+            <mat-label>Date de réception des fonds</mat-label>
+            <input matInput [matDatepicker]="buyingOrOpeningDatePicker" [(ngModel)]="data.buying_or_opening_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="buyingOrOpeningDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #buyingOrOpeningDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field *ngIf="data.category === 'REAL_ESTATE'" appearance="outline">
+            <mat-label>Capital restant dû</mat-label>
+            <input type='number' matInput [(ngModel)]="data.remaining_capital">
+        </mat-form-field>
+    </div>
+    <div class="d-flex">
+        <mat-form-field appearance="outline" class="mr-1">
+            <mat-label>Démembrement éventuel</mat-label>
+            <mat-select [(ngModel)]="data.breakup.type">
+                <mat-option *ngFor="let breakypType of breakupTypes" [value]="breakypType">{{ toString(breakypType) }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="data.breakup.type !== 'PLEINE_PROPRIETE'" appearance="outline">
+            <mat-label>Portion</mat-label>
+            <input type='number' matInput appLimitNumber minNumber="0" maxNumber="100" matInput [(ngModel)]="data.breakup.portion">
+        </mat-form-field>
+    </div>
+    <div class="d-flex" *ngIf="data.category === 'REAL_ESTATE'">
+        <mat-form-field appearance="outline" class="mr-1">
+            <mat-label>Dans le patrimoine depuis le</mat-label>
+            <input matInput [matDatepicker]="buyingOrOpeningDatePicker" [(ngModel)]="data.buying_or_opening_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="buyingOrOpeningDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #buyingOrOpeningDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field floatLabel="always" appearance="none">
+            <mat-slide-toggle [(ngModel)]="data.is_for_sale">Est à vendre</mat-slide-toggle>
+            <textarea matInput hidden></textarea>
+        </mat-form-field>        
+    </div>
+    <div *ngIf="data.is_for_sale" class="d-flex flex-column">
+        <div class="d-flex">
+            <mat-form-field appearance="outline" class="mr-1">
+                <mat-label>Depuis le</mat-label>
+                <input matInput [matDatepicker]="forSaleSincePicker" [(ngModel)]="data.for_sale.since" placeholder="JJ/MM/AAAA">
+                <mat-datepicker-toggle matSuffix [for]="forSaleSincePicker"></mat-datepicker-toggle>
+                <mat-datepicker #forSaleSincePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mr-1">
+                <mat-label>Signature du compromis</mat-label>
+                <input matInput [matDatepicker]="salesAgreementDatePicker" [(ngModel)]="data.for_sale.dates.sales_agreement_date" placeholder="JJ/MM/AAAA">
+                <mat-datepicker-toggle matSuffix [for]="salesAgreementDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #salesAgreementDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mr-1">
+                <mat-label>Levée des conditions suspensives</mat-label>
+                <input matInput [matDatepicker]="conditionsPrecedentEndDatePicker" [(ngModel)]="data.for_sale.dates.conditions_precedent_end_date" placeholder="JJ/MM/AAAA">
+                <mat-datepicker-toggle matSuffix [for]="conditionsPrecedentEndDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #conditionsPrecedentEndDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Signature de l'acte</mat-label>
+                <input matInput [matDatepicker]="signatureDatePicker" [(ngModel)]="data.for_sale.dates.signature_date" placeholder="JJ/MM/AAAA">
+                <mat-datepicker-toggle matSuffix [for]="signatureDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #signatureDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="d-flex">
+            <mat-form-field appearance="outline" class="mr-1">
+                <mat-label>Prix public de mise en vente</mat-label>
+                <input type='number' matInput [(ngModel)]="data.for_sale.price">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mr-1">
+                <mat-label>Frais d'agence à la charge du vendeur</mat-label>
+                <input type='number' matInput [(ngModel)]="data.for_sale.agency_fees">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="flex-fill">
+                <mat-label>Montant de l'impot éventuel sur le prix de vente</mat-label>
+                <input type='number' matInput [(ngModel)]="data.for_sale.taxes">
+            </mat-form-field>
+        </div>
+        <!-- <div class="d-flex">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Montant de l'impot éventuel sur le prix de vente</mat-label>
+                <input matInput [(ngModel)]="data.for_sale.taxes">
+            </mat-form-field>
+        </div> -->
+    </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial [disabled]="!data.type" color="accent">Ajouter</button>
+</div>

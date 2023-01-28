@@ -1,0 +1,89 @@
+<div [formGroup]="patrimony" class="patrimony mt-3 d-flex justify-content-center">
+    <mat-card class="mat-elevation-z4 mb-1 mat-card">
+        <mat-card-header>
+            <mat-card-title class="d-flex justify-content-start">
+                <button mat-button (click)="addMovable()">
+                    <mat-icon>weekend</mat-icon>
+                    Ajouter un patrimoine mobilier
+                </button>
+                <button mat-button (click)="addRealEstate()">
+                    <mat-icon>apartment</mat-icon>
+                    Ajouter un patrimoine immobilier
+                </button>
+                <button mat-button (click)="addSavings()">
+                    <mat-icon>payments</mat-icon>
+                    Ajouter une épargne
+                </button>
+                <button mat-button (click)="addProfessional()">
+                    <mat-icon>work</mat-icon>
+                    Ajouter un patrimoine professionel
+                </button>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="d-flex patrimony-container">
+            <div class="d-flex justify-content-start align-content-start flex-wrap">
+                <mat-card *ngFor="let pat of patrimony.controls; index as i"
+                    class="mat-elevation-z4 patrimony-card mr-1 mb-1" 
+                    [style.background]="getTypeColor(pat.value.category)"
+                    #tooltip="matTooltip"
+                    [matTooltip]="pat.value.comment"
+                    matTooltipClass="colored-tooltip"
+                    matTooltipPosition="below">
+                    <mat-card-header>
+                        <mat-card-title class="text-truncate">
+                            <mat-icon class="align-bottom" *ngIf="pat.value.category === 'MOVABLE'">weekend</mat-icon>
+                            <mat-icon class="align-bottom" *ngIf="pat.value.category === 'REAL_ESTATE'">apartment</mat-icon>
+                            <mat-icon class="align-bottom" *ngIf="pat.value.category === 'SAVINGS'">payments</mat-icon>
+                            <mat-icon class="align-bottom" *ngIf="pat.value.category === 'PROFESSIONAL'">work</mat-icon>
+                            {{ pat.value.type === 'OTHER' ? pat.value.description : toString(pat.value.type) }}
+                        </mat-card-title>
+                        <!-- <mat-card-title class="text-break">{{ pat.value.value | currency:'EUR' }}</mat-card-title> -->
+                        <mat-card-title>
+                            {{ pat.value.value | currency:'EUR' }}
+                        </mat-card-title>
+                        
+                        <!-- <mat-card-subtitle *ngIf="pat.value.category === 'SAVINGS' && pat.value.type !== 'FAMILY_DONATION'" class="text-white">
+                            Ouvert le {{ pat.value.initiatingDate | date }}
+                        </mat-card-subtitle> -->
+                        <!-- <mat-card-subtitle *ngIf="pat.value.type === 'FAMILY_DONATION'" class="text-white">
+                            Reçue le {{ pat.value.initiatingDate | date }}
+                        </mat-card-subtitle>
+                        <mat-card-subtitle *ngIf="pat.value.category === 'REAL_ESTATE'" class="text-white">
+                            Acheté le {{ pat.value.initiatingDate | date }}
+                        </mat-card-subtitle> -->
+                        <!-- <mat-card-subtitle *ngIf="pat.value.remaining_capital || pat.value.remaining_capital > 0" class="text-white">
+                            Capital restant dû {{ pat.value.remaining_capital | currency:'EUR' }}
+                        </mat-card-subtitle> -->
+                        <button class="menu-button" mat-icon-button 
+                            [matMenuTriggerFor]="menu" [matMenuTriggerData]="{data: pat.value, index: i}">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                        <button style="visibility: hidden;"></button>
+                    </mat-card-header>
+                    
+                    <mat-card-content >
+                        <div *ngIf="pat.value.category === 'SAVINGS' && pat.value.type !== 'FAMILY_DONATION'" class="d-flex justify-content-between">
+                            <span>Ouvert le</span><span class="font-weight-bold">{{ pat.value.buying_or_opening_date | date }}</span>
+                        </div>
+                        <div *ngIf="pat.value.type === 'FAMILY_DONATION'" class="d-flex justify-content-between">
+                            <span>Reçue le</span><span class="font-weight-bold">{{ pat.value.buying_or_opening_date | date }}</span>
+                        </div>
+                        <div *ngIf="pat.value.category === 'REAL_ESTATE'" class="d-flex justify-content-between">
+                            <span>Acheté le</span><span class="font-weight-bold">{{ pat.value.buying_or_opening_date | date }}</span>
+                        </div>
+                        <div *ngIf="pat.value.remaining_capital || pat.value.remaining_capital > 0" class="d-flex justify-content-between">
+                            <span>Capital restant</span><span class="font-weight-bold">{{ pat.value.remaining_capital | currency:'EUR' }}</span>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<mat-menu #menu="matMenu">
+    <ng-template matMenuContent let-patrimony="data" let-index="index">
+        <button mat-menu-item (click)="edit(index)"><mat-icon>create</mat-icon>Éditer</button>
+        <button mat-menu-item (click)="remove(index)"><mat-icon>delete_outline</mat-icon>Supprimer</button>
+    </ng-template>
+</mat-menu>

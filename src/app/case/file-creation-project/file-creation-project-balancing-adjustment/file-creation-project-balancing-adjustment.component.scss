@@ -1,0 +1,15 @@
+
+::ng-deep .mat-form-field-wrapper { padding-bottom: 1.34375em !important; }
+
+.comment {
+  width: 350px;
+}
+
+.small-inputs {
+  ::ng-deep .mat-card-header .mat-card-title {
+    font-size: 12px !important;
+  }
+  ::ng-deep .mat-card-header-text {
+    margin: 0 2px;
+  }
+}

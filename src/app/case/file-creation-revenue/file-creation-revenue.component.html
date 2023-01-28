@@ -1,0 +1,77 @@
+<div [formGroup]='finance' class="incomes d-flex justify-content-center ml-1">
+   
+    <mat-card class="mat-elevation-z4 mb-1 mr-1">
+        <mat-card-header>
+            <mat-card-title>
+                <span>Revenus mensuels courant ou à venir</span>
+                <button class="ml-2" mat-button (click)="addIncomes()">
+                    <mat-icon>add</mat-icon>
+                    Ajouter un revenu
+                </button>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="d-flex flex-column justify-content-start incomes-container">
+            <div formArrayName="revenues" *ngFor="let income of incomes.controls; index as i" 
+                class="d-flex mt-1" >
+                <ng-container [formGroupName]="i">
+                    <mat-form-field formGroupName="monthly_amount" appearance="outline" class="mr-1 small-input">
+                        <mat-label>{{ incomeToString(income.controls.type.value) }}</mat-label>
+                        <input type="number" matInput formControlName="figure">
+                    </mat-form-field>
+                    <mat-form-field formGroupName="monthly_amount" appearance="outline" class="mr-1 weight-input pr-0">
+                        <mat-label>Pondération (%)</mat-label>
+                        <input type="number" matInput appLimitNumber minNumber="0" maxNumber="100" formControlName="weight">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="mr-1 small-input">
+                        <mat-label>Commentaire</mat-label>
+                        <input matInput formControlName="comment">
+                    </mat-form-field>
+                    <button mat-button (click)="removeIncome(i)">
+                        Supprimer
+                    </button>
+                </ng-container>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    
+    <div class="d-flex flex-column">
+        <mat-card class="mat-elevation-z4 mb-1 mr-1">
+            <mat-card-header>
+                <mat-card-title>Apport au projet</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="d-flex flex-column justify-content-around">
+                <mat-form-field appearance="outline" class="mr-3">
+                    <mat-label>Apport</mat-label>
+                    <input type="number" matInput formControlName="personal_funding">
+                </mat-form-field>
+            </mat-card-content> 
+        </mat-card>
+        <mat-card formGroupName='income_tax' class="mat-elevation-z4 mb-1 mr-1 flex-fill" style="width: 330px">
+            <mat-card-header>
+                <mat-card-title>Imposition</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="d-flex flex-column justify-content-around">
+                <div>
+                    <mat-form-field appearance="outline" class="mr-3 w-100">
+                        <mat-label>Revenu fiscal de référence année N-1</mat-label>
+                        <input type="number" matInput formControlName="fiscal_reference_revenue_Nminus1">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Revenu fiscal de référence année N-2</mat-label>
+                        <input type="number" matInput formControlName="fiscal_reference_revenue_Nminus2">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="mr-3 w-100">
+                        <mat-label>Montant de l'impôt payé année N-1</mat-label>
+                        <input type="number" matInput formControlName="income_tax_Nminus1">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Montant de l'impôt payé année N-2</mat-label>
+                        <input type="number" matInput formControlName="income_tax_Nminus2">
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

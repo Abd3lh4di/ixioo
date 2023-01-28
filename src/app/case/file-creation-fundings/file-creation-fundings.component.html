@@ -1,0 +1,212 @@
+<div class="m-1 d-flex">
+    <button *ngFor="let funding of fundingsResources.controls; let idx = index" 
+        class="tab-button" mat-flat-button [color]="activeFunding === idx ? 'accent' : 'primary'"
+        (click)="selectFunding(idx)">
+        {{ funding.get('attributes').get('name').value ? funding.get('attributes').get('name').value : 'Nouveau financement' }}
+    </button>
+    <button class="ml-2 tab-button" mat-button (click)="addFunding()"><mat-icon>add</mat-icon>
+        Ajouter un financement
+    </button>
+    <button class="ml-auto tab-button" mat-button (click)="removeCurrentFunding()"><mat-icon>delete_outline</mat-icon>
+        Supprimer ce financement
+    </button>
+</div>
+
+<div class="m-1 d-flex justify-content-start" [formGroup]="currentFunding">
+    <mat-card class="mat-elevation-z4 funding-parameters mr-1 p-1 pt-0">
+        <div class="d-flex small-inputs">
+            <mat-form-field appearance="outline">
+                <mat-label>Nom du financement</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <button class="ml-auto small-btn" mat-button (click)="pickBank()">
+                {{ currentFunding.get('bank').get('name').value ? currentFunding.get('bank').get('name').value : 'Attacher une banque' }}
+                <mat-icon class="small-icon" *ngIf="currentFunding.get('bank').get('name').value" >edit</mat-icon>
+            </button>
+        </div>
+        <mat-card-content class="d-flex flex-column justify-content-around">
+            <div [formGroup]="fundingFees" class="d-flex justify-content-start align-items-center small-inputs">
+                <mat-form-field appearance="outline" class="mr-1 small-input-width">
+                    <mat-label>Frais de courtage</mat-label>
+                    <input type="number" matInput formControlName="broker_fees">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="small-input-width">
+                    <mat-label>Frais de dossier</mat-label>
+                    <input type="number" matInput formControlName="file_management_fees">
+                </mat-form-field>
+            </div>
+            <div class="d-flex justify-content-start align-items-center small-inputs">
+                <mat-form-field *ngIf="!isBudget && !isDebt" appearance="outline" class="mr-1 small-input-width">
+                    <mat-label>À financer hors garanties</mat-label>
+                    <input type="number" matInput [value]="localTotalFunding" disabled>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mr-1 small-input-width">
+                    <mat-label *ngIf="!isBudget && !isDebt">Dont apport</mat-label>
+                    <mat-label *ngIf="isBudget || isDebt">Apport</mat-label>
+                    <input type="number" matInput [value]="totalPersonalFunding" disabled>
+                </mat-form-field>
+                <mat-form-field *ngIf="!isBudget && !isDebt" appearance="outline" class="small-input-width">
+                    <mat-label>Reste à financer</mat-label>
+                    <input type="number" matInput [value]="remainingFunding" disabled>
+                </mat-form-field>
+            </div>
+            <div class="d-flex justify-content-start align-items-center small-inputs">
+                <mat-form-field appearance="outline" class="mr-1 small-input-width">
+                    <mat-label>Revenus</mat-label>
+                    <input type="number" matInput [value]="totalRevenues" disabled>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mr-1 small-input-width">
+                    <mat-label>Charges</mat-label>
+                    <input type="number" matInput [value]="totalCharges" disabled>
+                </mat-form-field>
+            </div>
+            <div class="d-flex justify-content-start align-items-center small-inputs">
+                <mat-form-field appearance="outline" class="mr-1 small-input-width">
+                    <mat-label>Mensualité cible maximale</mat-label>
+                    <input type="number" matInput formControlName="maximal_monthly_payment" (input)="onMaximalMonthlyPaymentInput()">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="small-input-width">
+                    <mat-label>Endettement maximal (%)</mat-label>
+                    <input type="number" matInput formControlName="maximal_debt_ratio" (input)="onMaximalDebtRatioInput()">
+                </mat-form-field>
+            </div>
+            <div>
+                <div>
+                    <button mat-button [matMenuTriggerFor]="menuProfile">
+                        <mat-icon class="small-icon">add</mat-icon>
+                        Profil de remboursement
+                    </button>
+                    <span>{{ this.getProfileType() }}</span>
+                </div>
+                <mat-menu #menuProfile="matMenu" yPosition="below" xPosition="after" class="fundings-choice-list">
+                    <div>
+                        <button mat-menu-item (click)="removeProfile()">Aucun</button>
+                        <button mat-menu-item (click)="pickProfile('GRANDIOZ')">Grandioz</button>
+                        <button mat-menu-item (click)="pickProfile('YEARLY_VARIATION')">Variation annuelle</button>
+                        <button mat-menu-item (click)="pickProfile('MONTHLY_VARIATION')">Variation mensuelle</button>
+                        <button mat-menu-item (click)="pickProfile('CUSTOM')">Personalisé</button>
+                    </div>
+                </mat-menu>
+            </div>
+            <div>
+                <button mat-button [matMenuTriggerFor]="menu">
+                    <mat-icon class="small-icon">add</mat-icon>
+                    Ajouter un prêt
+                </button>
+                <mat-menu #menu="matMenu" yPosition="below" xPosition="after" class="fundings-choice-list">
+                    <div>
+                        <button mat-menu-item (click)="addLoan('FREE_LOAN')">Prêt Amortissable</button>
+                        <button mat-menu-item (click)="addLoan('PTZ_LOAN')">Prêt à Taux Zéro</button>
+                        <button mat-menu-item (click)="addLoan('BOSS_LOAN')">Prêt Patronal</button>
+                        <button mat-menu-item (click)="addLoan('BRIDGE_LOAN')">Prêt Relais</button>
+                    </div>
+                </mat-menu>
+            </div>
+            <div>
+                <div class="d-flex flex-column justify-content-start loan-box">
+                    <mat-list role="list" >
+                        <mat-list-item role="listitem" class="loan-item mb-1" [style.background]="getLoanColor(loan.get('type').value)"
+                            formArrayName="loans" *ngFor="let loan of currentLoans.controls; let i = index">
+                            <ng-container [formGroupName]="i" [ngSwitch]="loan.get('type').value">
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <ng-container *ngSwitchCase="'FREE_LOAN'">
+                                        <span class="loan-name" [matTooltip]="getLoanName(loan.get('type').value)" >{{getLoanName(loan.get('type').value) | titlecase}}</span>
+                                        <div class="ml-auto mr-3">
+                                            <mat-form-field [floatLabel]="'never'" appearance="standard" class="mr-4 ml-2" style="width: 85px;">
+                                                <input type="number" class="text-right" matInput placeholder="Durée" formControlName="max_duration_months">
+                                                <span class="ml-1 align-text-top" matSuffix>mois</span>
+                                            </mat-form-field>
+                                            <mat-form-field [floatLabel]="'never'" appearance="standard" style="width: 50px;">
+                                                <input type="number" class="text-right" matInput appLimitNumber minNumber="0" maxNumber="100" placeholder="Taux" formControlName="yearly_rate">
+                                                <span class="ml-1 align-text-top" matSuffix>%</span>
+                                            </mat-form-field>
+                                        </div>
+                                        <a class="btn-lnk mr-3" (click)="editLoan(i)">
+                                            <mat-icon class="small-icon">create</mat-icon>Editer
+                                        </a>
+                                    </ng-container>
+
+                                    <ng-container *ngSwitchCase="'BRIDGE_LOAN'">
+                                        <span class="loan-name" [matTooltip]="getLoanName(loan.get('type').value)" >{{getLoanName(loan.get('type').value) | titlecase}}</span>
+                                        <div class="ml-auto mr-3">
+                                            <mat-form-field appearance="standard" class="mr-1" style="width: 65px;">
+                                                <mat-label>Montant</mat-label>
+                                                <input type="number" matInput formControlName="amount">
+                                                <span class="align-text-top" matSuffix>€</span>
+                                            </mat-form-field>
+                                            <mat-form-field [floatLabel]="'never'" appearance="standard" class="mr-4 ml-2" style="width: 85px;">
+                                                <input type="number" class="text-right" matInput placeholder="Durée" formControlName="duration_months">
+                                                <span class="ml-1 align-text-top" matSuffix>mois</span>
+                                            </mat-form-field>
+                                            <mat-form-field [floatLabel]="'never'" appearance="standard" style="width: 50px;">
+                                                <input type="number" class="text-right" matInput appLimitNumber minNumber="0" maxNumber="100" placeholder="Taux" formControlName="yearly_rate">
+                                                <span class="ml-1 align-text-top" matSuffix>%</span>
+                                            </mat-form-field>
+                                        </div>
+                                        <a class="btn-lnk mr-3" (click)="editLoan(i)">
+                                            <mat-icon class="small-icon">create</mat-icon>Editer
+                                        </a>
+                                    </ng-container>
+
+
+                                    <ng-container *ngSwitchCase="'PTZ_LOAN'">
+                                        <span class="loan-name" [matTooltip]="getLoanName(loan.get('type').value)" >{{getLoanName(loan.get('type').value) | titlecase}}</span>
+                                        <div class="ml-auto mr-3">
+                                        </div>
+                                        <a class="btn-lnk mr-3" (click)="editLoan(i)">
+                                            <mat-icon class="small-icon">create</mat-icon>Editer
+                                        </a>
+                                    </ng-container>
+
+
+                                    <ng-container *ngSwitchCase="'BOSS_LOAN'">
+                                        <span class="loan-name" [matTooltip]="getLoanName(loan.get('type').value)" >{{getLoanName(loan.get('type').value) | titlecase}}</span>
+                                        <div class="ml-auto mr-3">
+                                        </div>
+                                        <a class="btn-lnk mr-3" (click)="editLoan(i)">
+                                            <mat-icon class="small-icon">create</mat-icon>Editer
+                                        </a>
+                                    </ng-container>
+                                    
+                                    <a class="delete-loan btn-lnk d-flex align-items-center" (click)="deleteLoan(i)">
+                                        <mat-icon>delete_outline</mat-icon>
+                                    </a>
+                                </div>
+                            </ng-container>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="flex-fill mat-elevation-z4 p-0 small-inputs">
+        <mat-card-header class="funding-results-header">
+            <div class="d-flex align-items-center w-100">
+                <button mat-raised-button color="primary" class="align-self-center tab-button mr-2" (click)="saveAndAskForRun()" [disabled]="invalid()">
+                    Lancer le calcul
+                </button>
+                <mat-radio-group *ngIf="!isBudget" formControlName="objective" class="mt-1">
+                    <mat-radio-button value="MINIMIZE_INSTALMENT" checked>Maximiser le reste à vivre</mat-radio-button>
+                    <mat-radio-button value="MINIMIZE_COST">Minimiser le coût total du crédit</mat-radio-button>
+                </mat-radio-group>
+                <!-- <ng-container [formGroup]="candidateSimulationCheckedForm" >
+                    <mat-checkbox formControlName="candidateSimulationChecked" *ngIf="simulationData[activeFunding]" class="ml-auto mr-3" (change)="fundingChecked($event)">
+                        Sélectionner pour envoi
+                    </mat-checkbox>
+                </ng-container> -->
+            </div>
+        </mat-card-header>
+        <mat-card-content class="d-flex flex-column justify-content-start result-box">
+            <ng-template #loading>
+                <app-loading *ngIf="simulationLaunched" class="mt-5"></app-loading>
+            </ng-template>
+            <div *ngIf="!simulationLaunched && (simulationData$ | async) as simulationList; else loading">
+                <app-simulation-results #appSimulationResults
+                    *ngIf="simulationList.length > activeFunding" 
+                    [simulationData]="simulationList[activeFunding]?.attributes">
+                </app-simulation-results>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

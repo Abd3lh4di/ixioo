@@ -1,0 +1,230 @@
+<div [formGroup]="debtConsolidation">
+
+    <div formGroupName="expenses">
+        <span class="header">Dépenses liées au projet</span>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Autre dépenses</mat-label>
+            <input type="number" matInput formControlName="other_expenses">
+            <mat-icon matSuffix>euro</mat-icon>
+        </mat-form-field>
+    </div>
+    <span class="header">Prêt à racheter</span>
+    <table class="table text-nowrap">
+        <thead>
+            <tr>
+                <th scope="col">Taux annuel</th>
+                <th scope="col">Durée totale</th>
+                <th scope="col">Capital initial</th>
+                <th scope="col">Type de différé</th>               
+                <th scope="col">Durée du différé</th>
+                <th scope="col">Date de première mensualité</th>
+                <th scope="col">Type d'IRA</th>
+                <th scope="col">Montant d'IRA</th>
+            </tr>
+        </thead>
+        <tbody class="table-sm" formArrayName="loans_to_consolidate">
+            <tr *ngFor="let line of loans_to_consolidate.controls; let i = index">
+                <ng-container [formGroupName]="i">
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <input type="number" matInput appLimitNumber minNumber="0" maxNumber="100" placeholder="Ex. 0,6" formControlName="yearly_rate">
+                            <span matSuffix>%</span>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <input type="number" matInput appLimitNumber minNumber="0" placeholder="Ex. 240" formControlName="duration_months">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <input type="number" matInput appLimitNumber minNumber="0" placeholder="Ex. 100000" formControlName="initial_capital">
+                        </mat-form-field>
+                    </td>
+
+                    
+                    <td>
+                        <div [formGroup]="grace_period">
+                            <mat-form-field appearance="standard" class="type">
+                                <mat-select formControlName="type">
+                                    <mat-option selected>-- Aucun --</mat-option>
+                                    <mat-option value="PARTIAL">Partiel</mat-option>
+                                    <mat-option value="TOTAL">Total</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                       </div>
+                    </td>
+                    <td>
+                        <div [formGroup]="grace_period">
+                            <mat-form-field *ngIf="grace_period.get('type').value === 'PARTIAL' || grace_period.get('type').value === 'TOTAL'" appearance="standard" class="rate">
+                                <input type="number" matInput appLimitNumber minNumber="0" placeholder="Ex. 12" formControlName="length">
+                            </mat-form-field>
+                       </div>
+                    </td>
+                   
+                    <td>
+                        <mat-form-field appearance="standard" class="mr-3 date-input">
+                            <input matInput [matDatepicker]="firstInstalementPicker" formControlName="first_monthly_payment_date" placeholder="JJ/MM/AAAA">
+                            <mat-datepicker-toggle matSuffix [for]="firstInstalementPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #firstInstalementPicker></mat-datepicker>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <div [formGroup]="ira">
+                            <mat-form-field appearance="standard" class="type">
+                                <mat-select formControlName="type">
+                                    <mat-option value="LEGAL">Légales</mat-option>
+                                    <mat-option value="NEGOCIATED">Négociées</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                       </div>
+                    </td>
+                    <td>
+                        <div [formGroup]="ira">
+                            <mat-form-field *ngIf="ira.get('type').value === 'NEGOCIATED'" appearance="standard" class="rate">
+                                <input type="number" matInput appLimitNumber minNumber="0" placeholder="Ex. 1200" formControlName="value">
+                            </mat-form-field>
+                       </div>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="d-flex align-items-center small-inputs">
+        <span class="header m-0">Assurances du prêt à racheter</span>
+        <button class="ml-2" mat-button (click)="addInsurance()">
+            <mat-icon>add</mat-icon>
+            Ajouter une assurance
+        </button>
+    </div>
+
+    <table class="table text-nowrap" [formGroup]="firstLoan">
+        <thead>
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Taux</th>
+                <th scope="col">Organisme</th>
+                <th scope="col">Emprunteur</th>  
+                <th scope="col">Quota</th>
+                <th scope="col">Risques couverts</th>
+                <th scope="col">Obligatoire</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="table-sm" formArrayName="insurances">
+            <tr *ngFor="let line of insurances.controls; let i = index">
+                <ng-container [formGroupName]="i">
+                    <td>
+                        <mat-form-field appearance="standard" class="type">
+                            <mat-select formControlName="type">
+                                <mat-option selected>-- Aucune --</mat-option>
+                                <mat-option value="INITIAL_CAPITAL">Capital initial</mat-option>
+                                <mat-option value="REMAINING_CAPITAL">Capital restant dû</mat-option>
+                            </mat-select>
+                        </mat-form-field>  
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <input type="number" matInput appLimitNumber minNumber="0" maxNumber="100" placeholder="Ex. 0,6" formControlName="rate">
+                            <span matSuffix>%</span>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="company">
+                            <input matInput placeholder="Ex. Generali" formControlName="company">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="person">
+                            <mat-select formControlName="person">
+                                <mat-option *ngFor="let name of personNames" [value]="name">{{ name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <input type="number" matInput appLimitNumber minNumber="0" maxNumber="100" placeholder="Ex. 100" formControlName="quota">
+                            <span matSuffix>%</span>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="risks-covered">
+                            <mat-select formControlName="risks_covered" multiple>
+                                <mat-option value="ITT">ITT</mat-option>
+                                <mat-option value="IPP">IPP</mat-option>
+                                <mat-option value="IPT">IPT</mat-option>
+                                <mat-option value="PTIA">PTIA</mat-option>
+                                <mat-option value="DC">DC</mat-option>
+                                <mat-option value="PE">PE</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                    <td class="d-flex align-middle align-items-center">
+                        <mat-form-field class="text-center checkbox-center" floatLabel="never" appearance="none">
+                            <mat-checkbox formControlName="mandatory"></mat-checkbox>
+                            <textarea matInput hidden></textarea>
+                        </mat-form-field>
+                        <a class="ml-auto btn-lnk d-flex align-items-center align-self-center"
+                            (click)="removeInsurrance(i)">
+                            <mat-icon>delete_outline</mat-icon>
+                        </a>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex align-items-center small-inputs">
+        <span class="header m-0">Éléments lissables</span>
+        <button class="ml-2" mat-button (click)="addSmoothableElement()">
+            <mat-icon>add</mat-icon>
+            Ajouter un élément lissable
+        </button>
+    </div>
+
+    <table class="table text-nowrap" [formGroup]="firstLoan">
+        <thead>
+            <tr>
+                <th scope="col">Mois de début</th>
+                <th scope="col">Mois de fin</th>
+                <th scope="col">Mensualité globale</th>  
+                <th scope="col">Nom</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="table-sm" formArrayName="smoothable_elements">
+            <tr *ngFor="let line of smoothable_elements.controls; let i = index">
+                <ng-container [formGroupName]="i">
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <input type="number" matInput appLimitNumber minNumber="0" maxNumber="1000" placeholder="Ex. 2" formControlName="start_month">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <input type="number" matInput appLimitNumber minNumber="0" maxNumber="1000" placeholder="Ex. 2" formControlName="end_month">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <input type="number" matInput appLimitNumber minNumber="0" placeholder="Ex. 650" formControlName="monthly_payment">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <input type="string" matInput appLimitNumber placeholder="Ex. Crédit conso" formControlName="charge_name">
+                        </mat-form-field>
+                    </td>
+                    <td class="d-flex align-middle align-items-center">
+                        <a class="ml-auto btn-lnk d-flex align-items-center align-self-center"
+                            (click)="removeSmoothableElement(i)">
+                            <mat-icon>delete_outline</mat-icon>
+                        </a>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </table>
+</div>

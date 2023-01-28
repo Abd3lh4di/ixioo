@@ -1,0 +1,17 @@
+.result-table {
+  height: 536px;
+  min-height: 536px;
+  max-height: 536px;
+  overflow: auto;
+}
+
+.mat-paginator-sticky {
+  bottom: 0;
+  position: sticky;
+  z-index: 10;
+}
+
+.delete-btn {
+  color: red;
+  text-decoration: none;
+}

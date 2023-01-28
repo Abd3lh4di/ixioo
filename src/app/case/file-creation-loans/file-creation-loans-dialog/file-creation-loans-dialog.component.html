@@ -1,0 +1,67 @@
+<h1 mat-dialog-title>Ajouter un crédit en cours</h1>
+<div mat-dialog-content class="d-flex flex-column">  
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Type de crédit</mat-label>
+        <mat-select [(ngModel)]="data.type">
+            <mat-option value="MORTGAGE">{{ loanToString('MORTGAGE') }}</mat-option>
+            <mat-option value="PERSONAL_LOAN">{{ loanToString('PERSONAL_LOAN') }}</mat-option>
+            <mat-option value="SPECIFIC_LOAN">{{ loanToString('SPECIFIC_LOAN') }}</mat-option>
+            <mat-option value="REVOLVING_LOAN">{{ loanToString('REVOLVING_LOAN') }}</mat-option>
+            <mat-option value="OTHER">{{ loanToString('OTHER') }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Commentaire</mat-label>
+        <input matInput [(ngModel)]="data.comment">
+    </mat-form-field>
+    <div>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Mensualité</mat-label>
+            <input type="number" matInput [(ngModel)]="data.monthly_payment.figure">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Pondération (%)</mat-label>
+            <input type="number" matInput appLimitNumber minNumber="0" maxNumber="100" [(ngModel)]="data.monthly_payment.weight">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Capital restant dû</mat-label>
+            <input type="number" matInput [(ngModel)]="data.remaining_capital">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Date de début du prêt</mat-label>
+            <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="data.start_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Date de fin du prêt</mat-label>
+            <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="data.end_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Organisme prêteur</mat-label>
+            <input matInput [(ngModel)]="data.lender">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Futur du crédit</mat-label>
+            <mat-select [(ngModel)]="data.future">
+                <mat-option value="REIMBURSED_BEFORE_PROJECT">{{ futureToString('REIMBURSED_BEFORE_PROJECT') }}</mat-option>
+                <mat-option value="CONTINUE_AFTER_PROJECT">{{ futureToString('CONTINUE_AFTER_PROJECT') }}</mat-option>
+                <mat-option value="REIMBURSED_DURING_PROJECT">{{ futureToString('REIMBURSED_DURING_PROJECT') }}</mat-option>
+                <mat-option value="CONSOLIDATED_DURING_PROJECT">{{ futureToString('CONSOLIDATED_DURING_PROJECT') }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-checkbox *ngIf="data.future === 'CONTINUE_AFTER_PROJECT'" matInput [(ngModel)]="data.smoothable">Lissable dans le financement</mat-checkbox>
+    </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial color="accent">{{ data.edit ? 'Sauver':'Ajouter' }}</button>
+</div>

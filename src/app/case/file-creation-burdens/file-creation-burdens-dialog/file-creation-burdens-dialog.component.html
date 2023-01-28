@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Quelle charge souhaitez vous ajouter ?</h1>
+<div mat-dialog-content>  
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Type de charge</mat-label>
+        <mat-select [(ngModel)]="type">
+            <mat-option value="RENT">{{ toString('RENT') }}</mat-option>
+            <mat-option value="MAINTENANCE">{{ toString('MAINTENANCE') }}</mat-option>
+            <mat-option value="CONDOMINIUM_FEES">{{ toString('CONDOMINIUM_FEES') }}</mat-option>
+            <mat-option value="SCHEDULED_SAVING">{{ toString('SCHEDULED_SAVING') }}</mat-option>
+            <mat-option value="LOA">{{ toString('LOA') }}</mat-option>
+            <mat-option value="TAX">{{ toString('TAX') }}</mat-option>
+            <mat-option value="OTHER">{{ toString('OTHER') }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button [mat-dialog-close]="type" cdkFocusInitial color="accent">Ajouter</button>
+</div>

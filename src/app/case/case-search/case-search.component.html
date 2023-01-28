@@ -1,0 +1,53 @@
+<div>
+    <mat-form-field appearance="standard" class="w-75">
+        <mat-label>Nom du dossier</mat-label>
+        <input (keyup.enter)="searchCase()" matInput type="text" [(ngModel)]="filterCaseName" placeholder="Nom du dossier">
+        <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+    <button mat-button (click)="searchCase()" [disabled]="loading">
+        <mat-icon>search</mat-icon>
+        Rechercher
+    </button>
+</div>
+
+<div class="mat-elevation-z8 m-1">
+    <div class="bg-white">
+        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+        <table mat-table [dataSource]='paginator.dataSource' class="table-hover w-100" matSort>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Nom du dossier</th>
+                <td mat-cell *matCellDef="let element"> {{element.attributes.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> Projet </th>
+                <td mat-cell *matCellDef="let element"> {{ convertProjectType(element.attributes.project?.type) }} </td>
+            </ng-container>
+            <ng-container matColumnDef="actor">
+                <th mat-header-cell *matHeaderCellDef> Acteur </th>
+                <td mat-cell *matCellDef="let element"> {{ convertActor(element.attributes.actor?.type) }} </td>
+            </ng-container>
+            <ng-container matColumnDef="creationDate">
+                <th mat-header-cell *matHeaderCellDef> Date de création </th>
+                <td mat-cell *matCellDef="let element"> {{element.meta.created_at | date:'medium'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="modificationDate">
+                <th mat-header-cell *matHeaderCellDef> Date de modification </th>
+                <td mat-cell *matCellDef="let element"> {{element.meta.last_updated_at | date:'medium'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <a class="delete-btn btn-lnk d-flex align-items-center" (click)="deleteCase(element, $event)" [class.cursor-loading]="loading">
+                        <mat-icon>delete_outline</mat-icon>
+                    </a>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" ></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor" [class.row-disabled]="loading" (click)="loadCase(row)"></tr>
+        </table>
+        <tzr-infinite-paginator #paginator [dataService]='dataService'></tzr-infinite-paginator>
+    </div>    
+</div>
+

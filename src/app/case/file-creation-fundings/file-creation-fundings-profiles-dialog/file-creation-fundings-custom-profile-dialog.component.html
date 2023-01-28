@@ -1,0 +1,52 @@
+
+<div mat-dialog-content class="d-flex flex-column" [formGroup]="profileForm">
+    <div>
+        <span>Profil de prêt personnalisé</span>
+        <button mat-button (click)="addStep()">Ajouter une ligne</button>
+    </div>
+
+    <div>
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th scope="col">Montant de la mensualité</th>
+                    <th scope="col">Mois de départ</th>
+                    <th scope="col">Mois d'arrivée</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="table-sm" formArrayName="steps">
+                <tr *ngFor="let steps of steps.controls; let i = index">
+                    <ng-container [formGroupName]="i">
+                        <td>
+                            <mat-form-field [floatLabel]="'never'" appearance="standard" style="width: 200px;">
+                                <input type="number" matInput placeholder="Ex. 150" formControlName="monthly_payment">
+                                <span matSuffix>euros</span>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field [floatLabel]="'never'" appearance="standard" style="width: 200px;">
+                                <input type="number" matInput placeholder="10" formControlName="period_start">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field [floatLabel]="'never'" appearance="standard" style="width: 200px;">
+                                <input type="number" matInput placeholder="10" formControlName="period_end">
+                            </mat-form-field>
+                        </td>
+                        <td class="d-flex align-middle align-items-center">
+                            <a class="ml-auto btn-lnk d-flex align-items-center align-self-center" style="margin-top: 30px;" (click)="removeStep(i)">
+                                <mat-icon>delete_outline</mat-icon>
+                            </a>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="profileForm.value" cdkFocusInitial color="accent">Sauver</button>
+    <button mat-button (click)="onNoClick()">Annuler</button>
+</div>

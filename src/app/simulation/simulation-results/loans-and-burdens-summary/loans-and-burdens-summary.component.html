@@ -1,0 +1,24 @@
+<table class="mx-auto mt-5 table table-hover">
+    <thead>
+        <tr>
+            <td *ngFor="let header of this.summaryTableHeader"><b>{{header}}</b></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let credit of credits">
+            <td>{{credit[0]}}</td>
+            <td>{{credit[1]}}</td>
+            <td class='text-right'>{{credit[2]}}</td>
+            <td class='text-right'>{{credit[3]}}</td>
+            <td class='text-right'>{{credit[4]}}</td>
+            <td class='text-right'>{{credit[5]}}</td>
+            <td>{{credit[6]}}</td>
+            <td class='text-right'>{{credit[7]}}</td>
+            <td>{{credit[8]}}</td>
+            <td class='text-right'>{{credit[9]}}</td>
+            <td>{{credit[10]}}</td>
+            <td>{{credit[11]}}</td>
+            <td class='text-right'>{{credit[12]}}</td>
+        </tr>
+    </tbody>
+</table>

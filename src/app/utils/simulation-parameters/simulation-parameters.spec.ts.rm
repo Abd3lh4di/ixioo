@@ -1,0 +1,94 @@
+import { FormBuilder } from '@angular/forms';
+import { ScenarioStoreService } from 'src/app/_services/scenario-store.service';
+import { SimulationParameters } from './simulation-parameters';
+
+
+describe('SimulationParameters', () => {
+  let parameters: SimulationParameters;
+
+  beforeEach(async () => {
+    const fb = new FormBuilder();
+    const scenarioStore = new ScenarioStoreService();
+    parameters = new SimulationParameters(fb, scenarioStore);
+  });
+
+  it('should create an instance', () => {
+    expect(parameters).toBeTruthy();
+  });
+
+  it('should add and remove ptz', () => {
+    parameters.addPtz();
+    expect(parameters.ptz).toBeTruthy();
+    parameters.removePtz();
+    expect(parameters.ptz).toBeUndefined();
+    parameters.removePtz();
+    expect(parameters.ptz).toBeUndefined();
+  });
+
+  it('should add and remove bridge', () => {
+    parameters.addBridgeLoan();
+    expect(parameters.bridgeGrid).toBeTruthy();
+    parameters.addBridgeLoan();
+    expect(parameters.bridgeGrid).toBeTruthy();
+    parameters.removeBridgeLoan();
+    expect(parameters.bridgeGrid).toBeUndefined();
+    parameters.removeBridgeLoan();
+    expect(parameters.bridgeGrid).toBeUndefined();
+  });
+
+  it('should add and remove burdens', () => {
+    parameters.addBurdens();
+    expect(parameters.burdens).toBeTruthy();
+    parameters.addBurdens();
+    expect(parameters.burdens).toBeTruthy();
+    parameters.removeBurdens();
+    expect(parameters.burdens).toBeUndefined();
+    parameters.removeBurdens();
+    expect(parameters.burdens).toBeUndefined();
+  });
+
+  it('should add and remove funding slices', () => {
+    parameters.addFundingSlices();
+    expect(parameters.fundingSlices).toBeTruthy();
+    parameters.addFundingSlices();
+    expect(parameters.fundingSlices).toBeTruthy();
+    parameters.removeFundingSlices();
+    expect(parameters.fundingSlices).toBeUndefined();
+    parameters.removeFundingSlices();
+    expect(parameters.fundingSlices).toBeUndefined();
+  });
+
+});
+
+describe('SimulationParameters instantiation based on scenario', () => {
+  const scenarioStore = new ScenarioStoreService();
+  const fb = new FormBuilder();
+
+  it('should instanciate funding scenario', () => {
+    scenarioStore.selectFunding();
+    const parameters = new SimulationParameters(fb, scenarioStore);
+    expect(parameters.incomes).toBeTruthy();
+    expect(parameters.acquisition).toBeTruthy();
+    expect(parameters.fees).toBeTruthy();
+    expect(parameters.freeGrid).toBeTruthy();
+  });
+
+  it('should instanciate pinel scenario', () => {
+    scenarioStore.selectPinel();
+    const parameters = new SimulationParameters(fb, scenarioStore);
+    expect(parameters.incomes).toBeUndefined();
+    expect(parameters.acquisition).toBeUndefined();
+    expect(parameters.fees).toBeTruthy();
+    expect(parameters.freeGrid).toBeTruthy();
+  });
+
+  it('should instanciate rachat scenario', () => {
+    scenarioStore.selectDebtConsolidation();
+    const parameters = new SimulationParameters(fb, scenarioStore);
+    expect(parameters.incomes).toBeTruthy();
+    expect(parameters.acquisition).toBeUndefined();
+    expect(parameters.fees).toBeTruthy();
+    expect(parameters.freeGrid).toBeTruthy();
+  });
+
+});

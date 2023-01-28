@@ -1,0 +1,50 @@
+<div [formGroup]="finance" class="loans mt-3 d-flex justify-content-center">
+    <mat-card class="mat-elevation-z4 mb-1 mat-card">
+        <mat-card-header>
+            <mat-card-title>
+                <span>Crédits en cours</span>
+                <button class="ml-2" mat-button (click)="addLoan()">
+                    <mat-icon>add</mat-icon>
+                    Ajouter un nouveau crédit
+                </button>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="d-flex loans-container">
+            <div class="d-flex justify-content-start align-content-start flex-wrap">
+                <mat-card formArrayName="current_loans" *ngFor="let loan of current_loans.controls; index as i" 
+                    class="mat-elevation-z4 loan-card mr-1 mb-1" 
+                    [style.background]="getLoanColor(loan.value.type)"
+                    #tooltip="matTooltip"
+                    [matTooltip]="loan.value.comment"
+                    matTooltipClass="colored-tooltip"
+                    matTooltipPosition="below"
+                    (dblclick)="editLoan(i)">
+                    <mat-card-header>
+                        <mat-card-title>{{ loanToString(loan.value.type) }}</mat-card-title>
+                        <mat-card-subtitle class="text-white">{{ loanFutureToString(loan.value.future) }}</mat-card-subtitle>
+                        <button class="menu-button" mat-icon-button 
+                            [matMenuTriggerFor]="menu" [matMenuTriggerData]="{data: loan.value, index: i}">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                    </mat-card-header>
+                    <mat-card-content >
+                        <div class="d-flex justify-content-between"><span>Mensualité</span><span class="font-weight-bold">{{loan.value.monthly_payment.figure | currency:'EUR'}}</span></div>
+                        <div class="d-flex justify-content-between"><span>Capital restant</span><span class="font-weight-bold">{{loan.value.remaining_capital | currency:'EUR'}}</span></div>
+                        <div class="d-flex justify-content-between"><span>Date de fin</span><span class="font-weight-bold">{{loan.value.end_date | date}}</span></div>
+                    </mat-card-content>
+                    <!-- <mat-card-actions>
+                        <button mat-button (click)="editLoan(loan.value)"><mat-icon>create</mat-icon>Éditer</button>
+                        <button mat-button (click)="removeLoan(i)"><mat-icon>delete_outline</mat-icon>Supprimer</button>
+                    </mat-card-actions> -->
+                </mat-card>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<mat-menu #menu="matMenu">
+    <ng-template matMenuContent let-loan="data" let-index="index">
+        <button mat-menu-item (click)="editLoan(index)"><mat-icon>create</mat-icon>Éditer</button>
+        <button mat-menu-item (click)="removeLoan(index)"><mat-icon>delete_outline</mat-icon>Supprimer</button>
+    </ng-template>
+</mat-menu>

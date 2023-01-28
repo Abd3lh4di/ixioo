@@ -1,0 +1,77 @@
+@import '../../styles.scss';
+
+$logo-width: 60px;
+$nav-height: 60px;
+
+.box-container {
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tz-toolbar {
+  background: $tz-light;
+  background-color: $tz-light;
+  height: $nav-height;
+  min-height: $nav-height;
+  max-height: $nav-height;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  flex: 1;
+  overflow: hidden;
+}
+
+.tabs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-logo {
+  width: $logo-width;
+  margin-top: -15px;
+  margin-right: 40px;
+  img {
+    width: $logo-width;
+  }
+}
+
+.fill-nav-remaining-space {
+  flex: 1 1 auto;
+}
+
+.welcome {
+  color: #5c5c5c;
+  font-size: 15px;
+}
+
+// .left-menu {
+//   background: $tz-light;
+//   background-color: $tz-light;
+//   width: 96px;
+
+//   .menu-text {
+//     display: none;
+//   }
+// }
+
+// .mat-row:hover {
+//   cursor: pointer;
+// }
+
+// .container {
+//   background-color: #fff;
+//   max-width: 100%;
+//   // flex-grow: 1;
+//   // display: flex;
+//   // flex-direction: column;
+// }
+
+::ng-deep .mat-tab-body-wrapper {
+  flex: 1 !important;
+}

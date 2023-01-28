@@ -1,0 +1,73 @@
+import { FormBuilder } from '@angular/forms';
+import { FundingSlices } from './funding-slices';
+import { FundingSlices as FundingSlicesModel } from 'src/app/api/models';
+
+describe('FundingSlices', () => {
+  let fundingSlices: FundingSlices;
+
+  beforeEach(async () => {
+    const fb = new FormBuilder();
+    fundingSlices = new FundingSlices(fb);
+  });
+
+  it('should create an instance', () => {
+    expect(fundingSlices).toBeTruthy();
+  });
+
+  it('should get the value', () => {
+    fundingSlices.form.setValue({
+      amounts: [{
+        month: '10',
+        value: '200',
+        percentage: '3,3',
+        reason: 'reason'
+      }],
+      releasingOrder: 'INCREASING_RATE'
+    });
+    expect(fundingSlices.releasingOrder).toEqual('INCREASING_RATE');
+    expect(fundingSlices.amounts.value).toEqual([{
+      month: '10',
+      percentage: '3,3',
+      reason: 'reason'
+    }]);
+  });
+
+  it('should return undefined if only one slice', () => {
+    fundingSlices.form.setValue({
+      amounts: [{
+        month: '10',
+        value: '200',
+        percentage: '3,3',
+        reason: 'reason'
+      }],
+      releasingOrder: 'PROPORTIONAL'
+    });
+    expect(fundingSlices.formatSlices()).toBeUndefined();
+  });
+
+  it('should return undefined with more than one slice', () => {
+    fundingSlices.form.setValue({
+      amounts: [{
+        month: '10',
+        value: '200',
+        percentage: '3,3',
+        reason: 'reason 1'
+      }, {
+        month: '15',
+        value: '100',
+        percentage: '4,3',
+        reason: 'reason 2'
+      }],
+      releasingOrder: 'PROPORTIONAL'
+    });
+    const expectedValue: FundingSlicesModel = {
+      type: 'PROPORTIONAL',
+      steps: [
+        { date: 10, amount: 200, reason: 'reason 1' },
+        { date: 15, amount: 100, reason: 'reason 2' }
+      ]
+    };
+    expect(fundingSlices.formatSlices()).toEqual(expectedValue);
+  });
+
+});

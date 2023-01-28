@@ -1,0 +1,68 @@
+@import '../app.component.scss';
+@import '../../variables';
+
+.case-header {
+  width: 100%;
+  height: 40px;
+  background-color: #fff;
+  .back-link {
+    color: $toaztr-dark;
+    padding-left: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    img {
+      height: 20px;
+      vertical-align: text-bottom;
+      margin-right: 5px;
+    }
+  }
+}
+
+.side-nav {
+  width: 150px;
+  max-width: 150px;
+  background-color: $toaztr-dark;
+  color: #fff;
+  .divider {
+    height: 1px;
+    background-color: #fff;
+  }
+  .menu-btn {
+    .btn-label {
+      white-space: pre-wrap;
+      color: #fff;
+      line-height: 20px;
+    }
+
+    margin: 10px 0;
+  }
+  .menu-btn:hover {
+    .btn-label {
+      color: $toaztr-dark;
+    }
+
+    background-color: #fff;
+    color: $toaztr-dark;
+  }
+  .menu-btn.disabled,
+  .menu-btn:hover.disabled {
+    cursor: not-allowed;
+    color: #ccc;
+    background-color: $toaztr-dark;
+    .btn-label {
+      color: #ccc;
+    }
+  }
+}
+
+.main-content {
+  z-index: 0;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.small-text {
+  font-size: 12px;
+}

@@ -1,0 +1,28 @@
+import { Fees } from './fees';
+import { FormBuilder } from '@angular/forms';
+
+describe('Fees', () => {
+  let fees: Fees;
+
+  beforeEach(async () => {
+    const fb = new FormBuilder();
+    fees = new Fees(fb);
+  });
+
+  it('should create an instance', () => {
+    expect(fees).toBeTruthy();
+  });
+
+  it('should get the value', () => {
+    fees.form.patchValue({
+      notaryFees: 100,
+      agencyFees: 200,
+      agencyFeesPercentage: 33
+    });
+    expect(fees.notaryFees).toEqual(100);
+    expect(fees.agencyFees).toEqual(200);
+    expect(fees.agencyFeesPercentage).toEqual(33);
+    expect(fees.fileManagementFee).toBeUndefined();
+    expect(fees.brokerFee).toBeUndefined();
+  });
+});

@@ -1,0 +1,59 @@
+
+::ng-deep .mat-form-field-wrapper { padding-bottom: 1.34375em !important; }
+
+.insurance-list {
+  overflow-y: auto;
+  height: 250px;
+  max-height: 250px;
+}
+
+.checkbox-center {
+  position: relative;
+  top: 11px;
+  width: 30px;
+}
+
+.max-amount {
+  width: 120px;
+}
+
+.type {
+  width: 130px;
+}
+
+.rate {
+  width: 60px;
+}
+
+.duration {
+  width: 80px;
+}
+
+.company {
+  width: 90px;
+}
+
+.person {
+  width: 150px;
+}
+
+.risks-covered {
+  width: 127px;
+}
+
+.grace-period-duration {
+  width: 150px;
+}
+
+.grace-period-type {
+  width: 120px;
+}
+
+.small-inputs {
+  ::ng-deep .mat-card-header .mat-card-title {
+    font-size: 12px !important;
+  }
+  ::ng-deep .mat-card-header-text {
+    margin: 0 2px;
+  }
+}

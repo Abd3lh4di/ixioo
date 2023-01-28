@@ -1,0 +1,174 @@
+<h2 class="title">Plan de financement optimisé proposant un budget maximum</h2>
+
+<!-- <div class="title">
+    <h3>Plan de financement optimisé proposant un budget maximum</h3>
+    <div class="d-flex justify-content-center">
+        <div class="mr-5">
+            <span [style.color]="'#' + colormap[3]"><mat-icon class="align-text-bottom">house</mat-icon> {{ acquisitionState }}</span>
+        </div>
+        <div class="ml-5">
+            <span [style.color]="'#' + colormap[3]"><mat-icon class="align-text-bottom">location_on</mat-icon> {{ department }}</span>
+        </div>
+    </div>
+</div> -->
+
+<mat-card class="mx-4 text-center mat-elevation-z4 p-3" >
+    Une offre maximale d'un montant de 
+    <span [style.color]="'#' + colormap[2]">{{ results.budgets.maximal_price | currency:'EUR' }}</span> 
+    peut être faite sur un bien
+    <br>
+    <br>
+
+    <table class="summary-table">
+        <tbody>
+            <tr>
+                <td class="summary-table-td-left">{{ totalCostStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.total_cost | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ totalInterestsStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.interests_cost | currency:'EUR' }}</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ totalInsurancesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.insurances_cost | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ totalGuarantiesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.guaranties_cost | currency:'EUR' }}</span></td>
+            </tr>
+            <tr *ngIf="budgetSummary.capitalized_interests !== 0 || budgetSummary.preamortization_cost !== 0">
+                <td class="summary-table-td-left">{{ totalCapitalizedInterestsStr}}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.capitalized_interests | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ totalInterestsCounterStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.preamortization_cost | currency:'EUR' }}</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ fileManagementFeesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.file_management_fees | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ brokerFeesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.broker_fees | currency:'EUR' }}</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ notaryFeesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.notary_fees | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ otherExpensesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.other_expenses | currency:'EUR' }}</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ maximalInstalementStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.effective_maximal_monthly_payment | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ planLengthStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.plan_length }} mois</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ debtRatioStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.normal_debt_ratio }}%</span></td>
+                <td class="summary-table-td-left">{{ jumpChargeStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.jump_charge | currency:'EUR'  }}</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ personalFundingPercentageStr }} <span [style.color]="'#' + colormap[2]">{{ budgetSummary.personal_funding_ratio }}%</span> {{ personalFundingAbsoluteStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.personal_funding | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ remainingForLivingStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ budgetSummary.remaining_for_living | currency:'EUR' }}</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <mat-card-subtitle class="mt-1">
+        <!-- Sur la base d'un revenu mensuel de <span [style.color]="'#' + colormap[4]">{{ parameters.net_revenues | currency:'EUR' }}</span>, 
+        un endettement de <span [style.color]="'#' + colormap[4]">{{ parameters.debt_threshold }}%</span> 
+        et d'un apport personnel de <span [style.color]="'#' + colormap[4]">{{ parameters.personal_funding | currency:'EUR' }}</span>	 -->
+    </mat-card-subtitle>
+    <mat-card-content class="d-flex mx-auto justify-content-around align-items-start">
+        <div *ngIf="freeTaeg !== 0" class="d-flex flex-column justify-content-center">
+            <mat-chip-list>
+                <mat-chip *ngIf="freeTaegAboveWearRate; else belowFreeTaeg" color="warn" selected>TAEG Prêt(s) libre(s): {{freeTaeg}}%</mat-chip>
+                <ng-template #belowFreeTaeg>
+                    <mat-chip [style.background-color]="'#' + colormap[4]" class="text-white">TAEG Prêt(s) libre(s): {{freeTaeg}}%</mat-chip>
+                </ng-template>
+            </mat-chip-list>
+            <mat-error *ngIf="freeTaegAboveWearRate">Taux d'usure dépassé</mat-error>
+        </div>
+        <div *ngIf="bridgeTaeg !== 0" class="d-flex flex-column justify-content-center">
+            <mat-chip-list>
+                <mat-chip *ngIf="bridgeTaegAboveWearRate; else below" color="warn" selected>TAEG Prêt(s) relais: {{ bridgeTaeg }}%</mat-chip>
+                <ng-template #below>
+                    <mat-chip [style.background-color]="'#' + colormap[4]" class="text-white">TAEG Prêt(s) relais: {{ bridgeTaeg }}%</mat-chip>
+                </ng-template>
+            </mat-chip-list>
+            <mat-error *ngIf="bridgeTaegAboveWearRate">Taux d'usure dépassé</mat-error>
+        </div>
+    </mat-card-content>
+    
+</mat-card>
+
+<div class="mx-4 mt-2">
+    <span *ngIf="ptzRequested && isEligiblePtz" class="d-flex details">
+        <mat-icon [style.color]="'#' + colormap[4]">check_circle</mat-icon>
+        <span class="ml-2">Le projet est éligible au PTZ.</span>
+    </span>
+    <span *ngIf="ptzRequested && !isEligiblePtz" class="d-flex details">
+        <mat-icon [style.color]="'#' + colormap[9]">unpublished</mat-icon>
+        <span class="ml-2">Le projet n'est pas éligible au PTZ ou la présence d'un PTZ réduit le budget maximal.</span>
+    </span>
+</div>
+
+<div class="mx-4 mt-2">
+    <span *ngIf="bossLoanRequested && isEligibleBossLoan" class="d-flex details">
+        <mat-icon [style.color]="'#' + colormap[4]">check_circle</mat-icon>
+        <span class="ml-2">Le projet est éligible au 1% patronal.</span>
+    </span>
+    <span *ngIf="bossLoanRequested && !isEligibleBossLoan" class="d-flex details">
+        <mat-icon [style.color]="'#' + colormap[9]">unpublished</mat-icon>
+        <span class="ml-2">Le projet n'est pas éligible au 1% patronal ou la présence d'un 1% patronal réduit le budget maximal.</span>
+    </span>
+</div>
+
+<div class="mx-4 mt-3 mb-3">
+    <table class="results-table">
+        <tbody>
+            <tr class="text-black" [style.background-color]="'#' + colormap[7]">
+                <td></td>
+                <td>{{ balancingMaximalPriceStr }}</td>
+                <td class="text-right">{{ results.budgets.maximal_price | currency:'EUR' }}</td>
+                <td class="bold text-center" rowspan="2">Total projet</td>
+                <td class="bold text-center" rowspan="2">{{ totalProject | currency:'EUR'}}</td>
+            </tr>
+            <tr class="text-black" [style.background-color]="'#' + colormap[7]">
+                <td class="text-center px-3">+</td>
+                <td>{{ balancingOtherExpensesStr }}</td>
+                <td class="text-right">{{ results.budgets.other_expenses | currency:'EUR'}}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center px-3">+</td>
+                <td>{{ balancingBrokerFeesStr }}</td>
+                <td class="text-right">{{ results.budgets.broker_fees | currency:'EUR'}}</td>
+                <td class="bold text-center" rowspan="4">Total frais</td>
+                <td class="bold text-center" rowspan="4">{{ totalFees | currency:'EUR'}}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center px-3">+</td>
+                <td>{{ balancingFileManagementFeesStr }}</td>
+                <td class="text-right">{{ results.budgets.file_management_fees | currency:'EUR' }}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center px-3">+</td>
+                <td>{{ balancingNotaryFeesStr }}</td>
+                <td class="text-right">{{ results.budgets.notary_fees | currency:'EUR' }}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center px-3">+</td>
+                <td>{{ balancingGuarantiesStr }}</td>
+                <td class="text-right">{{ results.budgets.guaranties_fees | currency:'EUR' }}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[4]">
+                <td class="text-center px-3">-</td>
+                <td>{{ balancingPersonalFundingStr }}</td>
+                <td class="text-right">{{ results.funding_plan.summary.total_personal_funding | currency:'EUR' }}</td>
+            </tr>
+            <tr class="bold" [style.background-color]="'#' + colormap[0]">
+                <td class="text-center px-3">=</td>
+                <td>{{ balancingMaximalBorrowableStr }}</td>
+                <td class="text-right">{{ (results.budgets.total_budget - results.funding_plan.summary.total_personal_funding) | currency:'EUR' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

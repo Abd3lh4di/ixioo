@@ -1,0 +1,23 @@
+<div mat-dialog-content class="p-1 content">
+    <div class="d-flex justify-content-start flex-wrap ml-2">
+      <span>Plan de financement dont la mensualité varie chaque mois, d'un pourcentage fixe et défini à l'avance, à la hausse ou à la baisse.
+      Par exemple: +0.2% chaque mois, ou -0.51% chaque mois.</span>
+    </div>
+    <br>
+    <div class="d-flex justify-content-start flex-wrap ml-2">
+        <mat-form-field *ngIf="this.objective === 'MINIMIZE_COST' || this.objective === 'MAXIMIZE_BUDGET'" appearance="outline" class="mr-3">
+            <mat-label>Mensualité de départ</mat-label>
+            <input type="number" matInput [(ngModel)]="profile.custom_data.initial_monthly_payment">
+            <span class="align-text-top" matSuffix>euros</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Pourcentage de variation mensuel (à la hausse ou à la baisse)</mat-label>
+            <input type="number" matInput [(ngModel)]="profile.custom_data.variation">
+            <span class="align-text-top" matSuffix>%</span>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [disabled]="!isValid()" [mat-dialog-close]="profile" cdkFocusInitial color="accent">Sauver</button>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+</div>

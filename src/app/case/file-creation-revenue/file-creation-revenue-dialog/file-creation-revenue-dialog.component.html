@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Quelle revenu souhaitez vous ajouter ?</h1>
+<div mat-dialog-content>  
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Type de revenu</mat-label>
+        <mat-select [(ngModel)]="type">
+            <mat-option value="SALARY">{{ toString('SALARY') }}</mat-option>
+            <mat-option value="DIVIDENDS">{{ toString('DIVIDENDS') }}</mat-option>
+            <mat-option value="BONUS">{{ toString('BONUS') }}</mat-option>
+            <mat-option value="FRENCH_PARTICIPATION">{{ toString('FRENCH_PARTICIPATION') }}</mat-option>
+            <mat-option value="PROFESSIONAL_PROFITS_BIC_BNC_BA">{{ toString('PROFESSIONAL_PROFITS_BIC_BNC_BA') }}</mat-option>
+            <mat-option value="RENTAL_INCOMES">{{ toString('RENTAL_INCOMES') }}</mat-option>
+            <mat-option value="MAINTENANCE">{{ toString('MAINTENANCE') }}</mat-option>
+            <mat-option value="FAMILY_ALLOWANCE">{{ toString('FAMILY_ALLOWANCE') }}</mat-option>
+            <mat-option value="OTHER_ALLOWANCES_LIKE_AEH_AAH_AEEH">{{ toString('OTHER_ALLOWANCES_LIKE_AEH_AAH_AEEH') }}</mat-option>
+            <mat-option value="APL_AL">{{ toString('APL_AL') }}</mat-option>
+            <mat-option value="SOCIAL">{{ toString('SOCIAL') }}</mat-option>
+            <mat-option value="RETIREMENT_PENSION">{{ toString('RETIREMENT_PENSION') }}</mat-option>
+            <mat-option value="OTHER">{{ toString('OTHER') }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button [mat-dialog-close]="type" cdkFocusInitial color="accent">Ajouter</button>
+</div>

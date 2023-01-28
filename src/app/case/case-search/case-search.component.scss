@@ -1,0 +1,23 @@
+.result-table {
+  height: 440px;
+  min-height: 440px;
+  max-height: 440px;
+  overflow: auto;
+}
+
+.delete-btn {
+  color: #ff1e31;
+  text-decoration: none;
+}
+
+.cursor-loading {
+  cursor: wait;
+}
+
+.row-disabled {
+  cursor: wait;
+  background-color: #ececec;
+  td {
+    color: #b5b5b5 !important;
+  }
+}

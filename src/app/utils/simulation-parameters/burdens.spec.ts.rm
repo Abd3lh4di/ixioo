@@ -1,0 +1,63 @@
+import { Burdens } from './burdens';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { TypedFormArray } from 'src/app/typed-form-array';
+import { GridLevelProperties } from 'src/app/api/models';
+
+describe('Burdens', () => {
+  let burdens: Burdens;
+
+  beforeEach(async () => {
+    const fb = new FormBuilder();
+    burdens = new Burdens(fb);
+  });
+
+  it('should create an instance', () => {
+    expect(burdens).toBeTruthy();
+  });
+
+  it('should return empty array', () => {
+    expect(burdens.format()).toEqual([]);
+  });
+
+
+  it('should format the burdens', () => {
+    burdens.burdens.pushValue({ name: 'Nouvelle charge 1' });
+    const formattedGrid = burdens.format();
+    const expectedResponse: GridLevelProperties = {
+      loan_type: 'CHARGE',
+      min_duration_month: 0,
+      max_duration_month: 0,
+      min_amount: 0,
+      max_amount: 0,
+      min_amortization: 0,
+      max_amortization: 0,
+      yearly_rate: 0,
+      grace_period: undefined
+    };
+    expect(formattedGrid[0]).toEqual(expectedResponse);
+  });
+
+  it('should format the burdens', () => {
+    burdens.burdens.pushValue({
+      name: 'Nouvelle charge 1',
+      value: '100',
+      duration: '30',
+      startMonth: '10'
+    });
+    const formattedGrid = burdens.format();
+    const expectedResponse: GridLevelProperties = {
+      loan_type: 'CHARGE',
+      min_duration_month: 40,
+      max_duration_month: 40,
+      min_amount: 3000,
+      max_amount: 3000,
+      min_amortization: 100,
+      max_amortization: 100,
+      yearly_rate: 0,
+      grace_period: { type: 'PARTIAL', length: 10 }
+    };
+    expect(formattedGrid[0]).toEqual(expectedResponse);
+  });
+
+});
+

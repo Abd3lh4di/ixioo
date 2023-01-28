@@ -1,0 +1,64 @@
+<mat-form-field *ngIf="department" appearance="outline" class="mr-1">
+    <mat-label>Département</mat-label>
+    <input matInput required
+            type="text"
+            placeholder="Département"
+            aria-label="Number"
+            [formControl]="department"
+            [matAutocomplete]="dptAuto">
+    <mat-autocomplete [displayWith]="getDepartmentOptionText" 
+        #dptAuto="matAutocomplete" (optionSelected)="onDepartmentSelected($event)">
+        <mat-option *ngFor="let dpt of filteredDepartments$ | async" [value]="dpt">
+        {{dpt.name}} ({{dpt.number}})
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+
+<mat-form-field *ngIf="city" appearance="outline" class="mr-1">
+    <mat-label>Ville</mat-label>
+    <input matInput
+        type="text"
+        placeholder="Ville"
+        [formControl]="city"
+        [matAutocomplete]="autoCity">
+    <mat-autocomplete [displayWith]="getCityOptionText" #autoCity="matAutocomplete" (optionSelected)="onCitySelected($event)">
+        <mat-option *ngFor="let city of cities$ | async" [value]="city">
+        {{city.name}} ({{city.postal_code}})
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+
+<mat-form-field *ngIf="postalCode" appearance="outline" class="mr-1">
+    <mat-label>Code postal</mat-label>
+    <input matInput
+        type="text"
+        placeholder="Code postal"
+        aria-label="Number"
+        [formControl]="postalCode"
+        [matAutocomplete]="autoPostCode">
+    <mat-autocomplete [displayWith]="getPostCodeOptionText" #autoPostCode="matAutocomplete" (optionSelected)="onPostCodeSelected($event)">
+        <mat-option *ngFor="let city of cities$ | async" [value]="city">
+        {{city.name}} ({{city.postal_code}})
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+
+<mat-form-field *ngIf="inseeCode" appearance="outline" class="mr-1">
+    <mat-label>Code INSEE</mat-label>
+    <input matInput 
+        type="text"
+        aria-label="Number"
+        [formControl]="inseeCode">
+</mat-form-field>
+
+
+<mat-form-field *ngIf="zone" appearance="outline">
+    <mat-label>Zone d'acquisition</mat-label>
+    <mat-select [formControl]="zone">
+        <mat-option value="A">A</mat-option>
+        <mat-option value="Abis">A bis</mat-option>
+        <mat-option value="B1">B1</mat-option>
+        <mat-option value="B2">B2</mat-option>
+        <mat-option value="C">C</mat-option>
+    </mat-select>
+</mat-form-field>

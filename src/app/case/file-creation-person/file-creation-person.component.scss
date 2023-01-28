@@ -1,0 +1,29 @@
+
+.slider-margin {
+  margin: 8px 0;
+  display: block;
+}
+
+.bank-info-small {
+  display: block;
+}
+
+.borrower {
+  ::ng-deep mat-card {
+    margin: 3px;
+  }
+}
+
+//////////////////////
+
+// .fixed-input-width {
+//     width: 250px !important;
+// }
+
+// .fixed-input-width-400 {
+//     width: 400px !important;
+// }
+
+// .fixed-input-width-600 {
+//     width: 600px !important;
+// }

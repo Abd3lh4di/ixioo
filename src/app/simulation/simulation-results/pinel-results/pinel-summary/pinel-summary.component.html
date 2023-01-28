@@ -1,0 +1,169 @@
+<h2 class="title">Plan de financement optimisé pour {{objective | lowercase}}</h2>
+
+<!-- <div class="title">
+    <h3>Plan de financement optimisé proposant un budget maximum</h3>
+    <div class="d-flex justify-content-center">
+        <div class="mr-5">
+            <span [style.color]="'#' + colormap[3]"><mat-icon class="align-text-bottom">house</mat-icon> {{ acquisitionState }}</span>
+        </div>
+        <div class="ml-5">
+            <span [style.color]="'#' + colormap[3]"><mat-icon class="align-text-bottom">location_on</mat-icon> {{ department }}</span>
+        </div>
+    </div>
+</div> -->
+
+<mat-card class="mx-4 text-center mat-elevation-z4 p-3" >
+
+    <table class="summary-table">
+        <tbody>
+            <tr>
+                <td class="summary-table-td-left">{{ totalCostStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.total_cost | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ totalInterestsStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.interests_cost | currency:'EUR' }}</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ totalInsurancesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.insurances_cost | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ totalGuarantiesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.guaranties_cost | currency:'EUR' }}</span></td>
+            </tr>
+            <tr *ngIf="fundingSummary.capitalized_interests !== 0 || fundingSummary.preamortization_cost !== 0">
+                <td class="summary-table-td-left">{{ totalCapitalizedInterestsStr}}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.capitalized_interests | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ totalInterestsCounterStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.preamortization_cost | currency:'EUR' }}</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ fileManagementFeesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.file_management_fees | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ brokerFeesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.broker_fees | currency:'EUR' }}</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ notaryFeesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.notary_fees | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ otherExpensesStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.other_expenses | currency:'EUR' }}</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ maximalInstalementStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.effective_maximal_monthly_payment | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ planLengthStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.plan_length }} mois</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ debtRatioStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.normal_debt_ratio }}%</span></td>
+                <td class="summary-table-td-left">{{ jumpChargeStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.jump_charge | currency:'EUR'  }}</span></td>
+            </tr>
+            <tr>
+                <td class="summary-table-td-left">{{ personalFundingPercentageStr }} <span [style.color]="'#' + colormap[2]">{{ fundingSummary.personal_funding_ratio }}%</span> {{ personalFundingAbsoluteStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.personal_funding | currency:'EUR' }}</span></td>
+                <td class="summary-table-td-left">{{ remainingForLivingStr }}</td>
+                <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ fundingSummary.remaining_for_living | currency:'EUR' }}</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <mat-card-content class="mt-2 d-flex mx-auto justify-content-around align-items-start">
+        <div *ngIf="freeTaeg !== 0" class="d-flex flex-column justify-content-center">
+            <mat-chip-list>
+                <mat-chip *ngIf="freeTaegAboveWearRate; else belowFreeTaeg" color="warn" selected>TAEG Prêt(s) libre(s): {{freeTaeg}}%</mat-chip>
+                <ng-template #belowFreeTaeg>
+                    <mat-chip [style.background-color]="'#' + colormap[4]" class="text-white">TAEG Prêt(s) libre(s): {{freeTaeg}}%</mat-chip>
+                </ng-template>
+            </mat-chip-list>
+            <mat-error *ngIf="freeTaegAboveWearRate">Taux d'usure dépassé</mat-error>
+        </div>
+        <div *ngIf="bridgeTaeg !== 0" class="d-flex flex-column justify-content-center">
+            <mat-chip-list>
+                <mat-chip *ngIf="bridgeTaegAboveWearRate; else below" color="warn" selected>TAEG Prêt(s) relais: {{ bridgeTaeg }}%</mat-chip>
+                <ng-template #below>
+                    <mat-chip [style.background-color]="'#' + colormap[4]" class="text-white">TAEG Prêt(s) relais: {{ bridgeTaeg }}%</mat-chip>
+                </ng-template>
+            </mat-chip-list>
+            <mat-error *ngIf="bridgeTaegAboveWearRate">Taux d'usure dépassé</mat-error>
+        </div>
+    </mat-card-content>
+    
+</mat-card>
+
+<br>
+
+<div class="mx-4 mt-3 mb-3" *ngIf="parameters.project.type">
+    <table class="results-table">
+        <tbody>
+            <tr class="text-black" [style.background-color]="'#' + colormap[7]">
+                <td></td>
+                <td>{{ balancingPriceStr }}</td>
+                <td class="text-right">
+                    {{ (expenses.price ? expenses.price : 0) | currency:'EUR' }}
+                </td>
+                <td class="bold text-center" rowspan="4">Total projet</td>
+                <td class="bold text-center" rowspan="4">{{ totalProject | currency:'EUR'}}</td>
+            </tr>
+            <tr class="text-black" [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">+</td>
+                <td>{{ balancingVatStr }}</td>
+                <td class="text-right">
+                    {{ (expenses.vat?expenses.vat:0) | currency:'EUR' }}
+                </td>
+            </tr>
+            <tr class="text-black" [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">+</td>
+                <td>{{ balancingOtherTaxesStr }}</td>
+                <td class="text-right">
+                    {{ (expenses.other_taxes?expenses.other_taxes:0) | currency:'EUR' }}
+                </td>
+            </tr>
+            <tr class="text-black" [style.background-color]="'#' + colormap[7]">
+                <td class="text-center ">+</td>
+                <td>{{ balancingOtherExpensesStr }}</td>
+                <td class="text-right">{{ (expenses.other_expenses?expenses.other_expenses:0) | currency:'EUR' }}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center ">+</td>
+                <td>{{ balancingBrokerFeesStr }}</td>
+                <td class="text-right">{{ (fundingFees.broker_fees?fundingFees.broker_fees:0) | currency:'EUR'}}</td>
+                <td class="bold text-center" rowspan="5">Total frais</td>
+                <td class="bold text-center" rowspan="5">{{ totalFees | currency:'EUR'}}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center ">+</td>
+                <td>{{ balancingFileManagementFeesStr }}</td>
+                <td class="text-right">{{ (fundingFees.file_management_fees?fundingFees.file_management_fees:0) | currency:'EUR' }}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center ">+</td>
+                <td>{{ balancingNotaryFeesStr }}</td>
+                <td class="text-right">{{ (fees.notary_fees?fees.notary_fees:0) | currency:'EUR' }}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center ">+</td>
+                <td>{{ balancingAgencyFeesStr }}</td>
+                <td class="text-right">{{ (fees.agency_fees?fees.agency_fees:0) | currency:'EUR' }}</td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[2]">
+                <td class="text-center ">+</td>
+                <td>{{ balancingGuarantiesStr }}</td>
+                <td class="text-right">
+                    {{ (results.funding_plan.summary.total_guaranty?results.funding_plan.summary.total_guaranty:0) | currency:'EUR' }}
+                </td>
+            </tr>
+            <tr [style.background-color]="'#' + colormap[4]">
+                <td class="text-center ">-</td>
+                <td>{{ balancingPersonalFundingStr }}</td>
+                <td class="text-right">{{ (results.funding_plan.summary.total_personal_funding?results.funding_plan.summary.total_personal_funding:0) | currency:'EUR' }}</td>
+            </tr>
+            <tr class="bold" [style.background-color]="'#' + colormap[0]">
+                <td class="text-center ">=</td>
+                <td>{{ balancingBorrowedAmountStr }}</td>
+                <td class="text-right">
+                    {{ (totalProject + totalFees - (results.funding_plan.summary.total_personal_funding?results.funding_plan.summary.total_personal_funding:0)) | currency:'EUR' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

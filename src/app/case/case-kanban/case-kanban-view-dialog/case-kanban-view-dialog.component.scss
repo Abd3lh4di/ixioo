@@ -1,0 +1,22 @@
+
+.big-header {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+.modification-info {
+  color: #bdbdbd;
+  line-height: 1.5;
+}
+
+.case-info {
+  color: #ce93d8;
+  line-height: 1.5;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+::ng-deep .table-radio label {
+  margin-bottom: 0 !important;
+}

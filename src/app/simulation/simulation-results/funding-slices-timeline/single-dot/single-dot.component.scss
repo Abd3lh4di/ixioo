@@ -1,0 +1,48 @@
+.interval {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  .dot {
+    margin: 4px;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .top-label {
+    min-width: 150px;
+    max-width: 150px;
+    height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 10px;
+    position: absolute;
+    left: -64px;
+    top: -65px;
+    text-align: center;
+    .label-1,
+    .label-2 {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .label-2 {
+      font-size: large;
+    }
+  }
+  .bottom-label {
+    white-space: nowrap;
+    margin-left: -10px;
+  }
+}
+
+.interval:hover {
+  .top-label {
+    max-width: unset;
+    z-index: 9999;
+  }
+}

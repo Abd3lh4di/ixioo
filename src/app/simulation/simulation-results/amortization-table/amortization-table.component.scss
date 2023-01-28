@@ -1,0 +1,12 @@
+@import '../../../../variables';
+
+.amortization-table {
+  height: 620px;
+  overflow: auto;
+}
+
+@media screen and (max-width: $small-width-limit) {
+  // .amortization-table {
+  //   height: 488px;
+  // }
+}

@@ -1,0 +1,138 @@
+<span mat-dialog-title class="big-header cursor" (click)="loadCase()">
+  {{ inputData.case.name }}
+  <a mat-button (click)="loadCase()" color="primary" class="mb-3 float-right"><mat-icon>edit</mat-icon>Éditer</a>
+</span>
+
+<div mat-dialog-content>
+  
+  <div class="d-flex case-info">
+    <div class="mr-5 d-flex"><mat-icon class="mr-2">library_books</mat-icon>{{inputData.case.type}}</div>
+    <div class="mr-5 d-flex"><mat-icon class="mr-2">recent_actors</mat-icon>{{ actorToString(inputData.case.actor) }}</div>
+    <div class="mr-5" [class]="getClassFromStatus(inputData.case.status)">
+      <div class="status-chip">{{ caseStatusToString(inputData.case.status) }}</div>
+    </div>   
+  </div>
+  
+  <div class="d-flex flex-column modification-info">
+    <div class="d-flex"><mat-icon class="mr-2">update</mat-icon>Créé par {{ getUserName(inputData.case.createdBy) }} le {{inputData.case.creationDate | date:'medium' }}</div>
+    <div class="d-flex"><mat-icon class="mr-2"></mat-icon>Dernière modification par {{ getUserName(inputData.case.modifiedBy) }} le {{inputData.case.modificationDate | date:'medium' }}</div>
+  </div>
+
+  <div class="d-flex align-items-center">
+    <mat-icon class="mr-2">assignment_ind</mat-icon>
+    <mat-form-field appearance="standard" class="mr-3">
+      <mat-label>Assigné à</mat-label>
+      <mat-select [(ngModel)]="inputData.case.assignedTo">
+        <mat-option *ngFor="let user of inputData.usersList" [value]="user.ref">{{user.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- <mat-form-field appearance="fill" *ngIf="inputData.case.status !== CaseStatus.New || inputData.case.status !== CaseStatus.Instruction">
+      <mat-label>Status</mat-label>
+      <mat-select  [(ngModel)]="inputData.case.status">
+        <mat-option *ngFor="let status of statuses" [value]="status">{{ caseStatusToString(status) }}</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+  </div>
+
+  <!-- <div class="d-flex" *ngIf="inputData.case.status === CaseStatus.Instruction">
+    <mat-icon class="mr-2">account_balance</mat-icon>
+    <div class="d-flex flex-column w-100">
+      <h3>Les plans suivants seront envoyés aux banques</h3>
+      <mat-progress-bar *ngIf="loadingPlans" mode="indeterminate"></mat-progress-bar>
+      <table *ngIf="!loadingPlans" mat-table [dataSource]='casePlans' class="table-hover w-100" matSort>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nom du plan</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-radio-group [(ngModel)]="selectedPlan" class="table-radio">
+              <mat-radio-button [value]="element">{{ element.name }}</mat-radio-button>
+            </mat-radio-group>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="maximal_monthly_payment">
+          <th mat-header-cell *matHeaderCellDef> Mensualité maximum </th>
+          <td mat-cell *matCellDef="let element">{{ element.maximal_monthly_payment }}</td>
+        </ng-container>
+        <ng-container matColumnDef="maximal_debt_ratio">
+          <th mat-header-cell *matHeaderCellDef> Endettement maximum (%) </th>
+          <td mat-cell *matCellDef="let element">{{ element.maximal_debt_ratio }}</td>
+        </ng-container>
+        <ng-container matColumnDef="last_updated_at">
+          <th mat-header-cell *matHeaderCellDef> Dernière modification le </th>
+          <td mat-cell *matCellDef="let element">{{ element.last_updated_at | date:'medium' }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;" ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor" (click)="selectPlan(row)"></tr>
+      </table>      
+    </div>
+  </div> -->
+  
+
+  <!-- <div class="d-flex" *ngIf="inputData.case.status === CaseStatus.New  && casePlans.length">
+    <mat-icon class="mr-2">gavel</mat-icon>
+    <div class="d-flex flex-column w-100">
+      <h3>Choisissez un plan à passer en instruction</h3>
+      <mat-progress-bar *ngIf="loadingPlans" mode="indeterminate"></mat-progress-bar>
+      <table *ngIf="!loadingPlans" mat-table [dataSource]='casePlans' class="table-hover w-100" matSort>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nom du plan</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-radio-group [(ngModel)]="selectedPlan" class="table-radio">
+              <mat-radio-button [value]="element">{{ element.name }}</mat-radio-button>
+            </mat-radio-group>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="maximal_monthly_payment">
+          <th mat-header-cell *matHeaderCellDef> Mensualité maximum </th>
+          <td mat-cell *matCellDef="let element">{{ element.maximal_monthly_payment }}</td>
+        </ng-container>
+        <ng-container matColumnDef="maximal_debt_ratio">
+          <th mat-header-cell *matHeaderCellDef> Endettement maximum (%) </th>
+          <td mat-cell *matCellDef="let element">{{ element.maximal_debt_ratio }}</td>
+        </ng-container>
+        <ng-container matColumnDef="last_updated_at">
+          <th mat-header-cell *matHeaderCellDef> Dernière modification le </th>
+          <td mat-cell *matCellDef="let element">{{ element.last_updated_at | date:'medium' }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;" ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor" (click)="selectPlan(row)"></tr>
+      </table>      
+    </div>
+    
+  </div> -->
+  <!-- <a mat-button color="warn" (click)="inputData.case.status !== CaseStatus.Instruction">
+    <mat-icon>delete_forever</mat-icon>
+    Abandonner le dossier
+  </a> -->
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="inputData.case" cdkFocusInitial>Sauver</button>
+  
+  <button *ngIf="inputData.case.status === CaseStatus.New" mat-button color="primary" (click)="nextStatus()">
+    <mat-icon>keyboard_tab</mat-icon>
+    Passer en instruction
+  </button>
+  <button *ngIf="inputData.case.status === CaseStatus.Instruction" mat-button color="primary" (click)="nextStatus()">
+    <mat-icon>keyboard_tab</mat-icon>
+    Envoyer à la banque
+  </button>
+  <button *ngIf="inputData.case.status === CaseStatus.SentToBank" mat-button color="primary" (click)="nextStatus()">
+    <mat-icon>keyboard_tab</mat-icon>
+    Passer en {{ caseStatusToString(CaseStatus.GrantedBank) }}
+  </button>
+  <button *ngIf="inputData.case.status === CaseStatus.GrantedBank" mat-button color="primary" (click)="nextStatus()">
+    <mat-icon>keyboard_tab</mat-icon>
+    Passer en {{ caseStatusToString(CaseStatus.CustomerAccepted) }}
+  </button>
+  <button *ngIf="inputData.case.status === CaseStatus.CustomerAccepted" mat-button color="primary" (click)="nextStatus()">
+    <mat-icon>receipt</mat-icon>
+    Passer en {{ caseStatusToString(CaseStatus.Invoiced) }}
+  </button>
+  <button *ngIf="inputData.case.status === CaseStatus.Invoiced" mat-button color="primary" (click)="nextStatus()">
+    <mat-icon>close</mat-icon>
+    Passer en {{ caseStatusToString(CaseStatus.Closed) }}
+  </button>
+
+</div>
+

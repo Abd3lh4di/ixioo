@@ -1,0 +1,25 @@
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Ptz } from './ptz';
+
+describe('Ptz', () => {
+  let ptz: Ptz;
+
+  beforeEach(async () => {
+    const fb = new FormBuilder();
+    ptz = new Ptz(fb);
+  });
+
+  it('should create an instance', () => {
+    expect(ptz).toBeTruthy();
+  });
+
+  it('should get the value', () => {
+    ptz.form.patchValue({
+      guarantyType: 'GTYPE',
+      yearlyInsuranceRate: 3
+    });
+    expect(ptz.guarantyType).toEqual('GTYPE');
+    expect(ptz.insuranceType).toBeUndefined();
+    expect(ptz.yearlyInsuranceRate).toEqual(3);
+  });
+});

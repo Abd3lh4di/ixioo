@@ -1,0 +1,221 @@
+<div [formGroup]="person" class="borrower d-flex justify-content-center flex-wrap">
+    <mat-card formGroupName="civil" class="mat-elevation-z1">
+        <mat-card-header>
+            <mat-card-title>État civil</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="d-flex flex-column justify-content-around">
+            <div>
+                <mat-radio-group formControlName="courtesy" (change)="onCourtesyChange()">
+                    <mat-radio-button value="MRS">Madame</mat-radio-button>
+                    <mat-radio-button value="MR">Monsieur</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Prénom</mat-label>
+                    <input matInput formControlName="first_name">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ml-3">
+                    <mat-label>Nom</mat-label>
+                    <input matInput formControlName="last_name">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Téléphone</mat-label>
+                    <input matInput formControlName="phone_number">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ml-3">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput formControlName="email">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" class="mr-3 date-input">
+                    <mat-label>Date de naissance</mat-label>
+                    <input matInput [matDatepicker]="birthPicker" formControlName="birth_date" placeholder="JJ/MM/AAAA">
+                    <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #birthPicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Age</mat-label>
+                    <input matInput formControlName="age">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Lieu de naissance</mat-label>
+                    <input matInput formControlName="birth_place">
+                </mat-form-field>
+                <app-string-auto-complete class="ml-3"
+                    inputLabel="Nationalité"
+                    [control]='nationality'
+                    [autoCompleteList]='nationalities'
+                    (optionSelected)="onNationalitySelected()">
+                </app-string-auto-complete>
+            </div>
+            <div *ngIf="needResidencePermitNumber" formGroupName="residence_permit" class="mr-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Numéro du titre de séjour</mat-label>
+                    <input matInput formControlName="number">
+                </mat-form-field> 
+                <mat-form-field appearance="outline" class="date-input">
+                    <mat-label>Valable jusqu'au</mat-label>
+                    <input matInput [matDatepicker]="expiryDatePicker" formControlName="expiry_date" placeholder="JJ/MM/AAAA">
+                    <mat-datepicker-toggle matSuffix [for]="expiryDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #expiryDatePicker></mat-datepicker>
+                </mat-form-field>              
+            </div>
+            <div formGroupName="family_situation">
+                <mat-form-field appearance="outline">
+                    <mat-label>Situation familiale</mat-label>
+                    <mat-select formControlName="marital_status" (selectionChange)="maritalStatusChanged($event.value)">
+                        <mat-option value="SINGLE" selected>Célibataire</mat-option>
+                        <mat-option value="MARRIED" selected>{{ getMaritalStatusLabel('MARRIED')}}</mat-option>
+                        <mat-option value="PACSED" selected>{{ isMadam ? 'Pacsée' : 'Pacsé'}}</mat-option>
+                        <mat-option value="DIVORCED" selected>{{ isMadam ? 'Divorcée' : 'Divorcé'}}</mat-option>
+                        <mat-option value="DIVORCE_ONGOING" selected>En instance de divorce</mat-option>
+                        <mat-option value="SEPARATED" selected>{{ isMadam ? 'Séparée' : 'Séparé'}}</mat-option>
+                        <mat-option value="LIVING_TOGETHER" selected>Union libre</mat-option>
+                        <mat-option value="WIDOWER" selected>{{ isMadam ? 'Veuve' : 'Veuf'}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="maritalStatus.value !== 'SINGLE'" appearance="outline" class="ml-3 date-input" [title]="getMaritalStatusLabel(maritalStatus.value) + ' depuis le'">
+                    <mat-label>{{getMaritalStatusLabel(maritalStatus.value)}} depuis le</mat-label>
+                    <input matInput [matDatepicker]="maritalStatusSincePicker" formControlName="marital_status_since" (change)="updateRelation()" placeholder="JJ/MM/AAAA">
+                    <mat-datepicker-toggle matSuffix [for]="maritalStatusSincePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #maritalStatusSincePicker></mat-datepicker>
+                </mat-form-field> 
+            </div>
+            <div *ngIf="isWithSomeone()" formGroupName="family_situation">
+                <mat-form-field appearance="outline" [title]="getMaritalStatusLabel(maritalStatus.value) + ' avec'">
+                    <mat-label>{{getMaritalStatusLabel(maritalStatus.value)}} avec</mat-label>
+                    <mat-select formControlName="is_in_relation_with" (selectionChange)="onRelationWithChanged($event.value)">
+                        <mat-option value="NEW">Nouvel emprunteur</mat-option>
+                        <ng-container *ngFor="let name of personNames; let index = index">
+                            <mat-option *ngIf="index !== activeIndex" [value]="index.toString()">{{name}}</mat-option>
+                        </ng-container>
+                        <mat-option value="EXT">Personne extérieure au projet</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" *ngIf="maritalStatus.value === 'MARRIED'" class="ml-3">
+                    <mat-label>Régime matrimonial</mat-label>
+                    <mat-select formControlName="matrimony_regime" (selectionChange)="updateRelation()">
+                        <mat-option value="COMMUNAUTE_REDUITE_AUX_ACQUETS" selected>Communauté réduite aux acquêts</mat-option>
+                        <mat-option value="COMMUNAUTE_DE_MEUBLES_ET_ACQUETS">Communauté de meubles et acquêts</mat-option>
+                        <mat-option value="COMMUNAUTE_UNIVERSELLE">Communauté universelle</mat-option>
+                        <mat-option value="PARTICIPATION_AUX_ACQUETS">Participation aux acquêts</mat-option>
+                        <mat-option value="SEPARATION_DE_BIEN">Séparation de biens</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="maritalStatus.value === 'MARRIED'">
+                <mat-form-field appearance="outline" class="mr-3">
+                    <mat-label>Nom de naissance</mat-label>
+                    <input matInput formControlName="birth_name">
+                </mat-form-field>
+                <app-string-auto-complete
+                    inputLabel="Pays de mariage"
+                    [control]='maritalCountry'
+                    [autoCompleteList]='countries'
+                    (optionSelected)="updateRelation()">
+                </app-string-auto-complete>
+            </div>
+            <div *ngIf="maritalStatus.value === 'DIVORCE_ONGOING'" formGroupName="family_situation">
+                <mat-form-field appearance="outline">
+                    <mat-label>Procédure de divorce</mat-label>
+                    <mat-select formControlName="divorce_procedure" (selectionChange)="updateRelation()">
+                        <mat-option value="MUTUAL_CONSENT" selected>Consentement mutuel</mat-option>
+                        <mat-option value="JUDICIAL_MUTUAL_CONSENT">Consentement mutuel judiciaire</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="bank-info-small">
+                <a mat-button (click)="addBankInformation()">
+                    <mat-icon>account_balance</mat-icon>
+                    Préciser la banque actuelle
+                </a>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z4" formGroupName="civil">
+        <mat-card-header>
+            <mat-card-title>Adresse complète</mat-card-title>
+        </mat-card-header>
+        <mat-card-content formGroupName="residency_address" class="d-flex flex-column justify-content-around">
+            <div>
+                <mat-form-field appearance="outline" style="width:418px;">
+                    <mat-label>Adresse</mat-label>
+                    <textarea matInput formControlName="address"></textarea>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Code postal</mat-label>
+                    <input matInput formControlName="postal_code">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ml-3">
+                    <mat-label>Ville</mat-label>
+                    <input matInput formControlName="city">
+                </mat-form-field>
+            </div>
+            <div>
+                <app-string-auto-complete
+                    inputLabel="Pays"
+                    [control]='residenceCountry'
+                    [autoCompleteList]='countries'
+                    (optionSelected)="onResidenceCountrySelected()">
+                </app-string-auto-complete>
+            </div>
+        </mat-card-content>
+        <div formGroupName="housing">
+            <mat-form-field appearance="outline" class="mr-3">
+                <mat-label>Status d'habitation actuel</mat-label>
+                <mat-select formControlName="housing_status">
+                    <mat-option value="HOMEOWNER">Propriétaire</mat-option>
+                    <mat-option value="TENANT">Locataire</mat-option>
+                    <mat-option value="FREE_OF_CHARGE_TENANT">Occupant à titre gratuit</mat-option>
+                    <mat-option value="STAFF_HOUSING">Logement de fonction</mat-option>
+                    <mat-option value="OTHER">Autre</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="date-input">
+                <mat-label>Depuis le</mat-label>
+                <input matInput [matDatepicker]="housingPicker" formControlName="housing_status_since" placeholder="JJ/MM/AAAA">
+                <mat-datepicker-toggle matSuffix [for]="housingPicker"></mat-datepicker-toggle>
+                <mat-datepicker #housingPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field floatLabel="always" appearance="none" style="width:418px;">
+            <mat-slide-toggle formControlName="contact_address_needed">L'adresse postale est différente de l'adresse de résidence</mat-slide-toggle>
+            <textarea matInput hidden></textarea>
+        </mat-form-field>
+        <mat-card-content *ngIf="contactAddressNeeded.value" formGroupName="contact_address" class="d-flex flex-column justify-content-around">
+            <div>
+                <mat-form-field appearance="outline" style="width:418px;">
+                    <mat-label>Adresse</mat-label>
+                    <textarea matInput formControlName="address"></textarea>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Code postal</mat-label>
+                    <input matInput formControlName="postal_code">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ml-3">
+                    <mat-label>Ville</mat-label>
+                    <input matInput formControlName="city">
+                </mat-form-field>
+            </div>
+            <div>
+                <app-string-auto-complete
+                    inputLabel="Pays"
+                    [control]='contactCountry'
+                    [autoCompleteList]='countries'>
+                </app-string-auto-complete>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

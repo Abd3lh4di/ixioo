@@ -1,0 +1,128 @@
+<div class="box-container">
+    <mat-toolbar class="tz-toolbar">
+        <a class="nav-logo" routerLink='/'>
+            <img src="/assets/full_light.svg">
+        </a>
+
+        <span class="fill-nav-remaining-space"></span>
+        <span class="welcome">Bienvenue {{ licenceName }}</span>
+        <span class="fill-nav-remaining-space"></span>
+
+        <a mat-button routerLink="/partners">
+            <mat-icon>groups</mat-icon>
+            Gestion des partenaires
+        </a>
+
+        <a mat-button color='warn' (click)='logout()'>
+            <span>Se déconnecter </span>
+            <mat-icon>logout</mat-icon>
+        </a>
+    </mat-toolbar>
+
+    <div class="content pt-3 pr-3 pl-3">
+        <h1 class="mb-3">Créer un nouveau dossier</h1>
+        <div>
+            <a mat-raised-button color='primary' class="mr-3" routerLink="/case/household">
+                <mat-icon>face</mat-icon>
+                Personne physique
+            </a>
+            ou
+            <a mat-raised-button color='primary' class="mr-3 ml-3" routerLink="/case/legalperson">
+                <mat-icon>business</mat-icon>
+                Personne morale
+            </a>
+        </div>
+
+        <mat-tab-group color="accent" class="mt-3 mb-3 tabs">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <h1>Suivi de dossier</h1>
+                </ng-template>
+                <div class="d-flex justify-content-center p-3 pb-0 h-100">
+                    <app-case-kanban class="d-flex"></app-case-kanban>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <h1>Consulter/Éditer un dossier récent</h1>
+                </ng-template>
+                <app-case-search></app-case-search>
+            </mat-tab>
+        </mat-tab-group>
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="bg-white h-100 d-flex flex-column">
+
+    <mat-toolbar class="tz-toolbar">
+        <a class="nav-logo" routerLink='/'>
+            <img src="/assets/full_light.svg">
+        </a>
+
+        <span class="fill-nav-remaining-space"></span>
+        <span class="welcome">Bienvenue {{ authService.userName$ | async }}</span>
+        <span class="fill-nav-remaining-space"></span>
+
+        <a mat-button routerLink="/partners">
+            <mat-icon>groups</mat-icon>
+            Gestion des partenaires
+        </a>
+
+        <a mat-button color='warn' (click)='logout()'>
+            <span>Se déconnecter </span>
+            <mat-icon>logout</mat-icon>
+        </a>
+    </mat-toolbar>
+
+    <div class="container pt-3 pr-3 pl-3">
+        <h1 class="mb-3">Créer un nouveau dossier</h1>
+        <div>
+            <a mat-raised-button color='primary' class="mr-3" routerLink="/case/household">
+                <mat-icon>face</mat-icon>
+                Personne physique
+            </a>
+            ou
+            <a mat-raised-button color='primary' class="mr-3 ml-3" routerLink="/case/legalperson">
+                <mat-icon>business</mat-icon>
+                Personne morale
+            </a>
+        </div>
+
+
+        <mat-tab-group color="accent" class="mt-3 mb-3">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <h1>Suivi de dossier</h1>
+                </ng-template>
+                <div class="d-flex justify-content-center p-3 pb-0 " >
+                    <app-case-kanban></app-case-kanban>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <h1>Consulter/Éditer un dossier récent</h1>
+                </ng-template>
+                <app-case-search></app-case-search>                
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div> -->

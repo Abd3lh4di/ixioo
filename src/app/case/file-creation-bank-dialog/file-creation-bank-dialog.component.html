@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Informations bancaire</h1>
+<div [formGroup]="bankInfo" mat-dialog-content class="d-flex flex-column">
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Banque actuelle</mat-label>
+            <input matInput formControlName="current_bank">
+        </mat-form-field>
+        <mat-form-field appearance="outline"class="ml-3">
+            <mat-label>Agence</mat-label>
+            <input matInput formControlName="current_agency">
+        </mat-form-field>
+    </div>            
+    <div>
+        <app-department-input [department]="bankDepartment" >
+        </app-department-input>
+        <mat-form-field appearance="outline" class="ml-3" [style.width]="'201px'">
+            <mat-label>Client depuis le</mat-label>
+            <input matInput [matDatepicker]="customerSincePicker" formControlName="customer_since" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="customerSincePicker"></mat-datepicker-toggle>
+            <mat-datepicker #customerSincePicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div [formGroup]="rib" mat-dialog-content class="d-flex flex-column">
+        <div>
+            <mat-form-field appearance="outline" style="width: 418px;">
+                <mat-label>BIC</mat-label>
+                <input matInput formControlName="bic">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline" style="width: 418px;">
+                <mat-label>IBAN</mat-label>
+                <input matInput formControlName="iban">
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button [mat-dialog-close]="bankInfo" cdkFocusInitial color="accent">Sauver</button>
+</div>

@@ -1,0 +1,49 @@
+.title {
+  margin: 10px;
+  text-align: center;
+  span {
+    font-size: large;
+  }
+}
+
+.details {
+  span {
+    padding-top: 2px;
+  }
+}
+
+.summary-table {
+  margin: auto;
+}
+
+.summary-table-td-right {
+  text-align: right;
+  padding: 0 10px 0 10px;
+}
+
+.summary-table-td-left {
+  text-align: left;
+  padding: 0 10px 0 10px;
+}
+
+.results-table {
+  color: white;
+  width: 100%;
+  .bold {
+    font-weight: 500;
+    font-size: 18px;
+  }
+  td {
+    border-bottom: 1px solid #fff;
+    line-height: 25px;
+    padding: 5px;
+  }
+}
+
+.width60 {
+  width: 60%;
+}
+
+.width25 {
+  width: 25%;
+}

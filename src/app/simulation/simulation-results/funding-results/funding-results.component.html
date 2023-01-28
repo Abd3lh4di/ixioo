@@ -1,0 +1,39 @@
+<mat-tab-group>
+    <mat-tab label="Récapitulatif">
+        <div class="scroll">
+            <app-funding-summary #fundingSummary
+                [results]="simulationResults" 
+                [parameters]="simulationParameters">
+            </app-funding-summary>
+        </div>
+    </mat-tab>
+    <mat-tab label="Profil de remboursement">
+        <div class="d-flex flex-column mt-3 profileChartContainer">
+            <app-profile-chart #profileChart
+                [results]="simulationResults" [params]="simulationParameters" >
+            </app-profile-chart>
+            <button mat-button (click)="popupProfileChart()"><mat-icon>open_in_new</mat-icon>
+                Afficher en grand
+            </button>
+        </div>
+    </mat-tab>
+    <mat-tab label="Distribution des coûts et des amortissements">
+        <div class="d-flex flex-column">
+            <div>
+                <app-costs-distribution-chart #costsDistributionChart 
+                    [results]="simulationResults">
+                </app-costs-distribution-chart>
+            </div>
+            <button mat-button (click)="popupLoanBurdenSummary()"><mat-icon>open_in_new</mat-icon>
+                Afficher le detail
+            </button>
+        </div>
+    </mat-tab>
+    <mat-tab label="Tableau(x) d'amortissement">
+        <div class="mx-auto mt-4">
+            <app-amortization-table [fundingResults]="simulationResults">
+            </app-amortization-table>
+        </div>
+    </mat-tab>
+    
+</mat-tab-group>

@@ -1,0 +1,16 @@
+<mat-stepper orientation="vertical" [linear]="true" #stepper>
+    <mat-step completed="false">
+        <ng-template matStepLabel>Choisissez une banque ci dessous</ng-template>
+        <app-partner-search [hideDeleteOption]="true" [selectedPartner]="inputBank" (partnerSelected)="bankSelected($event)"></app-partner-search>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Quel sera le contact dans cette banque ?</ng-template>
+        <ng-template matStepContent>
+            <mat-selection-list #shoes [multiple]="false" (selectionChange)="contactSelected($event)">
+                <mat-list-option *ngFor="let contact of selectedBank.contacts" [value]="contact" >
+                    {{toCourtesyString(contact.courtesy)}} {{contact.first_name}} {{contact.last_name}}
+                </mat-list-option>
+            </mat-selection-list>
+        </ng-template>    
+    </mat-step>
+</mat-stepper>

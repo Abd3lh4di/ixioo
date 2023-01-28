@@ -1,0 +1,33 @@
+<div [formGroup]="budget">
+    <app-administrative-information [administrativeInformation]="administrative_information"></app-administrative-information>
+    
+    <mat-form-field appearance="outline">
+        <mat-label>DPE Cible</mat-label>
+        <mat-select formControlName="dpe_rate">
+            <mat-option value="A">A</mat-option>
+            <mat-option value="B">B</mat-option>
+            <mat-option value="C">C</mat-option>
+            <mat-option value="D">D</mat-option>
+            <mat-option value="E">E</mat-option>
+            <mat-option value="F">F</mat-option>
+            <mat-option value="G">G</mat-option>
+            <mat-option value="VIERGE">VIERGE</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <div formGroupName="expenses">
+        <span class="header">Frais du projet</span>
+        <mat-form-field appearance="outline">
+            <mat-label>Autre frais</mat-label>
+            <input type="number" matInput formControlName="other_expenses">
+            <mat-icon matSuffix>euro</mat-icon>
+        </mat-form-field>
+    </div>
+    <div>
+        <span class="header">Divers</span>
+        <mat-form-field appearance="outline" class="mr-3 w-75">
+            <mat-label>Commentaires</mat-label>
+            <input matInput formControlName="comment">
+        </mat-form-field>
+    </div>
+</div>

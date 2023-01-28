@@ -1,0 +1,343 @@
+<div [formGroup]="profession" class="profession d-flex flex-column justify-content-around ml-1">
+    <div class="d-flex align-items-start">
+        <mat-form-field appearance="outline" class="mr-1 socio-pro-group">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status" (selectionChange)="onStatusChanged()">
+                <mat-option value="EMPLOYEE" selected>Employé</mat-option>
+                <mat-option value="SELFEMPLOYED" selected>Independant</mat-option>
+                <mat-option value="STUDENT" selected>Étudiant</mat-option>
+                <mat-option value="RETIRED" selected>Retraité</mat-option>
+                <mat-option value="EARLY_RETIREMENT" selected>Pré-Retraité</mat-option>
+                <mat-option value="UNEMPLOYED" selected>Sans emploi</mat-option>
+                <mat-option value="ANNUITANT" selected>Rentier</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="status.value === 'EMPLOYEE'" formGroupName="worker" appearance="outline" class="w-75 mr-1">
+            <mat-label>Profession</mat-label>
+            <input matInput formControlName="profession">
+        </mat-form-field>
+    </div>
+    <div *ngIf="status.value !== '' && status.value !== null">
+        <div *ngIf="status.value === 'EMPLOYEE'; then employee_t else not_employee_t"></div>
+    </div>
+</div>
+
+<ng-template #employee_t [formGroup]="profession">
+    <div class="d-flex " formGroupName="socio_professional_group">
+        <mat-form-field appearance="outline" class="mr-1 socio-pro-group">
+            <mat-label>Groupe socio-professionnel</mat-label>
+            <mat-select formControlName="type" (selectionChange)="onSocioProGroupTypeChanged()">
+                <mat-option value="CADRES_PROFESSIONS_INTELLECTUELLES_SUPERIEURES" selected>Cadres et professions intellectuelles supérieures</mat-option>
+                <mat-option value="PROFESSIONS_INTERMEDIAIRES" selected>Professions intermédiaires</mat-option>
+                <mat-option value="EMPLOYES" selected>Employés</mat-option>
+                <mat-option value="OUVRIERS" selected>Ouvriers</mat-option>
+                <mat-option value="AUTRES_PERSONNES_SANS_ACTIVITE_PROFESSIONNELLE" selected>Autres personnes sans activité professionnelle</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="type.value" appearance="outline" class="flex-fill mr-1">
+            <mat-label>Catégorie socio-professionnelle</mat-label>
+            <mat-select formControlName="category">
+                
+                <mat-option *ngIf="type.value === 'CADRES_PROFESSIONS_INTELLECTUELLES_SUPERIEURES'" value="CADRES_FONCTION_PUBLIQUE" selected>Cadres de la fonction publique</mat-option>
+                <mat-option *ngIf="type.value === 'CADRES_PROFESSIONS_INTELLECTUELLES_SUPERIEURES'" value="PROFESSEURS_PROFESSIONS_SCIENTIFIQUES" selected>Professeurs, professions scientifiques</mat-option>
+                <mat-option *ngIf="type.value === 'CADRES_PROFESSIONS_INTELLECTUELLES_SUPERIEURES'" value="PROFESSIONS_INFORMATION_ARTS_SPECTACLES" selected>Professions de l'information, des arts et des spectacles</mat-option>
+                <mat-option *ngIf="type.value === 'CADRES_PROFESSIONS_INTELLECTUELLES_SUPERIEURES'" value="CADRES_ADMINISTRATIFS_COMMERCIAUX_ENTREPRISE" selected>Cadres administratifs et commerciaux d'entreprise</mat-option>
+                <mat-option *ngIf="type.value === 'CADRES_PROFESSIONS_INTELLECTUELLES_SUPERIEURES'" value="INGENIEURS_CADRES_TECHNIQUES_ENTREPRISE" selected>Ingénieurs et cadres techniques d'entreprise</mat-option>
+                
+                <mat-option *ngIf="type.value === 'PROFESSIONS_INTERMEDIAIRES'" value="PROFESSEURS_DES_ECOLES_INSTITUTEUR_ET_ASSIMILE" selected>Professeurs des écoles, instituteurs et assimilés</mat-option>
+                <mat-option *ngIf="type.value === 'PROFESSIONS_INTERMEDIAIRES'" value="PROFESSIONS_INTERMEDIAIRES_DE_LA_SANTE_ET_DU_TRAVAIL_SOCIAL" selected>Professions intermédiaires de la santé et du travail social</mat-option>
+                <mat-option *ngIf="type.value === 'PROFESSIONS_INTERMEDIAIRES'" value="CLERGE_RELIGIEUX" selected>Clergé, religieux</mat-option>
+                <mat-option *ngIf="type.value === 'PROFESSIONS_INTERMEDIAIRES'" value="PROFESSIONS_INTERMEDIAIRES_ADMINISTRATIVES_DE_LA_FONCTION_PUBLIQUE" selected>Professions intermédiaires administratives de la fonction publique</mat-option>
+                <mat-option *ngIf="type.value === 'PROFESSIONS_INTERMEDIAIRES'" value="PROFESSIONS_INTERMEDIAIRES_ADMINISTRATIVES_COMMERCIALES_ENTREPRISES" title="Professions intermédiaires administratives et commerciales des entreprises">Professions intermédiaires administratives et commerciales des entreprises</mat-option>
+                <mat-option *ngIf="type.value === 'PROFESSIONS_INTERMEDIAIRES'" value="TECHNICIENS" selected>Techniciens</mat-option>
+                <mat-option *ngIf="type.value === 'PROFESSIONS_INTERMEDIAIRES'" value="CONTREMAITRES_AGENTS_DE_MAITRISE" selected>	Contremaîtres, agents de maîtrise</mat-option>
+                
+                <mat-option *ngIf="type.value === 'EMPLOYES'" value="EMPLOYES_CIVIL_AGENTS_DE_SERVICE_FONCTION_PUBLIQUE" selected>Employés civils et agents de service de la fonction publique</mat-option>
+                <mat-option *ngIf="type.value === 'EMPLOYES'" value="POLICIERS_MILITAIRES" selected>Policiers et militaires</mat-option>
+                <mat-option *ngIf="type.value === 'EMPLOYES'" value="EMPLOYES_ADMINISTRATIFS_ENTREPRISE" selected>Employés administratifs d'entreprise</mat-option>
+                <mat-option *ngIf="type.value === 'EMPLOYES'" value="EMPLOYES_DE_COMMERCE" selected>Employés de commerce</mat-option>
+                <mat-option *ngIf="type.value === 'EMPLOYES'" value="PERSONNELS_DES_SERVICES_DIRECTS_AUX_PARTICULIERS" selected>Personnels des services directs aux particuliers</mat-option>
+                
+                <mat-option *ngIf="type.value === 'OUVRIERS'" value="OUVRIERS_QUALIFIES_DE_TYPE_INDUSTRIEL" selected>Ouvriers qualifiés de type industriel</mat-option>
+                <mat-option *ngIf="type.value === 'OUVRIERS'" value="OUVRIERS_QUALIFIES_DE_TYPE_ARTISANAL" selected>Ouvriers qualifiés de type artisanal</mat-option>
+                <mat-option *ngIf="type.value === 'OUVRIERS'" value="CHAUFFEURS" selected>Chauffeurs</mat-option>
+                <mat-option *ngIf="type.value === 'OUVRIERS'" value="OUVRIERS_QUALIFIERS_MANUTENTION_MAGASINAGE_TRANSPORT" selected>Ouvriers qualifiés de la manutention, du magasinage et du transport</mat-option>
+                <mat-option *ngIf="type.value === 'OUVRIERS'" value="OUVRIERS_NON_QUALIFIES_DE_TYPE_INDUSTRIEL" selected>Ouvriers non qualifiés de type industriel</mat-option>
+                <mat-option *ngIf="type.value === 'OUVRIERS'" value="OUVRIERS_NON_QUALIFIES_DE_TYPE_ARTISANAL" selected>Ouvriers non qualifiés de type artisanal</mat-option>
+                <mat-option *ngIf="type.value === 'OUVRIERS'" value="OUVRIERS_AGRICOLES" selected>Ouvriers agricoles</mat-option>
+                
+                <mat-option *ngIf="type.value === 'AUTRES_PERSONNES_SANS_ACTIVITE_PROFESSIONNELLE'" value="MILITAIRES_DU_CONTINGENT" selected>Militaires du contingent</mat-option>
+                
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div formGroupName="worker" class="d-flex justify-content-start">
+
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Type de contrat</mat-label>
+            <mat-select formControlName="contract_type" (selectionChange)="onContractTypeChanged()">
+                <mat-option value="CDI" selected>CDI</mat-option>
+                <mat-option value="CIVIL_SERVANT" selected>Fonctionnaire</mat-option>
+                <mat-option value="CDD" selected>CDD</mat-option>
+                <mat-option value="OTHER" selected>Autre</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="contractType.value !== 'CDD'" appearance="outline" class="mr-3">
+            <mat-label>Spécificité du contrat</mat-label>
+            <mat-select formControlName="sub_contract_type" (selectionChange)="onSubContractTypeChanged()">
+                <mat-option value="" selected>Aucune</mat-option>
+                <mat-option *ngIf="contractType.value === 'CDI'" value="TRIAL_PERIOD">Période d'essai</mat-option>
+                <mat-option *ngIf="contractType.value === 'CIVIL_SERVANT'" value="TITULAR_CIVIL_SERVANT" selected>Titulaire</mat-option>
+                <mat-option *ngIf="contractType.value === 'CIVIL_SERVANT'" value="CONTRACTUAL_CIVIL_SERVANT" selected>Contractuel</mat-option>
+                <mat-option *ngIf="contractType.value === 'CIVIL_SERVANT'" value="VACATAIRE_CIVIL_SERVANT" selected>Vacataire</mat-option>
+                <mat-option *ngIf="contractType.value === 'OTHER'" value="INTERIM" selected>Intérimaire</mat-option>
+                <mat-option *ngIf="contractType.value === 'OTHER'" value="INTERN" selected>Stagiaire</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-3 date-input">
+            <mat-label>Date d'embauche</mat-label>
+            <input matInput [matDatepicker]="hiringDatePicker" formControlName="hiring_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="hiringDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #hiringDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field *ngIf="subContractType.value === 'TRIAL_PERIOD'" appearance="outline" class="mr-3 date-input">
+            <mat-label>Fin de la période d'essai</mat-label>
+            <input matInput [matDatepicker]="endTrialDatePicker" formControlName="end_trial_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="endTrialDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endTrialDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="subContractType.value === 'INTERN'" appearance="outline" class="mr-3 date-input">
+            <mat-label>Date de fin du stage</mat-label>
+            <input matInput [matDatepicker]="endContractDatePicker" formControlName="end_contract_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="endContractDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endContractDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="subContractType.value === 'CDD'" appearance="outline" class="date-input">
+            <mat-label>Date de fin du contrat</mat-label>
+            <input matInput [matDatepicker]="endContractDatePicker" formControlName="end_contract_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="endContractDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endContractDatePicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <div formGroupName="worker" class="d-flex justify-content-center">
+        <mat-card class="mat-elevation-z4 mb-1 mr-3">
+            <mat-card-header>
+                <mat-card-title>Employeur actuel</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="d-flex flex-column justify-content-around">
+                <div>
+                    <mat-form-field appearance="outline" style="width:418px;">
+                        <mat-label>Nom</mat-label>
+                        <input matInput formControlName="employer">
+                    </mat-form-field>                
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" style="width:418px;">
+                        <mat-label>Nombre de salariés dans l'entreprise</mat-label>
+                        <input matInput type="number" formControlName="employees_number">
+                    </mat-form-field>                
+                </div>      
+                
+                <div formGroupName="employer_address">
+                    <mat-form-field appearance="outline" style="width:418px;">
+                        <mat-label>Adresse</mat-label>
+                        <textarea matInput formControlName="address"></textarea>
+                    </mat-form-field>
+                </div>
+                <div formGroupName="employer_address">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Code postal</mat-label>
+                        <input matInput formControlName="postal_code">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="ml-3">
+                        <mat-label>Ville</mat-label>
+                        <input matInput formControlName="city">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <app-string-auto-complete
+                        inputLabel="Pays"
+                        [control]='employerCountry'
+                        [autoCompleteList]='countries'>
+                    </app-string-auto-complete>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    
+</ng-template>
+
+
+<ng-template #not_employee_t [formGroup]="profession">
+    <div class="d-flex" formGroupName="socio_professional_group">
+        <mat-form-field appearance="outline" class="mr-3 socio-pro-group">
+            <mat-label>Groupe socio-professionnel</mat-label>
+            <mat-select formControlName="type" (selectionChange)="onSocioProGroupTypeChanged()">
+                <mat-option *ngIf="status.value === 'SELFEMPLOYED'" value="AGRICULTEURS_EXPLOITANTS" selected>Agriculteurs exploitants</mat-option>
+                <mat-option *ngIf="status.value === 'SELFEMPLOYED'" value="ARTISANS_COMMERCANTS_CHEFS_DENTREPRISE" selected>Artisans, commerçants et chefs d'entreprise</mat-option>
+                <mat-option *ngIf="status.value === 'SELFEMPLOYED'" value="CADRES_PROFESSIONS_INTELLECTUELLES_SUPERIEURES" selected>Cadres et professions intellectuelles supérieures</mat-option>
+                <mat-option *ngIf="status.value === 'RETIRED'" value="RETRAITES" selected>Retraités</mat-option>
+                <mat-option *ngIf="status.value === 'EARLY_RETIREMENT'" value="RETRAITES" selected>Pré-retraités</mat-option>
+                <mat-option *ngIf="status.value === 'STUDENT' || status.value === 'UNEMPLOYED' || status.value === 'ANNUITANT'" value="AUTRES_PERSONNES_SANS_ACTIVITE_PROFESSIONNELLE" selected>Autres personnes sans activité professionnelle</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="type.value" appearance="outline" class="w-50">
+            <mat-label>Catégorie socio-professionnelle</mat-label>
+            <mat-select formControlName="category">
+                <mat-option *ngIf="type.value === 'AGRICULTEURS_EXPLOITANTS'" value="AGRICULTEURS_PETITE_EXPLOITATION" selected>Agriculteurs sur petite exploitation</mat-option>
+                <mat-option *ngIf="type.value === 'AGRICULTEURS_EXPLOITANTS'" value="AGRICULTEURS_MOYENNE_EXPLOITATION" selected>Agriculteurs sur moyenne exploitation</mat-option>
+                <mat-option *ngIf="type.value === 'AGRICULTEURS_EXPLOITANTS'" value="AGRICULTEURS_GRANDE_EXPLOITATION" selected>Agriculteurs sur grande exploitation</mat-option>
+                
+                
+                <mat-option *ngIf="type.value === 'ARTISANS_COMMERCANTS_CHEFS_DENTREPRISE'" value="ARTISANS" selected>Artisans</mat-option>
+                <mat-option *ngIf="type.value === 'ARTISANS_COMMERCANTS_CHEFS_DENTREPRISE'" value="COMMERCANTS_ET_ASSIMILES" selected>Commerçants et assimilés</mat-option>
+                <mat-option *ngIf="type.value === 'ARTISANS_COMMERCANTS_CHEFS_DENTREPRISE'" value="CHEFS_ENTREPRISE_10_SALARIES_OU_PLUS" selected>Chefs d'entreprise de 10 salariés ou plus</mat-option>
+                
+                <mat-option *ngIf="type.value === 'CADRES_PROFESSIONS_INTELLECTUELLES_SUPERIEURES'" value="PROFESSIONS_LIBERALES" selected>Professions libérales</mat-option>
+                <mat-option *ngIf="type.value === 'CADRES_PROFESSIONS_INTELLECTUELLES_SUPERIEURES'" value="PROFESSIONS_INFORMATION_ARTS_SPECTACLES" selected>Professions de l'information, des arts et des spectacles</mat-option>
+
+                <mat-option *ngIf="type.value === 'RETRAITES'" value="ANCIENS_AGRICULTEURS_EXPLOITANTS" selected>Anciens agriculteurs exploitants</mat-option>
+                <mat-option *ngIf="type.value === 'RETRAITES'" value="ANCIENS_ARTISANS_COMMERCANTS_CHEFS_DENTREPRISE" selected>Anciens artisans, commerçants et chefs d'entreprise</mat-option>
+                <mat-option *ngIf="type.value === 'RETRAITES'" value="ANCIENS_CADRES" selected>Anciens cadres</mat-option>
+                <mat-option *ngIf="type.value === 'RETRAITES'" value="ANCIENNES_PROFESSIONS_INTERMEDIAIRES" selected>Anciennes professions intermédiaires</mat-option>
+                <mat-option *ngIf="type.value === 'RETRAITES'" value="ANCIENS_EMPLOYES" selected>Anciens employés</mat-option>
+                <mat-option *ngIf="type.value === 'RETRAITES'" value="ANCIENS_OUVRIERS" selected>Anciens ouvriers</mat-option>
+                
+                <mat-option *ngIf="status.value === 'UNEMPLOYED' && type.value === 'AUTRES_PERSONNES_SANS_ACTIVITE_PROFESSIONNELLE'" value="CHOMEURS_AYANT_JAMAIS_TRAVAILLE" selected>Chômeurs n'ayant jamais travaillé</mat-option>
+                <mat-option *ngIf="status.value === 'STUDENT' && type.value === 'AUTRES_PERSONNES_SANS_ACTIVITE_PROFESSIONNELLE'" value="ELEVES_ETUDIANTS" selected>Éleves, étudiants</mat-option>
+                <mat-option *ngIf="(status.value === 'UNEMPLOYED' || status.value === 'ANNUITANT') && type.value === 'AUTRES_PERSONNES_SANS_ACTIVITE_PROFESSIONNELLE'" value="SANS_ACTIVITE_MOINS_60" selected>Personnes diverses sans activité professionnelle de moins de 60 ans (sauf retraités)</mat-option>
+                <mat-option *ngIf="(status.value === 'UNEMPLOYED' || status.value === 'ANNUITANT') && type.value === 'AUTRES_PERSONNES_SANS_ACTIVITE_PROFESSIONNELLE'" value="SANS_ACTIVITE_PLUS_60" selected>Personnes diverses sans activité professionnelle de plus de 60 ans (sauf retraités)</mat-option>
+                
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="status.value === 'SELFEMPLOYED'" formGroupName="worker" class="d-flex justify-content-center">
+        <mat-card class="mat-elevation-z4 mr-1 mb-1">
+            <mat-card-header>
+                <mat-card-title>Entreprise</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="d-flex flex-column justify-content-around">
+                <div>
+                    <mat-form-field appearance="outline" class="mr-3">
+                        <mat-label>Dénomination</mat-label>
+                        <input matInput formControlName="company_name">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre d'employés</mat-label>
+                        <input matInput type="number" formControlName="employees_number">
+                    </mat-form-field>            
+                </div>
+                <div formGroupName="workplace_address">
+                    <mat-form-field appearance="outline" style="width:418px;">
+                        <mat-label>Adresse</mat-label>
+                        <textarea matInput formControlName="address"></textarea>
+                    </mat-form-field>
+                </div>
+                <div formGroupName="workplace_address">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Code postal</mat-label>
+                        <input matInput formControlName="postal_code">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="ml-3">
+                        <mat-label>Ville</mat-label>
+                        <input matInput formControlName="city">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <app-string-auto-complete
+                        inputLabel="Pays"
+                        [control]='companyCountry'
+                        [autoCompleteList]='countries'>
+                    </app-string-auto-complete>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mat-elevation-z4 mr-1 mb-1">
+            <mat-card-header>
+                <mat-card-title>Activité</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="d-flex flex-column justify-content-around">
+                <div>
+                    <mat-form-field appearance="outline" class="mr-1">
+                        <mat-label>Nature de l'activité</mat-label>
+                        <input matInput formControlName="activity_nature">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Code APE</mat-label>
+                        <input matInput formControlName="ape_code">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="mr-1">
+                        <mat-label>Forme juridique</mat-label>
+                        <input matInput formControlName="legal_status">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Numéro RCS / Greffe</mat-label>
+                        <input matInput formControlName="identification">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="mr-1 date-input">
+                        <mat-label>Date de début d'activité</mat-label>
+                        <input matInput [matDatepicker]="activityStartDatePicker" formControlName="activity_start_date" placeholder="JJ/MM/AAAA">
+                        <mat-datepicker-toggle matSuffix [for]="activityStartDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #activityStartDatePicker></mat-datepicker>
+                    </mat-form-field>                    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Loyer annuel</mat-label>
+                        <input matInput type="number" formControlName="rent_amount">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="mr-1 date-input">
+                        <mat-label>Date de début du bail</mat-label>
+                        <input matInput [matDatepicker]="commercialLeaseStartDatePicker" formControlName="commercial_lease_start_date" placeholder="JJ/MM/AAAA">
+                        <mat-datepicker-toggle matSuffix [for]="commercialLeaseStartDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #commercialLeaseStartDatePicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="date-input">
+                        <mat-label>Date de fin du bail</mat-label>
+                        <input matInput [matDatepicker]="commercialLeaseEndDatePicker" formControlName="commercial_lease_end_date" placeholder="JJ/MM/AAAA">
+                        <mat-datepicker-toggle matSuffix [for]="commercialLeaseEndDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #commercialLeaseEndDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="mat-elevation-z4 mr-1 mb-1">
+            <mat-card-header>
+                <mat-card-title>Actifs</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="d-flex flex-column justify-content-around">
+                <mat-form-field appearance="outline" class="fixed-input-width-180">
+                    <mat-label>Propriétaire du fond</mat-label>
+                    <mat-select formControlName="business_assets_owner">
+                        <mat-option [value]="true" selected>Oui</mat-option>
+                        <mat-option [value]="false" selected>Non</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Valeur du fond</mat-label>
+                    <input matInput type="number" formControlName="business_assets_value">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Capital restant du (si le fond est acquis via un crédit)</mat-label>
+                    <input matInput type="number" formControlName="remaining_capital" title="Capital restant du (si le fond est acquis via un crédit)">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="fixed-input-width-180">
+                    <mat-label>Nantissement</mat-label>
+                    <mat-select formControlName="collateral">
+                        <mat-option [value]="true" selected>Oui</mat-option>
+                        <mat-option [value]="false" selected>Non</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</ng-template>

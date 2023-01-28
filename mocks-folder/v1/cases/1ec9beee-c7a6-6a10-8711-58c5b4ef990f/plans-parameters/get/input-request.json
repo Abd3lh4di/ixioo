@@ -1,0 +1,22 @@
+{
+    "headers": {
+        "Host": "localhost:4400",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0",
+        "Accept": "application/json",
+        "Accept-Language": "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Authorization": "Bearer eyJraWQiOiIxNFE0UkUzdSthc01GQU5ZeVBEa2NqNXExcXZ4VnA2SE5NemhuamU3VnIwPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIxMDIyNTAyYi1hYmM4LTQ5YmYtOGU2YS05NDhiOGRhNTVmMjUiLCJjb2duaXRvOmdyb3VwcyI6WyJldS1jZW50cmFsLTFfNzAwNW9NeUpvX0dvb2dsZSJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtY2VudHJhbC0xLmFtYXpvbmF3cy5jb21cL2V1LWNlbnRyYWwtMV83MDA1b015Sm8iLCJ2ZXJzaW9uIjoyLCJjbGllbnRfaWQiOiIxNGtsMDBqcWlwNzlxZ21zOHAwbWlxODc4NyIsIm9yaWdpbl9qdGkiOiI0MWI3NDNlMC04MmYwLTRiZTctOWM4OC1mMDhkZTI2NGI2YjUiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImJpbGxzXC8qIG9wZW5pZCBwcm9maWxlIGxpY2Vuc2VcL3JlYWQgY2FzZXNcLyogc2ltdWxhdGlvbnNcLyoiLCJhdXRoX3RpbWUiOjE2NjQ1MjI1NjAsImV4cCI6MTY2NDU2NTc2MCwiaWF0IjoxNjY0NTIyNTYwLCJqdGkiOiIzYzRhOGJkYS0zMWJlLTQ3NDYtODg1MS0zNzZmZWVmZTcwZGMiLCJ1c2VybmFtZSI6Ikdvb2dsZV8xMTc4NTM2NzQ0Njk0NzgwOTA0MjYifQ.PFZmCxgxnFhdDDbAN1ElbVEjgejMvgNn8JUYT52dtm9dR2EU_-1icVgsS-xkdsJSuVTPMSVB9VX2QNGPVquexgsDjSs4vpBuBCGSmKhcb1d0_BtWNxKTrZAkyLOcc63qOmcZCcnDrALeekfc8qt8A2OnA_o32sym1EjCNzxAJPICMWYx234TizSdxQ--V9IkVAJ9aB22dSiI79xqkatbDsUgzh0aiVT6G2AkFKl6_g9Tc8J1tRMA5N5_qBfaPjqeRNdpUy1mTx15G_11WcDkyNnO3pnpy4voWUHyOmeHFFJJbpHQYfI1EVQHKPkGrvFM8THdmvmDjEfIjtLlV15xXQ",
+        "Origin": "http://localhost:4200",
+        "DNT": "1",
+        "Connection": "keep-alive",
+        "Referer": "http://localhost:4200/",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-site",
+        "Pragma": "no-cache",
+        "Cache-Control": "no-cache"
+    },
+    "method": "get",
+    "url": "http://localhost:4400/v1/cases/1ec9beee-c7a6-6a10-8711-58c5b4ef990f/plans-parameters",
+    "bodyFileName": "input-request-body"
+}

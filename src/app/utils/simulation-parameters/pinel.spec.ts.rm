@@ -1,0 +1,58 @@
+import { FormBuilder } from '@angular/forms';
+import { Pinel } from './pinel';
+
+describe('Pinel', () => {
+  let pinel: Pinel;
+
+  beforeEach(async () => {
+    const fb = new FormBuilder();
+    pinel = new Pinel(fb);
+  });
+
+  it('should create an instance', () => {
+    expect(pinel).toBeTruthy();
+  });
+
+  it('should get the value', () => {
+    pinel.form.patchValue({
+      maritalStatus: 'SINGLE',
+      childrenInCharge: '1',
+      mensualIncomes: '2000',
+      contribution: '10',
+      debtThreshold: '33,6',
+      department: '05',
+      cityControl: 'NCE',
+      price: '1000000',
+      priceYearlyEvolution: '3,3',
+      renting: '200',
+      pinelThreshold: '12',
+      rentingYearlyEvolution: '3,5',
+      rentingCharges: '100',
+      surface: '150',
+      additionalSurface: '40',
+      zone: 'Abis',
+      pinelDuration: 'SEVEN'
+    });
+
+    expect(pinel.maritalStatus).toEqual('SINGLE');
+    expect(pinel.childrenInCharge).toEqual(1);
+    expect(pinel.mensualIncomes).toEqual(2000);
+    expect(pinel.contribution).toEqual(10);
+    expect(pinel.debtThreshold).toEqual(33.6);
+    expect(pinel.department).toEqual('05');
+    expect(pinel.cityControl).toEqual('NCE');
+    expect(pinel.price).toEqual(1000000);
+    expect(pinel.priceYearlyEvolution).toEqual(3.3);
+    expect(pinel.renting).toEqual(200);
+    expect(pinel.pinelThreshold).toEqual(12);
+    expect(pinel.rentingYearlyEvolution).toEqual(3.5);
+    expect(pinel.rentingCharges).toEqual(100);
+    expect(pinel.surface).toEqual(150);
+    expect(pinel.additionalSurface).toEqual(40);
+    expect(pinel.zone).toEqual('Abis');
+    expect(pinel.pinelDuration).toEqual('SEVEN');
+  });
+
+
+});
+

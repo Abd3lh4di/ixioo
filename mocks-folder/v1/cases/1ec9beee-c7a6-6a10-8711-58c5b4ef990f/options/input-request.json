@@ -1,0 +1,23 @@
+{
+    "headers": {
+        "Host": "localhost:4400",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0",
+        "Accept": "*/*",
+        "Accept-Language": "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Access-Control-Request-Method": "GET",
+        "Access-Control-Request-Headers": "authorization",
+        "Referer": "http://localhost:4200/",
+        "Origin": "http://localhost:4200",
+        "DNT": "1",
+        "Connection": "keep-alive",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-site",
+        "Pragma": "no-cache",
+        "Cache-Control": "no-cache"
+    },
+    "method": "options",
+    "url": "http://localhost:4400/v1/cases/1ec9beee-c7a6-6a10-8711-58c5b4ef990f",
+    "bodyFileName": "input-request-body"
+}

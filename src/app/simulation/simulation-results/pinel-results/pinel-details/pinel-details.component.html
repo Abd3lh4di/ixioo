@@ -1,0 +1,59 @@
+
+<div>
+    <h2 class="title">Paramètres et évolution annuelle du dispositif Pinel</h2>
+    <mat-card class="mx-4 text-center mat-elevation-z4 p-3" >
+        <table class="summary-table">
+            <tbody>
+                <tr>
+                    <td class="summary-table-td-left">{{ pinelDurationStr }}</td>
+                    <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ parameters.project.pinel_duration }} ans</span></td>
+                    <td class="summary-table-td-left">{{ monthlyRentValueStr }}</td>
+                    <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ parameters.project.monthly_rent_value | currency:'EUR' }}</span></td>
+                </tr>
+                <tr>
+                    <td class="summary-table-td-left">{{ monthlyRentEvolutionStr }}</td>
+                    <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ parameters.project.monthly_rent_value_yearly_evolution_rate }} %</span></td>
+                    <td class="summary-table-td-left">{{ priceEvolutionStr }}</td>
+                    <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ parameters.project.price_yearly_evolution_rate }} %</span></td>
+                </tr>
+                <tr>
+                    <td class="summary-table-td-left">{{ rentChargesStr }}}}</td>
+                    <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ parameters.project.renting_charges_rate }} %</span></td>
+                    <td class="summary-table-td-left">{{ taxRegimeStr }}</td>
+                    <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ toTaxModeMap(parameters.project.tax_mode) }}</span></td>
+                </tr>
+                <tr>
+                    <td class="summary-table-td-left">{{ rentThresholdStr }}</td>
+                    <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ results.maximum_rent | currency:'EUR'  }}</span></td>
+                    <td class="summary-table-td-left">{{ zoneStr }}</td>
+                    <td class="summary-table-td-right"><span [style.color]="'#' + colormap[2]">{{ results.funding_plan.summary.zone }}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card>
+</div>
+
+<div class="amortization-table"> 
+    <table class="mx-auto mt-5 w-75 table table-hover">
+        <thead>
+            <tr>
+                <td class='text-right' *ngFor="let header of this.pinelTableHeader"><b>{{header}}</b></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let year of pinelTable; let isLast = last;">
+                <td [ngClass]="{'font-weight-bold': isLast}">{{year[0]}}</td>
+                <td [ngClass]="{'font-weight-bold': isLast}" class='text-right'>{{year[1]}}</td>
+                <td [ngClass]="{'font-weight-bold': isLast}" class='text-right'>{{year[2]}}</td>
+                <td [ngClass]="{'font-weight-bold': isLast}" class='text-right'>{{year[3]}}</td>
+                <td [ngClass]="{'font-weight-bold': isLast}" class='text-right'>{{year[4]}}</td>
+                <td [ngClass]="{'font-weight-bold': isLast}" class='text-right'>{{year[5]}}</td>
+                <td [ngClass]="{'font-weight-bold': isLast}" class='text-right'>{{year[6]}}</td>
+                <td [ngClass]="{'font-weight-bold': isLast}" class='text-right'>{{year[7]}}</td>
+                <td [ngClass]="{'font-weight-bold': isLast}" class='text-right'>{{year[8]}}</td>
+                <td [ngClass]="{'font-weight-bold': isLast}" class='text-right'>{{year[9]}}</td>
+                <td [ngClass]="{'font-weight-bold': isLast}" class='text-right'>{{year[10]}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

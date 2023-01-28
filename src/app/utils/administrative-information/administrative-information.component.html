@@ -1,0 +1,99 @@
+<div [formGroup]="administrativeInformation">
+
+    <div formGroupName="project_dates">
+        <span class="header">Dates du projet</span>
+        <mat-form-field appearance="outline" class="mr-1">
+            <mat-label>Signature du compromis</mat-label>
+            <input matInput [matDatepicker]="salesAgreementDatePicker" formControlName="sales_agreement_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="salesAgreementDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #salesAgreementDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-1">
+            <mat-label>Levée des conditions suspensives</mat-label>
+            <input matInput [matDatepicker]="conditionsPrecedentEndDatePicker" formControlName="conditions_precedent_end_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="conditionsPrecedentEndDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #conditionsPrecedentEndDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Signature de l'acte</mat-label>
+            <input matInput [matDatepicker]="signatureDatePicker" formControlName="signature_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="signatureDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #signatureDatePicker></mat-datepicker>
+        </mat-form-field>
+    </div> 
+
+    <span class="header">Informations sur le bien ciblé</span>
+
+    <div>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Description du bien</mat-label>
+            <input matInput formControlName="description">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Nature de l'acquisition</mat-label>
+            <mat-select formControlName="nature">
+                <mat-option value="FLAT">{{ natureToString('FLAT') }}</mat-option>
+                <mat-option value="HOUSE">{{ natureToString('HOUSE') }}</mat-option>
+                <mat-option value="LAND">{{ natureToString('LAND') }}</mat-option>
+                <mat-option value="LAND_AND_CONSTRUCTION_PROJECT">{{ natureToString('LAND_AND_CONSTRUCTION_PROJECT') }}</mat-option>
+                <mat-option value="CONSTRUCTION_PROJECT">{{ natureToString('CONSTRUCTION_PROJECT') }}</mat-option>
+                <mat-option value="PARKING">{{ natureToString('PARKING') }}</mat-option>
+                <mat-option value="COMMERCIAL_PREMISES">{{ natureToString('COMMERCIAL_PREMISES') }}</mat-option>
+                <mat-option value="OFFICES">{{ natureToString('OFFICES') }}</mat-option>
+                <mat-option value="SCPI">{{ natureToString('SCPI') }}</mat-option>
+                <mat-option value="BALANCING_ADJUSTMENT">{{ natureToString('BALANCING_ADJUSTMENT') }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>État de l'acquisition</mat-label>
+            <mat-select formControlName="state">
+                <mat-option value="NEW">{{ stateToString('NEW') }}</mat-option>
+                <mat-option value="OLD">{{ stateToString('OLD') }}</mat-option>
+                <mat-option value="OLD_WITH_WORKS">{{ stateToString('OLD_WITH_WORKS') }}</mat-option>
+                <mat-option value="RAW_LAND">{{ stateToString('RAW_LAND') }}</mat-option>
+                <mat-option value="UNDER_CONSTRUCTION">{{ stateToString('UNDER_CONSTRUCTION') }}</mat-option>
+                <mat-option value="WORKS">{{ stateToString('WORKS') }}</mat-option>
+                <mat-option value="VEFA">{{ stateToString('VEFA') }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Destination de l'acquisition</mat-label>
+            <mat-select formControlName="destination">
+                <mat-option value="MAIN_PROPERTY">{{ destinationToString('MAIN_PROPERTY') }}</mat-option>
+                <mat-option value="SECONDARY_PROPERTY">{{ destinationToString('SECONDARY_PROPERTY') }}</mat-option>
+                <mat-option value="RENTAL_PROPERTY">{{ destinationToString('RENTAL_PROPERTY') }}</mat-option>
+                <mat-option value="PROFESSIONAL_PROPERTY">{{ destinationToString('PROFESSIONAL_PROPERTY') }}</mat-option>
+                <mat-option value="VIAGER">{{ destinationToString('VIAGER') }}</mat-option>
+                <mat-option value="INVESTMENT">{{ destinationToString('INVESTMENT') }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>   
+
+    <div>
+        <span class="header">Localisation</span>
+        <div class="d-flex align-content-start" >
+            <mat-form-field formGroupName="address" appearance="outline" style="width:418px;" class="mr-1">
+                <mat-label>Adresse</mat-label>
+                <textarea matInput formControlName="address"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Parcelle cadastrale</mat-label>
+                <input matInput formControlName="land_register_reference">
+            </mat-form-field>
+        </div>
+        <div>
+            <app-location-input class="mr-1"
+                [city]="city"
+                [postalCode]="postal_code"
+                [inseeCode]="insee_code">
+            </app-location-input>
+            <app-string-auto-complete
+                inputLabel="Pays"
+                [control]='country'
+                [autoCompleteList]='countries'>
+            </app-string-auto-complete>
+        </div>
+    </div>
+</div>
+

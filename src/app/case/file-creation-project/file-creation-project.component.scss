@@ -1,0 +1,25 @@
+.full {
+  min-height: 300px;
+  align-items: center;
+}
+
+.small {
+  align-items: center;
+  min-height: 10px;
+  transition: min-height 500ms ease;
+}
+
+.header {
+  display: block;
+  font-size: 16px;
+  margin: 10px 0;
+  letter-spacing: normal;
+}
+
+.project-btn {
+  line-height: 30px !important;
+  padding: 0 8px !important;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}

@@ -1,0 +1,13 @@
+<mat-form-field appearance="outline">
+    <mat-label>Département</mat-label>
+    <input matInput
+           type="text"
+           placeholder="Département"
+           [formControl]="department"
+           [matAutocomplete]="dptAuto">
+    <mat-autocomplete [displayWith]="getDepartmentOptionText" #dptAuto="matAutocomplete">
+        <mat-option *ngFor="let dpt of filteredDepartments$ | async" [value]="dpt.number">
+        {{dpt.name}} ({{dpt.number}})
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

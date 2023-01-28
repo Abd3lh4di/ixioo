@@ -1,0 +1,124 @@
+@use '~@angular/material' as mat;
+@use 'sass:map';
+
+@include mat.core();
+
+$theme-primary: (
+  50 : #e0eff4,
+  100 : #b3d7e3,
+  200 : #80bcd0,
+  300 : #4da1bd,
+  400 : #268daf,
+  500 : #0079a1,
+  600 : #007199,
+  700 : #00668f,
+  800 : #005c85,
+  900 : #004974,
+  A100 : #a2d7ff,
+  A200 : #6fc0ff,
+  A400 : #3caaff,
+  A700 : #239fff,
+  contrast: (
+    50 : #000,
+    100 : #000,
+    200 : #000,
+    300 : #000,
+    400 : #fff,
+    500 : #fff,
+    600 : #fff,
+    700 : #fff,
+    800 : #fff,
+    900 : #fff,
+    A100 : #000,
+    A200 : #000,
+    A400 : #000,
+    A700 : #000,
+  )
+);
+
+$theme-warn: (
+  50 : #ffe4e6,
+  100 : #ffbcc1,
+  200 : #ff8f98,
+  300 : #ff626f,
+  400 : #ff4050,
+  500 : #ff1e31,
+  600 : #ff1a2c,
+  700 : #ff1625,
+  800 : #ff121f,
+  900 : #ff0a13,
+  A100 : #fff,
+  A200 : #fff5f5,
+  A400 : #ffc2c3,
+  A700 : #ffa8aa,
+  contrast: (
+    50 : #000,
+    100 : #000,
+    200 : #000,
+    300 : #000,
+    400 : #fff,
+    500 : #fff,
+    600 : #fff,
+    700 : #fff,
+    800 : #fff,
+    900 : #fff,
+    A100 : #000,
+    A200 : #000,
+    A400 : #000,
+    A700 : #000,
+  )
+);
+
+$theme-accent: (
+  50 : #fff4e5,
+  100 : #ffe4bf,
+  200 : #ffd395,
+  300 : #ffc16a,
+  400 : #ffb34a,
+  500 : #ffa62a,
+  600 : #ff9e25,
+  700 : #ff951f,
+  800 : #ff8b19,
+  900 : #ff7b0f,
+  A100 : #fff,
+  A200 : #fffaf7,
+  A400 : #ffdcc4,
+  A700 : #ffcdab,
+  contrast: (
+    50 : #000,
+    100 : #000,
+    200 : #000,
+    300 : #000,
+    400 : #000,
+    500 : #000,
+    600 : #fff,
+    700 : #fff,
+    800 : #fff,
+    900 : #fff,
+    A100 : #000,
+    A200 : #000,
+    A400 : #000,
+    A700 : #000,
+  )
+);
+
+$theme: mat.define-light-theme(
+  (
+    color: (
+      primary: mat.define-palette($theme-primary),
+      accent: mat.define-palette($theme-accent),
+      warn: mat.define-palette($theme-warn)
+    ),
+    typography: mat.define-typography-config(
+      $font-family: roboto
+    )
+  )
+);
+
+@include mat.all-component-themes($theme);
+
+$color-config:    mat.get-color-config($theme);
+$primary-palette: map.get($color-config, 'primary');
+$accent-palette:  map.get($color-config, 'accent');
+$warn-palette:    map.get($color-config, 'warn');
+$is-dark-theme:   map.get($color-config, 'is-dark');

@@ -1,0 +1,86 @@
+import { LoansToConsolidate } from './loans-to-consolidate';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { TypedFormArray } from 'src/app/typed-form-array';
+import { LoanToConsolidate } from 'src/app/api/models';
+
+describe('LoansToConsolidate', () => {
+  let loansToConsolidate: LoansToConsolidate;
+
+  beforeEach(async () => {
+    const fb = new FormBuilder();
+    loansToConsolidate = new LoansToConsolidate(fb);
+  });
+
+  it('should create an instance', () => {
+    expect(loansToConsolidate).toBeTruthy();
+  });
+
+  it('should format empty grid', () => {
+    expect(loansToConsolidate.format()).toEqual([]);
+  });
+
+  it('should format grid without insurance activated', () => {
+    loansToConsolidate.loansToConsolidateArray.pushValue({ name: 'Nouvelle grille de prêts à racheter' });
+    const firstGrid = loansToConsolidate.loansToConsolidateArray.at(0) as FormGroup;
+    (firstGrid.controls.loansToConsolidate as TypedFormArray).pushValue({
+      duration: '222',
+      yearlyRate: '1',
+      initialCapital: '33',
+      instalment: '12',
+      insuranceType: 'INITIAL_CAPITAL',
+      yearlyInsuranceRate: '22',
+      dateFirstInstalment: '2020-11-03',
+      iraType: 'NEGOCIATED',
+      iraValue: '2'
+    });
+
+    const expectedResponse: LoanToConsolidate = {
+      duration_months: 222,
+      yearly_rate: 1,
+      instalement: 12,
+      initial_capital: 33,
+      first_instalement_date: '2020-11-03T00:00:00.000Z',
+      insurance: undefined,
+      ira: { type: 'NEGOCIATED', value: 0 }
+    };
+    const formattedLoans = loansToConsolidate.format();
+    expect(formattedLoans[0]).toEqual(expectedResponse);
+  });
+
+  it('should format grid with insurance/ira activated', () => {
+    loansToConsolidate.loansToConsolidateArray.pushValue({ name: 'Nouvelle grille de prêts à racheter' });
+    const firstGrid = loansToConsolidate.loansToConsolidateArray.at(0) as FormGroup;
+    const lines: TypedFormArray = (firstGrid.controls.loansToConsolidate as TypedFormArray);
+
+    lines.pushValue({
+      duration: '222',
+      yearlyRate: '1',
+      initialCapital: '33',
+      instalment: '12',
+      insuranceType: 'INITIAL_CAPITAL',
+      yearlyInsuranceRate: '22',
+      dateFirstInstalment: '2020-11-03',
+      iraType: 'NEGOCIATED',
+      iraValue: '2'
+    });
+
+    lines.at(0).get('yearlyInsuranceRate').enable();
+    lines.at(0).get('iraValue').enable();
+
+    const expectedResponse: LoanToConsolidate = {
+      duration_months: 222,
+      yearly_rate: 1,
+      instalement: 12,
+      initial_capital: 33,
+      first_instalement_date: '2020-11-03T00:00:00.000Z',
+      insurance: [{ type: 'INITIAL_CAPITAL', rate: 22 }],
+      ira: { type: 'NEGOCIATED', value: 2 }
+    };
+
+    const formattedLoans = loansToConsolidate.format();
+    expect(formattedLoans[0]).toEqual(expectedResponse);
+  });
+
+
+});
+

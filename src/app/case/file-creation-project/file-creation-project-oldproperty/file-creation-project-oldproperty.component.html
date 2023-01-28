@@ -1,0 +1,149 @@
+<div [formGroup]="oldProperty">
+
+    <div>
+        <div>
+            <span class="header">Projet</span>
+
+            <mat-form-field appearance="outline" class="mr-3">
+                <mat-label>État du projet</mat-label>
+                <mat-select formControlName="project_state">
+                    <mat-option value="BEFORE_COMPROMIS">{{ projectStateToString('BEFORE_COMPROMIS') }}</mat-option>
+                    <mat-option value="COMPROMIS_SIGNED">{{ projectStateToString('COMPROMIS_SIGNED') }}</mat-option>
+                    <mat-option value="SIGNED">{{ projectStateToString('SIGNED') }}</mat-option>
+                    <mat-option value="CANCELED">{{ projectStateToString('CANCELED') }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="d-flex">
+            <div formGroupName="expenses">
+                <mat-form-field appearance="outline" class="mr-3">
+                    <mat-label>Prix</mat-label>
+                    <input type="number" matInput formControlName="price">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mr-3">
+                    <mat-label>Prix des travaux</mat-label>
+                    <input type="number" matInput formControlName="works_price">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mr-3">
+                    <mat-label>Prix des meubles</mat-label>
+                    <input type="number" matInput formControlName="furnitures_price">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex">
+        <div formGroupName="surfaces">
+            <mat-form-field appearance="outline" class="mr-3">
+                <mat-label>Surface</mat-label>
+                <input type="number" matInput formControlName="surface">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mr-3">
+                <mat-label>Surface additionnelle</mat-label>
+                <input type="number" matInput formControlName="additional_surface">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mr-3">
+                <mat-label>Surface du terrain</mat-label>
+                <input type="number" matInput formControlName="land_surface">
+            </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Nombre de pièces</mat-label>
+            <input type="number" matInput formControlName="rooms_count">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Date de construction</mat-label>
+            <input matInput [matDatepicker]="constructionDatePicker" formControlName="construction_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="constructionDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #constructionDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Normes de construction</mat-label>
+                <mat-select formControlName="construction_norm">
+                    <mat-option value="RT_2020">{{ constructionNormToString('RT_2020') }}</mat-option>
+                    <mat-option value="HPE_2012">{{ constructionNormToString('HPE_2012') }}</mat-option>
+                    <mat-option value="SIGNED">{{ constructionNormToString('RT_2012') }}</mat-option>
+                    <mat-option value="BBC_RENOV_2009">{{ constructionNormToString('BBC_RENOV_2009') }}</mat-option>
+                    <mat-option value="HPE_RENOV_2009">{{ constructionNormToString('HPE_RENOV_2009') }}</mat-option>
+                    <mat-option value="RT_2005">{{ constructionNormToString('RT_2005') }}</mat-option>
+                    <mat-option value="RT_ANTERIEUR">{{ constructionNormToString('RT_ANTERIEUR') }}</mat-option>
+                </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Numéro de lot</mat-label>
+            <input matInput formControlName="lot_number">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>DPE</mat-label>
+            <mat-select formControlName="dpe_rate">
+                <mat-option value="A">A</mat-option>
+                <mat-option value="B">B</mat-option>
+                <mat-option value="C">C</mat-option>
+                <mat-option value="D">D</mat-option>
+                <mat-option value="E">E</mat-option>
+                <mat-option value="F">F</mat-option>
+                <mat-option value="G">G</mat-option>
+                <mat-option value="VIERGE">VIERGE</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <app-administrative-information [administrativeInformation]="administrative_information"></app-administrative-information>
+    
+    <div formGroupName="expenses">
+        <span class="header">Frais du projet</span>
+        <mat-form-field formGroupName="fees" appearance="outline" class="mr-3">
+            <mat-label>Frais d'agence</mat-label>
+            <input type="number" matInput formControlName="agency_fees">
+            <mat-icon matSuffix>euro</mat-icon>
+        </mat-form-field>
+        <mat-form-field formGroupName="fees" appearance="outline" class="mr-3">
+            <mat-label>Frais de notaire</mat-label>
+            <input type="number" matInput formControlName="notary_fees">
+            <mat-icon matSuffix>euro</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Autre frais</mat-label>
+            <input type="number" matInput formControlName="other_expenses">
+            <mat-icon matSuffix>euro</mat-icon>
+        </mat-form-field>
+    </div>
+
+
+    <div formGroupName="seller">
+        <span class="header">Information vendeur</span>
+        <div>
+            <mat-radio-group formControlName="courtesy">
+                <mat-radio-button value="MRS">Madame</mat-radio-button>
+                <mat-radio-button value="MR">Monsieur</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Prénom</mat-label>
+                <input matInput formControlName="first_name">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="ml-3">
+                <mat-label>Nom</mat-label>
+                <input matInput formControlName="last_name">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="ml-3">
+                <mat-label>Téléphone</mat-label>
+                <input matInput formControlName="phone_number">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="ml-3">
+                <mat-label>E-mail</mat-label>
+                <input matInput formControlName="email">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline" class="mr-3 w-75">
+                <mat-label>Commentaires</mat-label>
+                <input matInput formControlName="comment">
+            </mat-form-field>
+        </div>
+    </div>
+</div>

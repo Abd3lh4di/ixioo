@@ -1,0 +1,49 @@
+<div class="result-table">
+    <div *ngIf="loading; else loaded" class="spinner-container">
+        <div class="spinner_overlay"></div>
+        <app-loading></app-loading>
+    </div>
+</div>
+<ng-template #loaded>
+    <table mat-table [dataSource]="dataSource" class="table-hover w-100" matSort>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element"> {{typeToString(element.type)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nom </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="sub_entity">
+            <th mat-header-cell *matHeaderCellDef> Sous entité </th>
+            <td mat-cell *matCellDef="let element"> {{element.sub_entity}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef> Ville </th>
+            <td mat-cell *matCellDef="let element"> {{element.address?.city}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contact">
+            <th mat-header-cell *matHeaderCellDef> Contact principal</th>
+            <td mat-cell *matCellDef="let element"> {{courtesyToString(element.main_contact?.courtesy)}} {{element.main_contact?.first_name}} {{element.main_contact?.last_name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <a *ngIf="hideDeleteOption === false" class="delete-btn btn-lnk d-flex align-items-center" (click)="deletePartner(element, $event)">
+                    <mat-icon>delete_outline</mat-icon>
+                </a>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectPartner(row)" class="cursor"></tr>
+    </table>
+</ng-template>
+<mat-paginator class="mat-paginator-sticky" [length]="dataLength" [pageSizeOptions]="[pageSize]"></mat-paginator>
+

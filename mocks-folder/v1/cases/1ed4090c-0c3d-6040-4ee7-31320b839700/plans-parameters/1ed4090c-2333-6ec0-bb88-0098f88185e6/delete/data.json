@@ -1,0 +1,29 @@
+{
+    "httpVersion": "2.0",
+    "headers": {
+        "date": "Fri, 30 Sep 2022 07:23:34 GMT",
+        "content-type": "text/plain; charset=utf-8",
+        "access-control-allow-origin": "*",
+        "apigw-requestid": "ZQzqWigNliAEPig="
+    },
+    "ignoredHeaders": {
+        ":status": "200",
+        "content-length": "2"
+    },
+    "status": {
+        "code": 200,
+        "message": ""
+    },
+    "bodyFileName": "body.txt",
+    "time": 1339.7028999999166,
+    "timings": {
+        "blocked": 0.4429000001400709,
+        "dns": -1,
+        "connect": -1,
+        "send": 0.022199999541044235,
+        "wait": 1338.9165000002831,
+        "receive": 0.3212999999523163,
+        "ssl": -1
+    },
+    "creationDateTime": "2022-09-30T07:23:34.678Z"
+}

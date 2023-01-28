@@ -1,0 +1,50 @@
+@import '../../../variables';
+
+.patrimony {
+  ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0 !important; }
+  ::ng-deep .mat-form-field-wrapper { padding-bottom: 0.34375em; }
+  ::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+  }
+  ::ng-deep input {
+    height: 17px !important;
+  }
+  ::ng-deep .mat-card-header .mat-card-title {
+    font-size: 12px !important;
+  }
+  ::ng-deep .mat-card-header-text {
+    margin: 0 2px;
+  }
+  ::ng-deep .mat-button-toggle-label-content {
+    line-height: 33px !important;
+  }
+}
+
+.patrimony-container {
+  max-height: 540px;
+  height: 540px;
+  overflow: auto;
+}
+
+.mat-card {
+  .mat-button {
+    padding: 0 10px !important;
+  }
+
+  width: 99%;
+  max-width: 99%;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+
+.patrimony-card {
+  width: 232px;
+  height: 120px;
+  padding: 5px;
+  color: #fff;
+  ::ng-deep .mat-card-header .mat-card-title {
+    font-size: 15px !important;
+  }
+}

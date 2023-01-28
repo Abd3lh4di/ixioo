@@ -1,0 +1,20 @@
+@import '../../../../variables';
+
+.profileChartContainer {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.scroll {
+  overflow: auto;
+  height: 700px;
+}
+
+@media screen and (max-width: $small-width-limit) {
+  // .scroll {
+  //   height: 560px;
+  // }
+  .profileChartContainer {
+    max-width: 800px;
+  }
+}

@@ -1,0 +1,17 @@
+{
+    "extends": "stylelint-config-standard",
+    "rules": {
+        "selector-pseudo-class-no-unknown": true,
+        "selector-type-no-unknown": [true, {
+            "ignoreTypes": ["ngb-accordion", "/^mat-/"]
+        }],
+        "selector-pseudo-element-no-unknown": [true, {
+          "ignorePseudoElements": ["ng-deep"]
+        }],
+        "at-rule-no-unknown": null,
+        "rule-empty-line-before": ["always", {
+            "except": ["inside-block"]
+        }]
+    },
+    "syntax": "scss"
+}

@@ -1,0 +1,55 @@
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Container } from './container';
+
+describe('Container', () => {
+  it('should create an instance', () => {
+    expect(new Container()).toBeTruthy();
+  });
+
+
+  it('should serialize the form', () => {
+    const container = new Container();
+    const fb = new FormBuilder();
+    container.formGroup = fb.group({
+      foo: new FormControl('bar'),
+    });
+    expect(container.serialize()).toEqual({ foo: 'bar' });
+  });
+
+  it('should format number', () => {
+    const container = new Container();
+    const fb = new FormBuilder();
+    container.formGroup = fb.group({
+      foo: new FormControl('1.2'),
+    });
+    expect(container.getNumber(container.formGroup.controls.foo)).toEqual(1.2);
+  });
+
+  it('should format number', () => {
+    const container = new Container();
+    const fb = new FormBuilder();
+    container.formGroup = fb.group({
+      foo: new FormControl('1,2'),
+    });
+    expect(container.getNumber(container.formGroup.controls.foo)).toEqual(1.2);
+  });
+
+  it('should format number', () => {
+    const container = new Container();
+    const fb = new FormBuilder();
+    container.formGroup = fb.group({
+      foo: new FormControl('a'),
+    });
+    expect(container.getNumber(container.formGroup.controls.foo)).toEqual('a');
+  });
+
+  it('should format number', () => {
+    const container = new Container();
+    const fb = new FormBuilder();
+    container.formGroup = fb.group({
+      foo: new FormControl('a'),
+    });
+    expect(container.getNumber(container.formGroup.controls.novalue)).toEqual(undefined);
+  });
+
+});

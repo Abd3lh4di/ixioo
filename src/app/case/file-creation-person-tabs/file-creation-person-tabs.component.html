@@ -1,0 +1,12 @@
+<div class="borrowers-tabs">
+    <button *ngIf="entityName" class="tab-button" mat-flat-button 
+        [color]="entitySelected ? 'accent' : ''"
+        (click)="selectEntity.emit()">
+        {{ entityName }}
+    </button>
+    <button *ngFor="let name of casesName; let idx = index" 
+        class="tab-button" mat-flat-button [color]="(!entitySelected && activeBorrower === idx) ? 'accent' : ''"
+        (click)="selectPerson.emit(idx)">
+        {{ name }}
+    </button>
+</div>

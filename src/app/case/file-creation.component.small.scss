@@ -1,0 +1,57 @@
+@import '../app.component.scss';
+@import '../../variables';
+
+$left-menu-width: 50px;
+
+@media screen and (max-width: $small-width-limit) {
+  .hidden-when-small {
+    display: none;
+  }
+  .case-header.back-link {
+    min-width: $left-menu-width;
+  }
+  .side-nav {
+    width: $left-menu-width;
+    padding-top: 10px;
+    .menu-btn {
+      position: relative;
+      z-index: 9 !important;
+      margin-bottom: 10px;
+      padding: 0 !important;
+      width: $left-menu-width !important;
+      min-width: unset !important;
+      border-radius: 0 !important;
+      background-color: $toaztr-dark;
+      .btn-label {
+        display: none;
+      }
+    }
+    .menu-btn:hover {
+      padding: 0 !important;
+      margin-left: 13px;
+      width: $left-menu-width/2 !important;
+      color: #fff;
+      background-color: $toaztr-dark;
+      .btn-label {
+        height: 36px;
+        line-height: 36px;
+        display: inline-block !important;
+        white-space: nowrap !important;
+        background-color: $toaztr-dark;
+        color: #fff;
+        padding-left: 15px;
+        padding-right: 15px;
+        border-radius: 5px;
+      }
+    }
+  }
+  ::ng-deep .mat-tab-label {
+    height: 35px !important;
+    padding: 0 10px !important;
+    min-width: 100px !important;
+  }
+  .legal-person-choice {
+    margin-left: 5px;
+    margin-top: 15px;
+  }
+}

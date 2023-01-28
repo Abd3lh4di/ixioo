@@ -1,0 +1,17 @@
+<mat-card class="m-3">
+    <mat-card-content class="d-flex flex-column justify-content-center">
+        <div class="d-flex justify-content-between">
+            <a mat-flat-button routerLink="/home">
+                <mat-icon>arrow_back</mat-icon>
+                Retour
+            </a>
+            <a mat-raised-button color='primary' routerLink="/partner">
+                <mat-icon>groups</mat-icon>
+                Nouveau partenaire
+            </a>
+        </div>
+        <h2 class="align-self-center mt-3">Tous les partenaires</h2>
+        <app-partner-search [hideDeleteOption]="false" (partnerSelected)="editPartner($event)" class="mt-1"></app-partner-search>
+    </mat-card-content>
+</mat-card>
+

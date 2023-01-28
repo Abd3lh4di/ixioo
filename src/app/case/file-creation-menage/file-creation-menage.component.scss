@@ -1,0 +1,25 @@
+@import '../file-creation.component.small.scss';
+
+.household {
+  ::ng-deep mat-card {
+    margin: 3px;
+  }
+}
+
+.small-width {
+  width: 50px;
+}
+
+.childs {
+  height: 400px;
+  width: 500px;
+  overflow: auto;
+}
+
+.family-composition {
+  width: 420px;
+}
+
+.bank-info-small {
+  display: block;
+}

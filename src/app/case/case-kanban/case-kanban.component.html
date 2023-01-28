@@ -1,0 +1,63 @@
+<div class="columns-container">
+    <div class="box box-1 d-flex">
+        <div class="user-chip" *ngFor="let user of usersList" [class.selected]="userFilter === user.ref"
+            (click)="filterByUser(user.ref)">
+            {{ user.name }}
+        </div>
+        <div class="user-chip" (click)="filterByUser('')">
+            <mat-icon>highlight_off</mat-icon>Supprimer le filtre
+        </div>
+    </div>
+
+    <div cdkDropListGroup class="box task-board mt-3 flex-auto flex-row">
+
+        <div class="task-container todo overflow-hidden">
+            <mat-progress-bar *ngIf="fetchNewCaseData.fetching" mode="indeterminate"></mat-progress-bar>
+            <div class="task-container-header">Nouveau</div>
+            <div cdkDropList #newList="cdkDropList" [cdkDropListData]="new" id="new"
+                 [cdkDropListConnectedTo]="[ongoingList,doneList]" class="task-list overflow-auto" (cdkDropListDropped)="drop($event)"
+                infiniteScroll appInfiniteScrollTrigger [items]="new" [infiniteScrollDistance]="2" [infiniteScrollThrottle]="80" (scrolled)="onNewScrolled()" [scrollWindow]="false" [immediateCheck]="true">
+                <div class="task mat-elevation-z2" *ngFor="let item of new" cdkDrag (click)="editCase(item)"
+                    [class]="getClassFromStatus(item.status)">
+                    <span>{{ item.name }}</span>
+                    <span class="created">Crée par {{ getUserName(item.createdBy) }}</span>
+                    <div class="status-chip">{{ caseStatusToString(item.status) }}</div>
+                    <span class="assigned-to">Assigné à {{ getUserName(item.assignedTo)?? 'Personne' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="task-container in-progress">
+            <mat-progress-bar *ngIf="fetchOnGoingCaseData.fetching" mode="indeterminate"></mat-progress-bar>
+            <div class="task-container-header">En cours</div>
+            <div cdkDropList #ongoingList="cdkDropList" [cdkDropListData]="ongoing" id="ongoing" 
+                [cdkDropListConnectedTo]="[newList,doneList]" class="task-list" (cdkDropListDropped)="drop($event)"
+                infiniteScroll appInfiniteScrollTrigger [items]="ongoing" [infiniteScrollDistance]="2" [infiniteScrollThrottle]="80" (scrolled)="onOnGoingScrolled()" [scrollWindow]="false" [immediateCheck]="true">
+                <div class="task mat-elevation-z2" *ngFor="let item of ongoing" cdkDrag (click)="editCase(item)"
+                    [class]="getClassFromStatus(item.status)">
+                    <span>{{ item.name }}</span>
+                    <span class="created">Crée par {{ getUserName(item.createdBy) }}</span>
+                    <div class="status-chip">{{ caseStatusToString(item.status) }}</div>
+                    <span class="assigned-to">Assigné à {{ getUserName(item.assignedTo)?? 'Personne' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="task-container done">
+            <mat-progress-bar *ngIf="fetchDoneCaseData.fetching" mode="indeterminate"></mat-progress-bar>
+            <div class="task-container-header">Clos</div>
+            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" id="done"
+                [cdkDropListConnectedTo]="[newList,ongoingList]" class="task-list" (cdkDropListDropped)="drop($event)"
+                infiniteScroll appInfiniteScrollTrigger [items]="done" [infiniteScrollDistance]="2" [infiniteScrollThrottle]="80" (scrolled)="onDoneScrolled()" [scrollWindow]="false" [immediateCheck]="true">
+                <div class="task mat-elevation-z2" *ngFor="let item of done" cdkDrag (click)="editCase(item)"
+                    [class]="getClassFromStatus(item.status)">
+                    <span>{{ item.name }}</span>
+                    <span class="created">Crée par {{ getUserName(item.createdBy) }}</span>
+                    <div class="status-chip">{{ caseStatusToString(item.status) }}</div>
+                    <span class="assigned-to">Assigné à {{ getUserName(item.assignedTo)?? 'Personne' }}</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<mat-tab-group>
+    <mat-tab label="Récapitulatif">
+        <div class="scroll">
+            <app-debt-consolidation-summary #debtSummary
+                [results]="simulationResults" 
+                [parameters]="simulationParameters">
+            </app-debt-consolidation-summary>
+        </div>
+    </mat-tab>
+    <mat-tab label="Détails du rachat">
+        <app-loan-to-consolidate-caracteristics [parameters]="simulationParameters" [results]="simulationResults">
+        </app-loan-to-consolidate-caracteristics>
+    </mat-tab>
+    <mat-tab label="Profil de remboursement">
+        <div class="d-flex flex-column mt-3 profileChartContainer">
+            <app-profile-chart #profileChart
+                [results]="simulationResults.funding_plan" [params]="simulationParameters" >
+            </app-profile-chart>
+            <button mat-button (click)="popupProfileChart()"><mat-icon>open_in_new</mat-icon>
+                Afficher en grand
+            </button>
+        </div>
+    </mat-tab>
+    <mat-tab label="Distribution des coûts et des amortissements">
+        <div class="d-flex flex-column">
+            <app-loans-and-burdens-summary [fundingResults]="simulationResults.funding_plan">
+            </app-loans-and-burdens-summary>
+            <div class="mx-auto w-65">
+                <app-costs-distribution-chart #costsDistributionChart 
+                    [results]="simulationResults.funding_plan">
+                </app-costs-distribution-chart>
+            </div>
+            <button mat-button (click)="popupLoanBurdenSummary()"><mat-icon>open_in_new</mat-icon>
+                Afficher le detail
+            </button>
+        </div>
+    </mat-tab>
+    <mat-tab label="Tableau(x) d'amortissement">
+        <div class="mx-auto mt-4">
+            <app-amortization-table [fundingResults]="simulationResults.funding_plan">
+            </app-amortization-table>
+        </div>
+    </mat-tab>
+</mat-tab-group>

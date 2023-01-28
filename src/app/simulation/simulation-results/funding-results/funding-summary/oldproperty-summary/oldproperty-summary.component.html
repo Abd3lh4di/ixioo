@@ -1,0 +1,66 @@
+<table class="results-table">
+    <tbody>
+        <tr class="text-black" [style.background-color]="'#' + colormap[7]">
+            <td></td>
+            <td>{{ balancingPriceStr }}</td>
+            <td class="text-right">
+                {{ (expenses.price?expenses.price:0) | currency:'EUR' }}
+            </td>
+            <td class="bold text-center" rowspan="3">Total projet</td>
+            <td class="bold text-center" rowspan="3">{{ totalProject | currency:'EUR'}}</td>
+        </tr>
+        <tr class="text-black" [style.background-color]="'#' + colormap[7]">
+            <td class="text-center ">+</td>
+            <td>{{ balancingWorkPriceStr }}</td>
+            <td class="text-right">
+                {{ (expenses.works_price?expenses.works_price:0) | currency:'EUR' }}
+            </td>
+        </tr>
+        <tr class="text-black" [style.background-color]="'#' + colormap[7]">
+            <td class="text-center ">+</td>
+            <td>{{ balancingOtherExpensesStr }}</td>
+            <td class="text-right">{{ (expenses.other_expenses?expenses.other_expenses:0) | currency:'EUR'}}</td>
+        </tr>
+        <tr [style.background-color]="'#' + colormap[2]">
+            <td class="text-center ">+</td>
+            <td>{{ balancingBrokerFeesStr }}</td>
+            <td class="text-right">{{ (fundingFees?.broker_fees?fundingFees.broker_fees:0) | currency:'EUR'}}</td>
+            <td class="bold text-center" rowspan="5">Total frais</td>
+            <td class="bold text-center" rowspan="5">{{ totalFees | currency:'EUR'}}</td>
+        </tr>
+        <tr [style.background-color]="'#' + colormap[2]">
+            <td class="text-center ">+</td>
+            <td>{{ balancingFileManagementFeesStr }}</td>
+            <td class="text-right">{{ (fundingFees?.file_management_fees?fundingFees.file_management_fees:0) | currency:'EUR' }}</td>
+        </tr>
+        <tr [style.background-color]="'#' + colormap[2]">
+            <td class="text-center ">+</td>
+            <td>{{ balancingNotaryFeesStr }}</td>
+            <td class="text-right">{{ (fees.notary_fees?fees.notary_fees:0) | currency:'EUR' }}</td>
+        </tr>
+        <tr [style.background-color]="'#' + colormap[2]">
+            <td class="text-center ">+</td>
+            <td>{{ balancingAgencyFeesStr }}</td>
+            <td class="text-right">{{ (fees.agency_fees?fees.agency_fees:0) | currency:'EUR' }}</td>
+        </tr>
+        <tr [style.background-color]="'#' + colormap[2]">
+            <td class="text-center ">+</td>
+            <td>{{ balancingGuarantiesStr }}</td>
+            <td class="text-right">
+                {{ (results.summary.total_guaranty?results.summary.total_guaranty:0) | currency:'EUR' }}
+            </td>
+        </tr>
+        <tr [style.background-color]="'#' + colormap[4]">
+            <td class="text-center ">-</td>
+            <td>{{ balancingPersonalFundingStr }}</td>
+            <td class="text-right">{{ (results.summary.total_personal_funding?results.summary.total_personal_funding:0) | currency:'EUR' }}</td>
+        </tr>
+        <tr class="bold" [style.background-color]="'#' + colormap[0]">
+            <td class="text-center ">=</td>
+            <td>{{ balancingBorrowedAmountStr }}</td>
+            <td class="text-right">
+                {{ (totalProject + totalFees - (results.summary.total_personal_funding?results.summary.total_personal_funding:0)) | currency:'EUR' }}
+            </td>
+        </tr>
+    </tbody>
+</table>

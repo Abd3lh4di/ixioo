@@ -1,0 +1,221 @@
+<mat-accordion [formGroup]="formGroup">
+    <mat-expansion-panel #expansionPanel expanded="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title class="d-flex align-items-center">
+                <h3 class="m-0">Informations relatives au bien à acquérir</h3>
+            </mat-panel-title>
+            <mat-panel-description>Renseignez les informations relatives à l'acquisition</mat-panel-description>
+        </mat-expansion-panel-header>
+        
+        <div class="d-flex justify-content-start">
+            <mat-form-field appearance="outline" class="mr-3" [style.width.px]=180>
+                <mat-label>Destination de l'acquisition</mat-label>
+                <mat-select formControlName="acquisitionDestination">
+                    <mat-option value="MAIN_PROPERTY" selected>Résidence principale</mat-option>
+                    <mat-option value="SECONDARY_PROPERTY" selected>Résidence secondaire</mat-option>
+                    <mat-option value="RENTAL_PROPERTY" selected>Investissement locatif</mat-option>
+                    <mat-option value="BUSINESS_ESTATE" selected>Bien professionnel</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mr-3" [style.width.px]=180>
+                <mat-label>Nature de l'acquisition</mat-label>
+                <mat-select formControlName="acquisitionNature">
+                    <mat-option value="FLAT" selected>Appartement</mat-option>
+                    <mat-option value="HOUSE" selected>Maison</mat-option>
+                    <mat-option value="LAND" selected>Terrain</mat-option>
+                    <mat-option value="LAND_CONSTRUCTION" selected>Terrain et construction</mat-option>
+                    <mat-option value="CAR_PARKING" selected>Parking</mat-option>
+                    <mat-option value="COMMERCIAL_LOCAL" selected>Local commercial</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mr-3" [style.width.px]=180>
+                <mat-label>Etat de l'acquisition</mat-label>
+                <mat-select formControlName="acquisitionState">
+                    <mat-option value="OLD" selected>Ancien</mat-option>
+                    <mat-option value="OLD_RW" selected>Ancien avec travaux</mat-option>
+                    <mat-option value="NEW" selected>Neuf</mat-option>
+                    <mat-option value="VEFA" selected>VEFA</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Prix du bien</mat-label>
+                <input matInput formControlName="acquisitionPrice" title="Prix du bien">
+                <mat-error *ngIf="acquisitionPrice.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="acquisitionState.value === 'OLD_RW'" appearance="outline" class="full-width mr-3">
+                <mat-label>Prix des travaux</mat-label>
+                <input matInput formControlName="acquisitionPriceRenewalWork" title="Prix des travaux">
+                <mat-error *ngIf="acquisitionPriceRenewalWork.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="d-flex justify-content-start">
+            <mat-form-field appearance="outline" class="full-width mr-3 fixed-input-width-600">
+                <mat-label>Description du bien</mat-label>
+                <input matInput formControlName="acquisitionDescription" title="Description du bien">
+                <mat-error *ngIf="acquisitionDescription.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="d-flex justify-content-start">
+            <mat-form-field appearance="outline" class="full-width mr-3 fixed-input-width-600">
+                <mat-label>Adresse du bien</mat-label>
+                <input matInput formControlName="acquisitionAddress" title="Adresse du bien">
+                <mat-error *ngIf="acquisitionAddress.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Code postal</mat-label>
+                <input matInput formControlName="acquisitionPostalCode" title="Code postal">
+                <mat-error *ngIf="acquisitionPostalCode.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Ville</mat-label>
+                <input matInput formControlName="acquisitionCity" title="Villes">
+                <mat-error *ngIf="acquisitionCity.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="acquisitionNature.value === 'FLAT' || acquisitionNature.value === 'HOUSE'" class="d-flex justify-content-start">
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Surface du bien</mat-label>
+                <input matInput formControlName="acquisitionSurface" title="Surface du bien">
+                <mat-error *ngIf="acquisitionSurface.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Surface des annexes</mat-label>
+                <input matInput formControlName="acquisitionAnnexesSurface" title="Surface des annexes">
+                <mat-error *ngIf="acquisitionAnnexesSurface.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Nombre de pièces</mat-label>
+                <input matInput formControlName="acquisitionRoomsNumber" title="Nombre de pièces">
+                <mat-error *ngIf="acquisitionRoomsNumber.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Note DPE</mat-label>
+                <input matInput formControlName="acquisitionDPE" title="Note DPE (Diagnostic de Performance Energétique)">
+                <mat-error *ngIf="acquisitionDPE.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="acquisitionNature.value === 'FLAT' || acquisitionNature.value === 'HOUSE'" class="d-flex justify-content-start">
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Parcelle cadastrale</mat-label>
+                <input matInput formControlName="acquisitionCadastre" title="Parcelle cadastrale">
+                <mat-error *ngIf="acquisitionCadastre.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="acquisitionNature.value === 'LAND'" class="d-flex justify-content-start">
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Surface du terrain</mat-label>
+                <input matInput formControlName="acquisitionLandSurface" title="Surface du terrain">
+                <mat-error *ngIf="acquisitionLandSurface.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Parcelle cadastrale</mat-label>
+                <input matInput formControlName="acquisitionCadastre" title="Parcelle cadastrale">
+                <mat-error *ngIf="acquisitionCadastre.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="acquisitionNature.value === 'LAND_CONSTRUCTION'" class="d-flex justify-content-start">
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Surface du terrain</mat-label>
+                <input matInput formControlName="acquisitionLandSurface" title="Surface du terrain">
+                <mat-error *ngIf="acquisitionLandSurface.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Surface habitable prévue</mat-label>
+                <input matInput formControlName="acquisitionFutureSurface" title="Surface habitable prévue">
+                <mat-error *ngIf="acquisitionFutureSurface.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Nombre de pièces</mat-label>
+                <input matInput formControlName="acquisitionRoomsNumber" title="Nombre de pièces">
+                <mat-error *ngIf="acquisitionRoomsNumber.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Parcelle cadastrale</mat-label>
+                <input matInput formControlName="acquisitionCadastre" title="Parcelle cadastrale">
+                <mat-error *ngIf="acquisitionCadastre.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="acquisitionNature.value === 'CAR_PARKING' || acquisitionNature.value === 'COMMERCIAL_LOCAL'" class="d-flex justify-content-start">
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Surface du bien</mat-label>
+                <input matInput formControlName="acquisitionSurface" title="Surface du bien">
+                <mat-error *ngIf="acquisitionSurface.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Parcelle cadastrale</mat-label>
+                <input matInput formControlName="acquisitionCadastre" title="Parcelle cadastrale">
+                <mat-error *ngIf="acquisitionCadastre.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="d-flex justify-content-start">
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Date de signature du compromis</mat-label>
+                <input matInput type="date" formControlName="compromisDate" title="Date de signature du compromis">
+                <mat-error *ngIf="compromisDate.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Date de levée des conditions suspensives</mat-label>
+                <input matInput type="date" formControlName="conditionsSuspensivesDate" title="Date de levée des conditions suspensives">
+                <mat-error *ngIf="conditionsSuspensivesDate.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width mr-3">
+                <mat-label>Date de signature de l'acte</mat-label>
+                <input matInput type="date" formControlName="signatureActeDate" title="Date de signature de l'acte">
+                <mat-error *ngIf="signatureActeDate.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="acquisitionState.value === 'VEFA'" appearance="outline" class="full-width mr-3">
+                <mat-label>Date de livraison prévisionnelle</mat-label>
+                <input matInput type="date" formControlName="deliveryDate" title="Date de livraison prévisionnelle">
+                <mat-error *ngIf="deliveryDate.hasError('required')">
+                    Doit être <strong>rempli</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        
+    </mat-expansion-panel>
+    
+</mat-accordion>

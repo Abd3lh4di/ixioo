@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{ inputData.name }}</h1>
+<div mat-dialog-content >
+    <h3>Choisissez le nouveau status du dossier</h3>
+    <div class="d-flex flex-row">
+        <div *ngFor="let status of inputData.statuses" [class]="getClassFromStatus(status)" class="mr-3" >
+            <div class="status-chip" style="cursor: pointer; padding: 10px;" [mat-dialog-close]="status">{{ caseStatusToString(status) }}</div>
+        </div>
+    </div>
+</div>

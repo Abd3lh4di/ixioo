@@ -1,0 +1,29 @@
+import { Incomes } from './incomes';
+import { FormBuilder } from '@angular/forms';
+
+describe('Incomes', () => {
+  let incomes: Incomes;
+
+  beforeEach(async () => {
+    const fb = new FormBuilder();
+    incomes = new Incomes(fb);
+  });
+
+  it('should create an instance', () => {
+    expect(incomes).toBeTruthy();
+  });
+
+  it('should get the value', () => {
+    incomes.form.patchValue({
+      mensualIncomes: 2000,
+      allowedDebt: 33,
+      contribution: 100
+    });
+    expect(incomes.mensualIncomes).toEqual(2000);
+    expect(incomes.allowedDebt).toEqual(33);
+    expect(incomes.contribution).toEqual(100);
+    expect(incomes.yearlyIncome).toBeUndefined();
+    expect(incomes.peopleInHousehold).toEqual(1);
+  });
+
+});

@@ -1,0 +1,44 @@
+@import '../../../../../variables';
+
+.green {
+  background-color: #1a9850;
+  color: #fff;
+}
+
+.red {
+  background-color: #d73027;
+  color: #fff;
+}
+
+.amortization-table {
+  height: 620px;
+  overflow: auto;
+}
+
+@media screen and (max-width: $small-width-limit) {
+  // .amortization-table {
+  //   height: 488px;
+  // }
+}
+
+.title {
+  margin: 10px;
+  text-align: center;
+  span {
+    font-size: large;
+  }
+}
+
+.summary-table {
+  margin: auto;
+}
+
+.summary-table-td-right {
+  text-align: right;
+  padding: 0 10px 0 10px;
+}
+
+.summary-table-td-left {
+  text-align: left;
+  padding: 0 10px 0 10px;
+}

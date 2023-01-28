@@ -1,0 +1,69 @@
+<div class="project m-1">
+    <mat-card class="mat-elevation-z4">
+        <mat-card-content class="d-flex flex-column justify-content-center"  [ngClass]="(scenario)?'small':'full'">
+            <h1 *ngIf="!scenario" class="mb-3">Selectionner un type de projet ci-dessous</h1>
+            <mat-form-field *ngIf="!scenario" class="mb-3" appearance="outline" >
+                <mat-label>Chercher un projet</mat-label>
+                <input matInput type="text" [(ngModel)]="inputProject" (ngModelChange)="filterProject($event)">
+            </mat-form-field>
+              
+            <div class="d-flex flex-wrap justify-content-start w-100">
+                <button class="project-btn" mat-raised-button 
+                    *ngIf="scenario" (click)="resetScenario()">Changer de projet
+                </button>
+                <button class="project-btn" mat-raised-button 
+                    *ngFor="let project of projectListFilter"
+                    [color]="scenario === project ? 'accent' : 'primary'"
+                    (click)="selectScenario(project)">{{ projectToString(project) }}
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="scenario" class="flex-fill mat-elevation-z4 mt-2">
+        <mat-card-content>
+            <ng-container [ngSwitch]="scenario">
+                <ng-container *ngSwitchCase="'BUDGET'" [ngTemplateOutlet]="budgetTpl"></ng-container>
+                <ng-container *ngSwitchCase="'LAND'" [ngTemplateOutlet]="landTpl"></ng-container>
+                <ng-container *ngSwitchCase="'OLD_PROPERTY'" [ngTemplateOutlet]="oldPropertyTpl"></ng-container>
+                <ng-container *ngSwitchCase="'NEW_PROPERTY'" [ngTemplateOutlet]="newPropertyTpl"></ng-container>
+                <ng-container *ngSwitchCase="'WORKS'" [ngTemplateOutlet]="worksTpl"></ng-container>
+                <ng-container *ngSwitchCase="'HOUSE_CONSTRUCTION'" [ngTemplateOutlet]="houseConstructionTpl"></ng-container>
+                <ng-container *ngSwitchCase="'PINEL'" [ngTemplateOutlet]="pinelTpl"></ng-container>
+                <ng-container *ngSwitchCase="'DEBT_CONSOLIDATION'" [ngTemplateOutlet]="debtConsolidationTpl"></ng-container>
+                <ng-container *ngSwitchCase="'BALANCING_ADJUSTMENT'" [ngTemplateOutlet]="balancingAdjustmentTpl"></ng-container>
+                <!--ng-container *ngSwitchCase="'LMNP'" [ngTemplateOutlet]="lmnpTpl"></ng-container-->
+            </ng-container>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<ng-template #budgetTpl>
+    <app-file-creation-project-budget [budget]="project"></app-file-creation-project-budget>
+</ng-template>
+<ng-template #landTpl>
+    <app-file-creation-project-land [land]="project"></app-file-creation-project-land>
+</ng-template>
+<ng-template #oldPropertyTpl>
+    <app-file-creation-project-oldproperty [oldProperty]="project"></app-file-creation-project-oldproperty>
+</ng-template>
+<ng-template #newPropertyTpl>
+    <app-file-creation-project-newproperty [newProperty]="project"></app-file-creation-project-newproperty>
+</ng-template>
+<ng-template #worksTpl>
+    <app-file-creation-project-works [works]="project"></app-file-creation-project-works>
+</ng-template>
+<ng-template #houseConstructionTpl>
+    <app-file-creation-project-houseconstruction [houseConstruction]="project"></app-file-creation-project-houseconstruction>
+</ng-template>
+<ng-template #pinelTpl>
+    <app-file-creation-project-pinel [pinel]="project"></app-file-creation-project-pinel>
+</ng-template>
+<ng-template #debtConsolidationTpl>
+    <app-file-creation-project-debt-consolidation [personNames]="personNames" [debtConsolidation]="project"></app-file-creation-project-debt-consolidation>
+</ng-template>
+<ng-template #balancingAdjustmentTpl>
+    <app-file-creation-project-balancing-adjustment [balancingAdjustment]="project"></app-file-creation-project-balancing-adjustment>
+</ng-template>
+<ng-template #lmnpTpl>
+    <app-file-creation-project-lmnp [lmnp]="project"></app-file-creation-project-lmnp>
+</ng-template>

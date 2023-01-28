@@ -1,0 +1,52 @@
+import { FormBuilder } from '@angular/forms';
+import { Acquisition } from './acquisition';
+
+
+describe('Acquisition', () => {
+  let acquisition: Acquisition;
+
+  beforeEach(async () => {
+    const fb = new FormBuilder();
+    acquisition = new Acquisition(fb);
+  });
+
+  it('should create an instance', () => {
+    expect(acquisition).toBeTruthy();
+  });
+
+  it('should get the value', () => {
+    acquisition.form.patchValue({
+      price: 200000,
+      renewalWorksAmount: 100,
+      department: { number: '05' },
+      city: 'NICE'
+    });
+    expect(acquisition.price).toEqual(200000);
+    expect(acquisition.constructionPrice).toBeUndefined();
+    expect(acquisition.acquisitionState).toEqual('NEW');
+    expect(acquisition.renewalWorksAmount).toEqual(100);
+    expect(acquisition.department).toEqual({ number: '05' });
+    expect(acquisition.city).toEqual('NICE');
+    expect(acquisition.zone).toEqual('A');
+  });
+
+  it('should validate the form', () => {
+    acquisition.form.patchValue({
+      price: 200000,
+      renewalWorksAmount: 100,
+      department: { number: '05' },
+      city: 'NICE'
+    });
+    expect(acquisition.invalid()).toBeFalse();
+  });
+
+  it('should invalidate the form', () => {
+    acquisition.form.patchValue({
+      renewalWorksAmount: 100,
+      department: { number: '05' },
+      city: 'NICE'
+    });
+    expect(acquisition.invalid()).toBeTrue();
+  });
+});
+

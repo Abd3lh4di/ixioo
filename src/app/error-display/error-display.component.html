@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Oups, nous avons un soucis</h1>
+<div mat-dialog-content>
+    <h3>{{data.header}}</h3>
+    <p>
+        {{data.text}}
+    </p>
+</div>
+<div mat-dialog-actions>
+  <!-- <button mat-button (click)="onNoClick()">Ouvrir un ticket</button> -->
+  <button mat-button cdkFocusInitial (click)="close()">Compris !</button>
+</div>

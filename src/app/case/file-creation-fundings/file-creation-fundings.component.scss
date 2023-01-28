@@ -1,0 +1,112 @@
+@import '../../../variables';
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.small-btn {
+  height: 39px;
+}
+
+.small-icon {
+  font-size: 15px;
+  vertical-align: baseline;
+  display: inline;
+}
+
+.tab-button {
+  line-height: 30px !important;
+  padding: 0 8px !important;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+// mat-form-field text-center ng-tns-c190-22 mat-primary mat-form-field-type-mat-input
+// mat-form-field-appearance-standard mat-form-field-can-float mat-form-field-has-label ng-pristine ng-valid ng-touched mat-form-field-hide-placeholder
+
+// .funding-results-header .mat-card-header-text {
+//   margin: 0;
+// }
+
+.funding-parameters {
+  width: 500px;
+  min-width: 500px;
+}
+
+.result-box {
+  height: 750px;
+  max-height: 750px;
+  overflow: hidden;
+}
+
+@media screen and (max-width: $small-width-limit) {
+  // .result-box {
+  //   height: 594px;
+  //   max-height: 594px;
+  // }
+}
+
+.loan-box {
+  height: 450px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.small-input-width {
+  width: 160px;
+}
+
+.fundings-choice-list {
+  // background-color: red;
+
+  min-width: 400px !important;
+  max-width: 400px !important;
+  width: 400px !important;
+
+  // height: 500px !important;
+  // min-height: 500px !important;
+  max-height: 400px !important;
+}
+
+.loan-item {
+  border-radius: 5px;
+  .delete-loan {
+    color: #c2185b;
+  }
+  .loan-name {
+    max-width: 170px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  ::ng-deep .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1em) scale(0.75) !important;
+  }
+}
+
+.small-inputs {
+  ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0 !important; }
+  ::ng-deep .mat-form-field-wrapper { padding-bottom: 0.34375em; }
+  ::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+  }
+  ::ng-deep input {
+    height: 17px !important;
+  }
+  ::ng-deep .mat-card-header .mat-card-title {
+    font-size: 12px !important;
+  }
+  ::ng-deep .mat-card-header-text {
+    margin: 0 2px;
+  }
+  ::ng-deep .mat-button-toggle-label-content {
+    line-height: 33px !important;
+  }
+}
+
+.burden-name {
+  width: 130px;
+}

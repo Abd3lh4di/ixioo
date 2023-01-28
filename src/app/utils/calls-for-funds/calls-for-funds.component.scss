@@ -1,0 +1,30 @@
+.content {
+  height: 500px;
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.figure {
+  width: 60px;
+}
+
+.reason {
+  width: 250px;
+}
+
+.small-inputs {
+
+  // ::ng-deep input {
+  //   height: 17px !important;
+  // }
+  ::ng-deep .mat-card-header .mat-card-title {
+    font-size: 12px !important;
+  }
+  ::ng-deep .mat-card-header-text {
+    margin: 0 2px;
+  }
+
+  // ::ng-deep .mat-button-toggle-label-content {
+  //   line-height: 33px !important;
+  // }
+}

@@ -1,0 +1,91 @@
+@import '../../styles.scss';
+
+//TODO: Check the code below, may be unused
+
+$badge-height: 45px;
+$header-font-size: 17px;
+
+.btn-link {
+  display: block;
+  text-transform: none;
+  font-size: 11px;
+  font-weight: normal;
+  color: $tz-primary;
+  text-decoration: underline;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-link-inline {
+  display: inline;
+  margin-right: 3rem;
+}
+
+.tz-badge {
+  transition: none;
+  height: $badge-height;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  font-size: 14px;
+  input,
+  select {
+    width: 150px;
+    padding: 0.3rem 0.5rem;
+    line-height: 1.5;
+    font-size: 14px;
+    font-weight: 400;
+    color: $tz-primary;
+    border: 1px solid $tz-font-color;
+    border-radius: 0.25rem;
+  }
+  input {
+    text-align: right;
+  }
+  input::placeholder {
+    text-align: left;
+  }
+  .input-amount {
+    width: 100px;
+  }
+}
+
+.input-small {
+  max-width: 70px;
+}
+
+.input-medium {
+  max-width: 150px;
+}
+
+.tz-badge-close {
+  color: $tz-primary; // $tz-danger;
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 15px;
+  vertical-align: baseline;
+}
+
+.tz-badge-outline-primary {
+  color: $tz-primary;
+  border-color: $tz-primary;
+}
+
+.tz-badge-outline-primary:hover {
+  background-color: $tz-primary;
+  color: $tz-light;
+}
+
+.tz-badge-outline-primary:hover .tz-fab-icon,
+.tz-badge-outline-primary:hover .tz-badge-close {
+  color: $tz-light;
+}
+
+.divider {
+  height: 100%;
+  border-right: 1px solid $tz-primary;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}

@@ -1,0 +1,22 @@
+@import '../../../variables';
+
+.weight-input {
+  width: 110px;
+}
+
+.colored-tooltip {
+  background: #c8e6c9;
+  color: black !important;
+  font-size: 15px;
+}
+
+.burdens-container {
+  max-height: 540px;
+  height: 540px;
+  width: 640px;
+  overflow: auto;
+}
+
+.charge {
+  border-bottom: 1px solid $toaztr-dark;
+}

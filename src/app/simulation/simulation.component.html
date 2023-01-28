@@ -1,0 +1,26 @@
+<app-simulation-parameters [hidden]="simulationLaunched || simulationResultsReceived" 
+    [initValue]="initValue"
+    (launchBudgetSimulation)="launchBudgetSimulation($event)"
+    (launchFundingSimulation)="launchFundingSimulation($event)"
+    (launchPinelSimulation)="launchPinelSimulation($event)"
+    (launchDebtConsolidationSimulation)="launchDebtConsolidationSimulation($event)">
+</app-simulation-parameters>
+
+<ng-template #loading>
+    <div class="d-flex justify-content-center flex-grow-1" *ngIf="(simulationLaunched && !simulationResultsReceived) ">
+        <div class="d-flex flex-column">
+            <mat-spinner></mat-spinner>
+            <span class="pt-5">Veuillez patienter</span>
+        </div>
+    </div>
+</ng-template>
+
+<div *ngIf="(simulationDetails$ | async) as simulationDetails; else loading">
+
+    <button mat-button (click)="backToParameters()">
+        <mat-icon>build</mat-icon>
+        Changer les paramètres
+    </button>
+    
+    <app-simulation-results [simulationDetails]="simulationDetails"></app-simulation-results>
+</div>

@@ -1,0 +1,139 @@
+$toaztr-dark: #29323d;
+
+// TODO: Check if used and remove
+$tz-font-color: #5c5c5c;
+$tz-primary: #2c3243;
+$tz-secondary: #22427c;
+$tz-faded-denim: #798fa8;
+$tz-brilliant-white: #eff0f1;
+$tz-flat-peter-river: #3498db;
+$tz-classic-blue: #0f4c81;
+$tz-classic-blue-soft: #add4f5;
+$tz-danger: #ff4136;
+$tz-secondary-light: rgba(219, 220, 232, 0.3);
+$tz-light: #f5f5f5;
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex > .mat-form-field-suffix {
+  height: 29px;
+}
+
+html,
+body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: $tz-font-color;
+  background-color: $tz-light;
+}
+
+button {
+  outline: none;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.cursor:hover {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+// Text colors
+
+.tz-text-primary {
+  color: $tz-primary !important;
+}
+
+.tz-text-brilliant-white {
+  color: $tz-brilliant-white !important;
+}
+// Background colors
+
+.tz-bg-faded-denim {
+  background-color: $tz-faded-denim !important;
+}
+
+.tz-bg-brilliant-white {
+  background-color: $tz-brilliant-white !important;
+}
+
+.tz-bg-flat-peter-river {
+  background-color: $tz-flat-peter-river !important;
+}
+
+.tz-bg-classic-blue {
+  background-color: $tz-classic-blue !important;
+}
+
+.tz-bg-classic-blue-soft {
+  background-color: $tz-classic-blue-soft !important;
+}
+// Buttons
+
+.tz-btn-primary {
+  color: $tz-light;
+  background-color: $tz-primary;
+  border-color: $tz-primary;
+}
+
+.tz-btn-primary:hover {
+  color: $tz-primary;
+  background-color: $tz-light;
+  border-color: $tz-primary;
+}
+
+.tz-btn-outline-primary {
+  color: $tz-primary;
+  background-color: $tz-light;
+  border-color: $tz-primary;
+}
+
+.tz-btn-outline-primary:hover {
+  color: $tz-light;
+  background-color: $tz-primary;
+  border-color: $tz-primary;
+}
+
+a.btn-lnk {
+  cursor: pointer;
+}
+
+.flex-break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+.w-65 {
+  width: 65%;
+}
+
+.w-60 {
+  width: 60%;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.full-width-dialog .cdk-overlay-pane {
+  max-width: 90vw !important;
+}
+
+.date-input {
+  width: 201px !important;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

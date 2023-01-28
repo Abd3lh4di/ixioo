@@ -1,0 +1,190 @@
+<div [formGroup]="balancingAdjustment">
+
+    <div>
+        <span class="header">Projet</span>
+        <div class="d-flex">
+            <mat-form-field appearance="outline" class="mr-3">
+                <mat-label>État du projet</mat-label>
+                <mat-select formControlName="project_state">
+                    <mat-option value="BEFORE_COMPROMIS">{{ projectStateToString('BEFORE_COMPROMIS') }}</mat-option>
+                    <mat-option value="COMPROMIS_SIGNED">{{ projectStateToString('COMPROMIS_SIGNED') }}</mat-option>
+                    <mat-option value="SIGNED">{{ projectStateToString('SIGNED') }}</mat-option>
+                    <mat-option value="CANCELED">{{ projectStateToString('CANCELED') }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div formGroupName="expenses">
+                <mat-form-field appearance="outline" class="mr-3">
+                    <mat-label>Montant total de la soulte</mat-label>
+                    <input type="number" matInput formControlName="total_balancing_adjustment_value">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mr-3">
+                    <mat-label>Prix des travaux</mat-label>
+                    <input type="number" matInput formControlName="works_price">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mr-3">
+                    <mat-label>Prix des meubles</mat-label>
+                    <input type="number" matInput formControlName="furnitures_price">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex">
+        <div formGroupName="surfaces">
+            <mat-form-field appearance="outline" class="mr-3">
+                <mat-label>Surface</mat-label>
+                <input type="number" matInput formControlName="surface">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mr-3">
+                <mat-label>Surface additionnelle</mat-label>
+                <input type="number" matInput formControlName="additional_surface">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mr-3">
+                <mat-label>Surface du terrain</mat-label>
+                <input type="number" matInput formControlName="land_surface">
+            </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Nombre de pièces</mat-label>
+            <input type="number" matInput formControlName="rooms_count">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Date de construction</mat-label>
+            <input matInput [matDatepicker]="constructionDatePicker" formControlName="construction_date" placeholder="JJ/MM/AAAA">
+            <mat-datepicker-toggle matSuffix [for]="constructionDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #constructionDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Normes de construction</mat-label>
+                <mat-select formControlName="project_state">
+                    <mat-option value="RT_2020">{{ constructionNormToString('RT_2020') }}</mat-option>
+                    <mat-option value="HPE_2012">{{ constructionNormToString('HPE_2012') }}</mat-option>
+                    <mat-option value="SIGNED">{{ constructionNormToString('RT_2012') }}</mat-option>
+                    <mat-option value="BBC_RENOV_2009">{{ constructionNormToString('BBC_RENOV_2009') }}</mat-option>
+                    <mat-option value="HPE_RENOV_2009">{{ constructionNormToString('HPE_RENOV_2009') }}</mat-option>
+                    <mat-option value="RT_2005">{{ constructionNormToString('RT_2005') }}</mat-option>
+                    <mat-option value="RT_ANTERIEUR">{{ constructionNormToString('RT_ANTERIEUR') }}</mat-option>
+                </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Numéro de lot</mat-label>
+            <input matInput formControlName="lot_number">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>DPE</mat-label>
+            <mat-select formControlName="dpe_rate">
+                <mat-option value="A">A</mat-option>
+                <mat-option value="B">B</mat-option>
+                <mat-option value="C">C</mat-option>
+                <mat-option value="D">D</mat-option>
+                <mat-option value="E">E</mat-option>
+                <mat-option value="F">F</mat-option>
+                <mat-option value="G">G</mat-option>
+                <mat-option value="VIERGE">VIERGE</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <app-administrative-information [administrativeInformation]="administrative_information"></app-administrative-information>
+    
+    <div formGroupName="expenses">
+        <span class="header">Frais du projet</span>
+        <mat-form-field formGroupName="fees" appearance="outline" class="mr-3">
+            <mat-label>Frais de notaire</mat-label>
+            <input type="number" matInput formControlName="notary_fees">
+            <mat-icon matSuffix>euro</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Autre frais</mat-label>
+            <input type="number" matInput formControlName="other_expenses">
+            <mat-icon matSuffix>euro</mat-icon>
+        </mat-form-field>
+    </div>
+
+
+    <div class="d-flex align-items-center small-inputs">
+        <span class="header m-0">Indivisaires</span>
+        <button class="ml-2" mat-button (click)="addUndividedPerson()">
+            <mat-icon>add</mat-icon>
+            Ajouter un indivisaire
+        </button>
+    </div>
+
+    <table class="table text-nowrap">
+        <thead>
+            <tr>
+                <th scope="col">Pourcentage détenu</th>
+                <th scope="col">Relation vis-à-vis de l'emprunteur</th>
+                <th scope="col">Civilité</th>  
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Commentaire</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="table-sm" formArrayName="undivided_persons">
+            <tr *ngFor="let line of undivided_persons.controls; let i = index">
+                <ng-container [formGroupName]="i">
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <input type="number" matInput appLimitNumber minNumber="0" maxNumber="100" placeholder="Ex. 20%" formControlName="share_percentage">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="standard" class="rate">
+                            <mat-select formControlName="relationship">
+                                <mat-option value="SPOUSE">Epouse</mat-option>
+                                <mat-option value="EX-SPOUSE">Ex-épouse</mat-option>
+                                <mat-option value="HUSBAND">Mari</mat-option>
+                                <mat-option value="EX-HUSBAND">Ex-mari</mat-option>
+                                <mat-option value="BROTHER">Frère</mat-option>
+                                <mat-option value="SISTER">Soeur</mat-option>
+                                <mat-option value="MOTHER">Mère</mat-option>
+                                <mat-option value="FATHER">Père</mat-option>
+                                <mat-option value="OTHER">Autre</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <div [formGroup]="this.getContact(i)">
+                                <mat-radio-group matInput formControlName="courtesy">
+                                    <mat-radio-button value="MRS">Madame</mat-radio-button>
+                                    <mat-radio-button value="MR">Monsieur</mat-radio-button>
+                                </mat-radio-group>
+                        </div>
+                    </td>
+                    <td>
+                        <div [formGroup]="this.getContact(i)">
+                            <mat-form-field appearance="standard">
+                                <input type="string" matInput placeholder="" formControlName="first_name">
+                            </mat-form-field>
+                        </div>
+                    </td>
+                    <td>
+                        <div [formGroup]="this.getContact(i)">
+                            <mat-form-field appearance="standard">
+                                <input type="string" matInput placeholder="" formControlName="last_name">
+                            </mat-form-field>
+                        </div>
+                    </td>
+                    <td>
+                        <div [formGroup]="this.getContact(i)">
+                            <mat-form-field appearance="standard" class="comment">
+                                <input type="string" matInput placeholder="" formControlName="comment">
+                            </mat-form-field>
+                        </div>
+                    </td>
+                    <td class="d-flex align-middle align-items-center">
+                        <a class="ml-auto btn-lnk d-flex align-items-center align-self-center"
+                            (click)="removeUndividedPerson(i)">
+                            <mat-icon>delete_outline</mat-icon>
+                        </a>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
